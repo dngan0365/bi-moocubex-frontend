@@ -20,27 +20,32 @@ import { DashboardLayout } from '@toolpad/core/DashboardLayout';
 import { ThemeProvider } from '@mui/material/styles';
 import CssBaseline from '@mui/material/CssBaseline';
 import Image from 'next/image';
+import { AuthRedirect } from '@/components/auth/AuthRedirect';
 
 export const NAVIGATION = [
   {
     segment: 'overview',
     title: 'Overview',
     icon: <AnalyticsIcon />,
+    href: '/overview'
   },
   {
     segment: 'data-quality',
     title: 'Data Quality',
     icon: <DonutLargeIcon />,
+    href: '/data-quality'
   },
   {
     segment: 'courses',
     title: 'Courses',
     icon: <BookIcon />,
+    href: '/courses'
   },
   {
     segment: 'data-mining',
     title: 'Data Mining',
     icon: <QueryStatsIcon />,
+    href: 'data-mining'
   },
 ];
 
@@ -102,22 +107,26 @@ export default function UserLayout({
   }, []);
 
   const router = useDemoRouter('/dashboard');
+
   return (
-    <ThemeProvider theme={demoTheme}>
-      <CssBaseline />
-      <AppRouterCacheProvider options={{ enableCssLayer: true }}>
-          <NextAppProvider 
-            session={session}
-            authentication={authentication}
-            branding={BRANDING}
-            navigation={NAVIGATION}
-            router={router}
-            theme={demoTheme}>
-                <DashboardLayout>
-                  {children}
-                </DashboardLayout>
-          </NextAppProvider>
-      </AppRouterCacheProvider>
-    </ThemeProvider>
+    <>
+      {/* <AuthRedirect/> */}
+        <ThemeProvider theme={demoTheme}>
+          <CssBaseline />
+          <AppRouterCacheProvider options={{ enableCssLayer: true }}>
+              <NextAppProvider 
+                session={session}
+                authentication={authentication}
+                branding={BRANDING}
+                navigation={NAVIGATION}
+                router={router}
+                theme={demoTheme}>
+                    <DashboardLayout>
+                      {children}
+                    </DashboardLayout>
+              </NextAppProvider>
+          </AppRouterCacheProvider>
+        </ThemeProvider>
+    </>
   );
 }

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Be_Vietnam_Pro, Roboto } from "next/font/google";
 import "./globals.css";
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
+import { AuthProvider } from '@/context/AuthContext';
 
 // Icon
 
@@ -29,15 +30,17 @@ export default function RootLayout({
 }>) {
 
   return (
-    <AppRouterCacheProvider options={{ enableCssLayer: true }}>
-          <html lang="en">
-            <body
-              className={`${beVietnamPro.className} ${roboto.className} antialiased`}
-            >
-              
-              {children}
-            </body>
-          </html>
-    </AppRouterCacheProvider>
+    <AuthProvider>
+      <AppRouterCacheProvider options={{ enableCssLayer: true }}>
+            <html lang="en">
+              <body
+                className={`${beVietnamPro.className} ${roboto.className} antialiased`}
+              >
+                
+                {children}
+              </body>
+            </html>
+      </AppRouterCacheProvider>
+    </AuthProvider>
   );
 }

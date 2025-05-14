@@ -1,6 +1,8 @@
 'use client';
-import { FC, useState } from 'react';
+import { FC, useState, useEffect  } from 'react';
 import Link from 'next/link';
+import { useAuth } from '@/context/AuthContext';
+import { useRouter } from 'next/navigation';
 
 interface SignUpModalProps {
   isOpen: boolean;
@@ -9,8 +11,25 @@ interface SignUpModalProps {
 
 const SignUpModal: FC<SignUpModalProps> = ({ isOpen, onClose }) => {
   const [showPassword, setShowPassword] = useState(false);
+  const router = useRouter();
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const { register, loading, error, isAuthenticated, clearError } = useAuth();
+  
+  useEffect(() => {
+    if (isAuthenticated) {
+      router.push('/');
+    }
+  }, [isAuthenticated, router]);
 
   if (!isOpen) return null;
+
+  const handleRegister = async (e: React.FormEvent) => {
+    e.preventDefault();
+    clearError();
+    await register(username, email, password);
+  };
 
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50">
@@ -41,7 +60,7 @@ const SignUpModal: FC<SignUpModalProps> = ({ isOpen, onClose }) => {
         </p>
         </div>
         
-        <form>
+        <form onSubmit={handleRegister}>
         {/* Name field */}
           <div className="mb-6">
             <label htmlFor="name" className="block text-gray-600 mb-2">
@@ -50,8 +69,10 @@ const SignUpModal: FC<SignUpModalProps> = ({ isOpen, onClose }) => {
             <input
               type="text"
               id="name"
+              name="username"
               className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
               placeholder='Enter your profile name'
+              onChange={(e) => setUsername(e.target.value)}
             />
           </div>
           {/* Email/Phone field */}
@@ -62,8 +83,11 @@ const SignUpModal: FC<SignUpModalProps> = ({ isOpen, onClose }) => {
             <input
               type="text"
               id="email"
+              name="email"
+              required
               className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
               placeholder='Enter your email address'
+              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
           
@@ -101,8 +125,11 @@ const SignUpModal: FC<SignUpModalProps> = ({ isOpen, onClose }) => {
             <input
               type={showPassword ? "text" : "password"}
               id="password"
+              name="password"
+              required
               className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
               placeholder='Enter your password'
+              onChange={(e) => setPassword(e.target.value)}
             />
             <p className='text-sm text-gray-600'>Use 8 or more characters with a mix of letters, numbers & symbols</p>
           </div>
@@ -122,7 +149,7 @@ const SignUpModal: FC<SignUpModalProps> = ({ isOpen, onClose }) => {
 
         <button
             type="submit"
-            className="w-full py-3 bg-gray-300 text-gray-700 font-medium rounded-full hover:bg-gray-400 transition-colors mb-6"
+            className="w-full py-3 bg-cyan-500 text-white font-medium rounded-full hover:bg-cyan-300 transition-colors mb-6"
             >
             Create an account
         </button>

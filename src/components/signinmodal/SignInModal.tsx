@@ -1,6 +1,8 @@
 'use client';
-import { FC, useState } from 'react';
+import { FC, useState, useEffect } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
+import { useAuth } from '@/context/AuthContext';
 
 interface SignInModalProps {
   isOpen: boolean;
@@ -9,7 +11,23 @@ interface SignInModalProps {
 
 const SignInModal: FC<SignInModalProps> = ({ isOpen, onClose }) => {
   const [showPassword, setShowPassword] = useState(false);
-  const [rememberMe, setRememberMe] = useState(false);
+  const router = useRouter();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  // Use the auth context instead of local state
+  const { login, loading, error, isAuthenticated, clearError, user } = useAuth();
+  
+  useEffect(() => {
+    if (isAuthenticated && user) {
+        router.push('/');
+    }
+  }, [isAuthenticated, router, user]);
+
+  const handleLogin = async (e: React.FormEvent) => {
+    e.preventDefault();
+    clearError(); // Clear any previous errors
+    await login(email, password);
+  };
 
   if (!isOpen) return null;
 
@@ -35,16 +53,22 @@ const SignInModal: FC<SignInModalProps> = ({ isOpen, onClose }) => {
         
         <h1 className="text-3xl font-medium text-gray-800 mb-8">Sign in</h1>
         
-        <form>
+        <form onSubmit={handleLogin}>
           {/* Email/Phone field */}
           <div className="mb-6">
             <label htmlFor="email" className="block text-gray-600 mb-2">
-              Email or phone number
+              Email
             </label>
             <input
-              type="text"
+              type="email"
+              name="email"
               id="email"
+              autoComplete="email"
+              required
               className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+              placeholder="Enter your email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
           </div>
           
@@ -82,43 +106,30 @@ const SignInModal: FC<SignInModalProps> = ({ isOpen, onClose }) => {
             <input
               type={showPassword ? "text" : "password"}
               id="password"
+              name="password"
+              required
+              autoComplete="current-password"
               className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
             />
           </div>
           
           {/* Sign in button */}
           <button
             type="submit"
-            className="w-full py-3 bg-gray-300 text-gray-700 font-medium rounded-full hover:bg-gray-400 transition-colors mb-6"
+            className="w-full py-3 bg-cyan-500 text-white font-medium rounded-full hover:bg-cyan-400 transition-colors mb-6"
           >
             Sign in
           </button>
           
           {/* Remember me and help */}
           <div className="flex justify-between items-center mb-8">
-            <label className="flex items-center cursor-pointer">
-              <input
-                type="checkbox"
-                checked={rememberMe}
-                onChange={() => setRememberMe(!rememberMe)}
-                className="h-5 w-5 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
-              />
-              <span className="ml-2 text-gray-700">Remember me</span>
-            </label>
             <Link href="/help" className="text-gray-700 hover:underline">
               Need help?
             </Link>
           </div>
           
-          {/* Sign up link */}
-          <div className="mb-4">
-            <p className="text-gray-700">
-              Don't have an account? {" "}
-              <Link href="/signup" className="text-gray-800 font-medium hover:underline">
-                Sign up
-              </Link>
-            </p>
-          </div>
         </form>
       </div>
     </div>

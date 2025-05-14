@@ -41,10 +41,10 @@ const Home: NextPage = () => {
                   />
                 </div>
                 <button 
-                  className="px-6 py-3 bg-gray-900 text-white font-medium rounded-full hover:bg-gray-800 transition-colors"
+                  className="px-6 py-3 bg-cyan-500 text-white font-medium rounded-full hover:bg-gray-600 transition-colors"
                   onClick={() => setShowSignInModal(true)}
                 >
-                  Sign up
+                  Sign in
                 </button>
               </div>
             </div>
