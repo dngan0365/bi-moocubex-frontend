@@ -3,7 +3,7 @@ import { useTheme } from '@/context/ThemeContext';
 import { ArrowUp, ArrowDown, Info, Sun, Moon } from 'lucide-react';
 import StudentTrendLineChart from '@/components/charts/StudentTrendLineChart'
 import UserEnrollBarChart from '@/components/charts/UserEnrollBarChart'
-import StudentGroupPieChart from '@/components/charts/StudentGroupPiechart'
+import StudentGroupPieChart from '@/components/charts/StudentGroupPieChart'
 
 export default function Dashboard() {
   const { theme } = useTheme(); 
