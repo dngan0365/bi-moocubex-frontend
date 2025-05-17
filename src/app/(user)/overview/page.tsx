@@ -1,9 +1,9 @@
 'use client';
 import { useTheme } from '@/context/ThemeContext';
 import { ArrowUp, ArrowDown, Info, Sun, Moon } from 'lucide-react';
-import StudentTrendLinechart from '@/components/charts/StudentTrendLineChart'
+import StudentTrendLineChart from '@/components/charts/StudentTrendLineChart'
 import UserEnrollBarChart from '@/components/charts/UserEnrollBarChart'
-import StudentGroupPieChart from '@/components/charts/StudentGroupPiechart'
+import StudentGroupPieChart from '@/components/charts/StudentGroupPieChart'
 
 export default function Dashboard() {
   const { theme } = useTheme(); 
@@ -68,7 +68,7 @@ export default function Dashboard() {
               <h3 className="text-lg font-semibold ">Students Trend</h3>
             </div>
             <div className="h-64 w-full">
-              <StudentTrendLinechart/>
+              <StudentTrendLineChart/>
             </div>
           </div>
 
