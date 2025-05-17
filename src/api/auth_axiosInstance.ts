@@ -13,6 +13,7 @@ const axiosInstance: AxiosInstance = axios.create({
     'Content-Type': 'application/json',
     Accept: 'application/json',
   },
+  withCredentials: true,
 });
 
 // Request interceptor for API calls

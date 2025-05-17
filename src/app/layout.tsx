@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { Be_Vietnam_Pro, Roboto } from "next/font/google";
 import "./globals.css";
-import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
 import { AuthProvider } from '@/context/AuthContext';
-
+import Navbar from '../components/navbar/Navbar';
+import {ThemeProvider} from '@/context/ThemeContext';
 // Icon
 
 // Font Family
@@ -31,16 +31,19 @@ export default function RootLayout({
 
   return (
     <AuthProvider>
-      <AppRouterCacheProvider options={{ enableCssLayer: true }}>
+
             <html lang="en">
               <body
                 className={`${beVietnamPro.className} ${roboto.className} antialiased`}
-              >
-                
-                {children}
+                >
+                <ThemeProvider>
+                <div className="min-h-screen flex flex-col">
+                    <Navbar />
+                      {children}
+                </div>
+                </ThemeProvider>
               </body>
             </html>
-      </AppRouterCacheProvider>
     </AuthProvider>
   );
 }

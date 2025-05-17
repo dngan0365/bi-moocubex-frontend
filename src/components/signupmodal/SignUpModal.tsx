@@ -16,9 +16,12 @@ const SignUpModal: FC<SignUpModalProps> = ({ isOpen, onClose }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const { register, loading, error, isAuthenticated, clearError } = useAuth();
+
+
   
   useEffect(() => {
     if (isAuthenticated) {
+      onClose();
       router.push('/');
     }
   }, [isAuthenticated, router]);
@@ -29,6 +32,7 @@ const SignUpModal: FC<SignUpModalProps> = ({ isOpen, onClose }) => {
     e.preventDefault();
     clearError();
     await register(username, email, password);
+    onClose();
   };
 
   return (
@@ -149,9 +153,10 @@ const SignUpModal: FC<SignUpModalProps> = ({ isOpen, onClose }) => {
 
         <button
             type="submit"
+            disable = {loading}
             className="w-full py-3 bg-cyan-500 text-white font-medium rounded-full hover:bg-cyan-300 transition-colors mb-6"
             >
-            Create an account
+            Create an account {loading? "Create an account": "Creating an account"}
         </button>
 
         </form>

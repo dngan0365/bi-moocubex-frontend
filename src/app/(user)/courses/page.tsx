@@ -1,21 +1,11 @@
+
 'use client'
 import React, { useState } from 'react';
-import { 
-  Box, 
-  Typography, 
-  TextField, 
-  Paper, 
-  Table, 
-  TableBody, 
-  TableCell, 
-  TableContainer, 
-  TableHead, 
-  TableRow,
-  IconButton,
-  InputAdornment
-} from '@mui/material';
-import { Search as SearchIcon, School as SchoolIcon } from '@mui/icons-material';
-import CourseListItem from '@/components/course/courseListItem';
+import { Search, BookOpen, Users, ArrowUpRight } from 'lucide-react';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useTheme } from '@/context/ThemeContext'
+import CourseCard from '@/components/coursecard/CourseCard';
 
 // Course interface
 interface Course {
@@ -58,7 +48,10 @@ const mockCourses: Course[] = [
   }
 ];
 
+
 const CoursesPage: React.FC = () => {
+  const { theme } = useTheme()
+
   const [searchTerm, setSearchTerm] = useState('');
 
   const filteredCourses = mockCourses.filter(course => 
@@ -67,45 +60,39 @@ const CoursesPage: React.FC = () => {
   );
 
   return (
-    <Typography>
-      <Box className="p-4">
+    <div className={`min-h-screen transition-colors duration-200 ${theme === 'dark' ? 'bg-gray-800 text-white' : 'bg-white text-gray-800'}`} >
+      <div className="max-w-7xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
         
-        <TextField 
-          fullWidth
-          variant="outlined"
-          placeholder="Search for course..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          className="mb-4"
-          InputProps={{
-            startAdornment: (
-              <InputAdornment position="start">
-                <SearchIcon />
-              </InputAdornment>
-            ),
-          }}
-        />
+        <div className="relative mb-8">
+          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+            <Search className={`h-5 w-5 ${theme === "dark" ? "text-gray-100": "text-gray-400"} `} />
+          </div>
+          <input
+            type="text"
+            placeholder="Search for courses by name or ID..."
+            className="block w-full pl-10 pr-3 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500  shadow-sm"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+        </div>
 
-        <TableContainer component={Paper}>
-          <Table>
-            <TableHead>
-              <TableRow>
-                <TableCell>Course ID</TableCell>
-                <TableCell>Name</TableCell>
-                <TableCell align="right">University</TableCell>
-                <TableCell align="right">Enrolled Users</TableCell>
-                <TableCell align="right">Actions</TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {filteredCourses.map((course) => (
-                <CourseListItem key={course.id} course={course} />
-              ))}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </Box>
-    </Typography>
+        {filteredCourses.length === 0 ? (
+          <div className="text-center py-12">
+            <div className="mx-auto w-24 h-24 rounded-full bg-gray-100 flex items-center justify-center">
+              <BookOpen className="h-12 w-12 text-gray-400" />
+            </div>
+            <h3 className="mt-4 text-lg font-medium text-gray-900">No courses found</h3>
+            <p className="mt-1 text-gray-500">Try adjusting your search terms</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            {filteredCourses.map((course) => (
+              <CourseCard key={course.id} course={course} />
+            ))}
+          </div>
+        )}
+      </div>
+    </div>
   );
 };
 

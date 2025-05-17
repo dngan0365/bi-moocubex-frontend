@@ -27,6 +27,7 @@ export const login = async (email: string, password: string): Promise<AuthRespon
     console.error('Login failed:', error);
     throw error;
   }
+
 };
 
 export const register = async (username: string, email: string, password: string): Promise<AuthResponse> => {
