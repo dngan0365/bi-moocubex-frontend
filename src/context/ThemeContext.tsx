@@ -1,10 +1,13 @@
 // ThemeContext.tsx
 'use client';
-import { createContext, useContext, useState, useEffect } from 'react';
+import { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
 const ThemeContext = createContext({ theme: 'light', toggleTheme: () => {} });
 
-export const ThemeProvider = ({ children }) => {
+type ThemeProviderProps = {
+  children: ReactNode;
+};
+export const ThemeProvider = ({ children }: ThemeProviderProps) => {
   const [theme, setTheme] = useState('light');
   const [isHydrated, setIsHydrated] = useState(false); // 👈
 
