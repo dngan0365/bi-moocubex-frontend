@@ -197,13 +197,19 @@ const featuresPhase2 = {
 const featuresPhase3 = {};
 const featuresPhase4 = {};
 
-const stats = [
-  { title: 'Video', value: '20' },
-  { title: 'Bài tập', value: '30' },
-  { title: 'Exam', value: '1' },
-  { title: 'Comment/Reply', value: '5' },
-];
+type StatItem = {
+  title: string;
+  value: string;
+  icon: React.ReactNode;
+};
 
+const stats: StatItem[] = [
+  { title: 'Videos', value: '20', icon: <FaVideo /> },
+  { title: 'Exercises', value: '30', icon: <FaTasks /> },
+  { title: 'Exams', value: '1', icon: <BookCheck /> },
+  { title: 'Comment/Reply', value: '5', icon: <FaComments />},
+
+]
 const user_info = {
   ID: 'DM101',
   school: 'UIT',
@@ -427,7 +433,6 @@ export default function UserInfo() {
                 </div>}
         </div>
 
->>>>>>> 8ac0062b034b470cc4df7f864fac3a157e7700bd
       </div>
 
       {/* Footer Note */}
