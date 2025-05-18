@@ -64,14 +64,15 @@ const FeatureHeatMap = () => {
       "order_item_total": 0.335, "order_item_product_price": 0.1722, "order_item_profit_amount": 1
     }
   };
+  const correlationMatrixTyped = correlationMatrix as Record<string, Record<string, number>>;
 
-    const series = variables.map((rowVar) => ({
-      name: rowVar,
-      data: variables.map((colVar) => ({
-        x: colVar,
-        y: parseFloat(correlationMatrix[rowVar]?.[colVar] ?? "0"),
-      })),
-    }));
+  const series = variables.map((rowVar) => ({
+    name: rowVar,
+    data: variables.map((colVar) => ({
+      x: colVar,
+      y: parseFloat(correlationMatrixTyped[rowVar]?.[colVar] ?? "0"),
+    })),
+  }));
 
   const options: ApexCharts.ApexOptions = {
     chart: {
