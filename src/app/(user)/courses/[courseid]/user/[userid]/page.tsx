@@ -197,7 +197,13 @@ const featuresPhase2 = {
 const featuresPhase3 = {};
 const featuresPhase4 = {};
 
-const stats = [
+type StatItem = {
+  title: string;
+  value: string;
+  icon: React.ReactNode;
+};
+
+const stats: StatItem[] = [
   { title: 'Videos', value: '20', icon: <FaVideo /> },
   { title: 'Exercises', value: '30', icon: <FaTasks /> },
   { title: 'Exams', value: '1', icon: <BookCheck /> },
