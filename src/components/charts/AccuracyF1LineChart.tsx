@@ -50,7 +50,7 @@ const AccuracyF1LineChart = ({ data }: AccuracyF1LineChartProps) => {
     },
   ];
 
-  const options = {
+  const options: ApexCharts.ApexOptions = {
     chart: {
       type: "line",
       toolbar: { show: true },
