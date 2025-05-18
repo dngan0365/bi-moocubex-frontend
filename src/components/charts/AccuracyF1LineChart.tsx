@@ -2,7 +2,11 @@ import React from "react";
 import Chart from "react-apexcharts";
 import { useTheme } from "@/context/ThemeContext";
 
-const AccuracyF1LineChart = ({ data }) => {
+type AccuracyF1LineChartProps = {
+  data: Array<{ fold: string; value: any }>;
+};
+
+const AccuracyF1LineChart = ({ data }: AccuracyF1LineChartProps) => {
   const { theme } = useTheme();
   const isDark = theme === "dark";
 
