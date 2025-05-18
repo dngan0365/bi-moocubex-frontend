@@ -51,9 +51,6 @@ const VideoScatterChart = () => {
       zoom: { enabled: true, type: "xy" },
       foreColor: theme === "dark" ? "#f0f0f0" : "#333"
     },
-    theme: {
-      mode: theme
-    },
     xaxis: {
       title: {
         text: "Số khóa học",
@@ -107,9 +104,6 @@ const VideoScatterChart = () => {
       fontWeight: 500,
       labels: {
         colors: theme === "dark" ? "#f0f0f0" : "#333"
-      },
-      markers: {
-        radius: 12
       }
     },
     tooltip: {
