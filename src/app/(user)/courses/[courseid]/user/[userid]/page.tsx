@@ -219,7 +219,7 @@ const userDetails = [
 
 ];
 
-export default function UserInfo({ params }: { params: { courseId: string, userId: string } }) {
+export default function UserInfo() {
   const { theme } = useTheme()
   
   const isDark = theme === 'dark';

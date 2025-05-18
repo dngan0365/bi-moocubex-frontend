@@ -11,7 +11,6 @@ import CourseBehaviourLineGraph from '@/components/charts/CourseBehaviourLineGra
 import CourseStudentGroupCharts from '@/components/charts/CourseStudentGroupCharts';
 import { useTheme } from "@/context/ThemeContext";
 
-const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
 
 const course_info = {
   name: 'Introduction to Data Mining',
