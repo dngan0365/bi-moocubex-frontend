@@ -42,7 +42,7 @@ const ExerciseScatterChart = () => {
     color: labelColors[label] || "#888"
   }));
 
-  const options = {
+  const options: ApexCharts.ApexOptions = {
     chart: {
       type: "scatter",
       height: 400,

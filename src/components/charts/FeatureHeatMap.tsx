@@ -73,7 +73,7 @@ const FeatureHeatMap = () => {
     }))
   }));
 
-  const options = {
+  const options: ApexCharts.ApexOptions = {
     chart: {
       height: 600,
       type: "heatmap",

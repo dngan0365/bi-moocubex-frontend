@@ -41,7 +41,7 @@ const VideoScatterChart = () => {
     color: labelColors[label] || "#888"
   }));
 
-  const options = {
+  const options: ApexCharts.ApexOptions = {
     chart: {
       height: 400,
       type: "scatter",
