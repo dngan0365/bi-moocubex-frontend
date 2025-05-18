@@ -1,4 +1,5 @@
 'use client';
+
 import { useTheme } from '@/context/ThemeContext';
 import {
   ArrowUp,
@@ -14,21 +15,27 @@ import phase1Data from './phase1.json';
 import FeatureImportanceBarChart from '@/components/charts/FeatureImportanceBarChart';
 import AccuracyF1LineChart from '@/components/charts/AccuracyF1LineChart';
 
+type ReliabilityItem = Record<string, any>;
+
 export default function Dashboard() {
   const { theme } = useTheme();
   const isDark = theme === 'dark';
   const data = phase1Data;
 
-  const variance = data.reliability.find(item => item.varianceFold);
-  const aurRocObj = data.relevance.find(item => item['AUR-ROC']);
-  const aurRocValues = aurRocObj?.['AUR-ROC'] || [];
+  // Extract variance object from reliability data
+  const variance = data.reliability.find((item: ReliabilityItem) => 'varianceFold' in item);
+  // Extract AUR-ROC data for relevance
+  const aurRocObj = data.relevance.find((item: any) => 'AUR-ROC' in item);
+  const aurRocValues: number[] = aurRocObj?.['AUR-ROC'] ?? [];
   const classLabels = ['lớp A', 'lớp B', 'lớp C', 'lớp D', 'lớp E', 'trung bình các lớp'];
 
-  const filteredReliability = data.reliability.filter(item => {
+  // Filter reliability data to exclude certain keys
+  const filteredReliability = data.reliability.filter((item: any) => {
     const key = Object.keys(item)[0];
     return !['Fold', 'varianceFold', 'nhanxet1'].includes(key);
   });
 
+  // Allowed keys for display in lists
   const allowedKeys = [
     'dataset',
     'object50',
@@ -39,6 +46,7 @@ export default function Dashboard() {
     'f1',
   ];
 
+  // Helper to determine status color based on percentage and theme
   const getStatusColor = (percentage: number) => {
     if (percentage > 10) return isDark ? 'text-green-400' : 'text-green-500';
     if (percentage < 0) return isDark ? 'text-red-400' : 'text-red-500';
@@ -48,17 +56,14 @@ export default function Dashboard() {
   const getCardBg = () => (isDark ? 'bg-gray-900' : 'bg-cyan-400/10');
   const getSectionBg = () => (isDark ? 'bg-gray-900' : 'bg-cyan-50');
 
-  const StatCard = ({
-    title,
-    value,
-    percentage,
-    icon: Icon,
-  }: {
+  type StatCardProps = {
     title: string;
-    value: number | string;
+    value: number | string | undefined;
     percentage: number;
-    icon: any;
-  }) => (
+    icon: React.ComponentType<{ size?: number; className?: string }>;
+  };
+
+  const StatCard = ({ title, value, percentage, icon: Icon }: StatCardProps) => (
     <div className="w-full md:w-1/2 lg:w-1/4 p-2">
       <div
         className={`rounded-xl shadow-md ${getCardBg()} p-4 transition-all duration-200 h-full hover:shadow-lg transform hover:-translate-y-1`}
@@ -70,7 +75,7 @@ export default function Dashboard() {
           </div>
         </div>
         <div className="flex items-center justify-between">
-          <div className="text-2xl font-bold">{value}</div>
+          <div className="text-2xl font-bold">{value ?? '-'}</div>
           <div className={`flex items-center ${getStatusColor(percentage)}`}>
             {percentage > 0 ? (
               <ArrowUp size={16} />
@@ -84,15 +89,13 @@ export default function Dashboard() {
     </div>
   );
 
-  const MetricCard = ({
-    title,
-    children,
-    icon: Icon,
-  }: {
+  type MetricCardProps = {
     title: string;
     children: React.ReactNode;
-    icon?: any;
-  }) => (
+    icon?: React.ComponentType<{ size?: number; className?: string }>;
+  };
+
+  const MetricCard = ({ title, children, icon: Icon }: MetricCardProps) => (
     <div className="w-full p-2">
       <div className={`rounded-xl shadow-md ${getCardBg()} p-5 transition-all duration-200 h-full`}>
         <div className="flex justify-between items-center mb-4">
@@ -100,7 +103,7 @@ export default function Dashboard() {
             {Icon && <Icon size={20} className="mr-2 text-cyan-500" />}
             {title}
           </h2>
-          <button className="p-1 rounded hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+          <button className="p-1 rounded hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors" aria-label="Info">
             <Info size={18} className="text-gray-400" />
           </button>
         </div>
@@ -112,7 +115,10 @@ export default function Dashboard() {
   const renderList = (items: any[]) => (
     <div className="space-y-4">
       {items.map((item, idx) => (
-        <div key={idx} className={`p-3 rounded-lg ${isDark ? 'bg-gray-800' : 'bg-cyan-50/50'}`}>
+        <div
+          key={idx}
+          className={`p-3 rounded-lg ${isDark ? 'bg-gray-800' : 'bg-cyan-50/50'}`}
+        >
           {Object.entries(item)
             .filter(([k]) => allowedKeys.includes(k))
             .map(([k, v]) => (
@@ -149,7 +155,7 @@ export default function Dashboard() {
                   <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-1.5 mt-1">
                     <div
                       className="bg-cyan-500 h-1.5 rounded-full"
-                      style={{ width: `${Math.min(v, 100)}%` }}
+                      style={{ width: `${Math.min(v * 100, 100)}%` }}
                     ></div>
                   </div>
                 )}
@@ -160,16 +166,14 @@ export default function Dashboard() {
     </div>
   );
 
+  // Process Fold data for chart
   const foldEntry = data?.reliability?.find((item: any) => 'Fold' in item);
   let foldList: { fold: string; value: any }[] = [];
 
   if (foldEntry?.Fold && Array.isArray(foldEntry.Fold)) {
     foldList = foldEntry.Fold.map((foldObj: any) => {
       const [key, value] = Object.entries(foldObj)[0];
-      return {
-        fold: key,
-        value,
-      };
+      return { fold: key, value };
     });
   }
 
@@ -214,7 +218,7 @@ export default function Dashboard() {
         </div>
 
         {/* Main Metrics */}
-        <div className="grid grid-cols-2 md:grid-cols-3">
+        <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
           <MetricCard title="Completeness" icon={BarChart2}>
             {renderList(data.completeness)}
           </MetricCard>
@@ -239,7 +243,7 @@ export default function Dashboard() {
                   <BarChart2 size={20} className="mr-2 text-cyan-500" />
                   Reliability
                 </h2>
-                <button className="p-1 rounded hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                <button className="p-1 rounded hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors" aria-label="Info">
                   <Info size={18} className="text-gray-400" />
                 </button>
               </div>
@@ -260,16 +264,16 @@ export default function Dashboard() {
             </div>
           </div>
 
-          <div className={`rounded-xl shadow-md ${getCardBg()} w-full p-5 transition-all duration-200`}>
+          <div className={`rounded-xl shadow-md ${getCardBg()} w-full p-5 transition-all duration-200 mt-6`}>
             <h2 className="text-xl font-semibold flex items-center mb-4">Relevance</h2>
             <h3 className="font-semibold mb-2">AUR-ROC Scores</h3>
             {aurRocValues.map((value, index) => (
               <div key={index} className="text-md">
-                AUR-ROC cho {classLabels[index]}: {value}
+                AUR-ROC cho {classLabels[index]}: {value.toFixed(4)}
               </div>
             ))}
             <FeatureImportanceBarChart
-              data={data.relevance.find(item => item.featureImportance)?.featureImportance}
+              data={data.relevance.find((item: any) => 'featureImportance' in item)?.featureImportance}
             />
           </div>
         </div>
