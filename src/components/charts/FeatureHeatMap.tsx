@@ -70,7 +70,7 @@ const FeatureHeatMap = () => {
     name: rowVar,
     data: variables.map((colVar) => ({
       x: colVar,
-      y: parseFloat(correlationMatrixTyped[rowVar]?.[colVar] ?? "0"),
+      y: correlationMatrixTyped[rowVar]?.[colVar] ?? 0,
     })),
   }));
 
