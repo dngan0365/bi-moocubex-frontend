@@ -26,7 +26,7 @@
   "reliability": [
     { "accuracy": 90 },
     { "f1": 80 },
-    { "nhanxet1": "Tin cay cao" },
+    { "nhanxet1": "F1 cao, Accuracy cao. Hai chỉ số gần bằng nhau => Reliability cao" },
     {
       "Fold": [
         {

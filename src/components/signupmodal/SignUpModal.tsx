@@ -153,7 +153,7 @@ const SignUpModal: FC<SignUpModalProps> = ({ isOpen, onClose }) => {
 
         <button
             type="submit"
-            disable = {loading}
+            disabled={loading}
             className="w-full py-3 bg-cyan-500 text-white font-medium rounded-full hover:bg-cyan-300 transition-colors mb-6"
             >
             Create an account {loading? "Create an account": "Creating an account"}
