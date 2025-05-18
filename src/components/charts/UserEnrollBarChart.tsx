@@ -40,7 +40,6 @@ const UserEnrollBarChart = () => {
           speed: 350,
         },
       },
-      fontFamily: 'Arial, "Segoe UI", Roboto, "Noto Sans", sans-serif', // 👈 add here
     },
     plotOptions: {
       bar: {
@@ -52,7 +51,6 @@ const UserEnrollBarChart = () => {
     dataLabels: {
       enabled: false,
       style: {
-        fontFamily: 'Arial, "Segoe UI", Roboto, "Noto Sans", sans-serif', // 👈
       },
     },
     xaxis: {
@@ -63,14 +61,12 @@ const UserEnrollBarChart = () => {
       style: {
         color: isDark ? '#fff' : '#4B5563',
         fontSize: '14px', // 👈 giảm kích thước font
-        fontFamily: 'Arial, "Segoe UI", Roboto, "Noto Sans", sans-serif',
       },
     },
     labels: {
       style: {
         fontSize: '14px',
         colors: isDark ? '#fff' : '#4B5563',
-        fontFamily: 'Arial, "Segoe UI", Roboto, "Noto Sans", sans-serif',
       },
     },
   },
@@ -81,14 +77,12 @@ const UserEnrollBarChart = () => {
       style: {
         fontSize: '14px',
         color: isDark ? '#fff' : '#374151',
-        fontFamily: 'Arial, "Segoe UI", Roboto, "Noto Sans", sans-serif',
       },
     },
     labels: {
       style: {
         fontSize: '12px',
         colors: isDark ? '#fff' : '#4B5563',
-        fontFamily: 'Arial, "Segoe UI", Roboto, "Noto Sans", sans-serif',
       },
     },
   },
@@ -97,7 +91,6 @@ const UserEnrollBarChart = () => {
       position: 'top',
       labels: {
         colors: isDark ? '#fff' : '#4B5563',
-        fontFamily: 'Arial, "Segoe UI", Roboto, "Noto Sans", sans-serif', // 👈
       },
     },
     fill: {
@@ -107,7 +100,6 @@ const UserEnrollBarChart = () => {
     tooltip: {
       theme: isDark ? 'dark' : 'light',
       style: {
-        fontFamily: 'Arial, "Segoe UI", Roboto, "Noto Sans", sans-serif', // 👈
       },
     },
   };
