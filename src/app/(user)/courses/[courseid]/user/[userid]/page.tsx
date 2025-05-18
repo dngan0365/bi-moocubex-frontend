@@ -391,7 +391,7 @@ export default function UserInfo() {
                           {/* Highlight label separately */}
                           <div className="mt-4 px-3 py-2 bg-cyan-400/10 border-l-4 border-cyan-400 rounded text-sm">
                             <span className="text-cyan-500 font-semibold">Label: </span>
-                            <span className="text-cyan-500 font-bold text-base">{featuresPhase3?.label}</span>
+                            <span className="text-cyan-500 font-bold text-base"> {(featuresPhase3 as any)?.label}</span>
                           </div>
                         </>
                       ) : (
@@ -418,7 +418,7 @@ export default function UserInfo() {
                           {/* Highlight label separately */}
                           <div className="mt-4 px-3 py-2 bg-cyan-400/10 border-l-4 border-cyan-400 rounded text-sm">
                             <span className="text-cyan-500 font-semibold">Label: </span>
-                            <span className="text-cyan-500 font-bold text-base">{featuresPhase4?.label}</span>
+                            <span className="text-cyan-500 font-bold text-base"> {(featuresPhase4 as any)?.label}</span>
                           </div>
                         </>
                       ) : (
