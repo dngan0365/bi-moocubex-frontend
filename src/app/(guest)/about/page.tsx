@@ -4,14 +4,19 @@ import { useState } from 'react';
 import { BarChart, LineChart, Users, AlertTriangle, Info, Clipboard, Zap, FileText } from 'lucide-react';
 import { useTheme } from '@/context/ThemeContext';
 
-// Reusable components
-const Card = ({ children, className = '' }) => (
+import React, { ReactNode } from 'react';
+
+interface CardProps {
+  children: ReactNode;
+  className?: string;
+}
+
+const Card: React.FC<CardProps> = ({ children, className = '' }) => (
   <div className={`bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 ${className}`}>
     {children}
   </div>
 );
-
-const StatCard = ({ title, value, trend, trendValue, icon, color }) => (
+const StatCard = ({ title, value, trend, trendValue, icon, color }: any) => (
   <div className={`bg-gray-800 p-5 rounded-xl border-l-4 ${color} transition-transform duration-300 hover:scale-[1.02]`}>
     <div className="flex justify-between items-start">
       <div>
@@ -28,7 +33,7 @@ const StatCard = ({ title, value, trend, trendValue, icon, color }) => (
   </div>
 );
 
-const TeamMember = ({ name, id, classInfo, avatar }) => (
+const TeamMember = ({ name, id, classInfo, avatar } : any) => (
   <div className="flex items-center space-x-4 p-4 bg-gray-50 rounded-xl hover:bg-cyan-50 transition-colors">
     <div className="flex-shrink-0 h-14 w-14 rounded-full bg-gradient-to-r from-cyan-500 to-blue-600 flex items-center justify-center text-2xl text-white shadow-md">
       {avatar}
