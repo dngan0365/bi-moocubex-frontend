@@ -56,7 +56,6 @@ const AccuracyF1LineChart = ({ data }: AccuracyF1LineChartProps) => {
       toolbar: { show: true },
       animations: {
         enabled: true,
-        easing: "easeinout",
         speed: 800,
       },
     },

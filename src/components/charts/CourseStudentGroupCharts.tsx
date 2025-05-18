@@ -173,7 +173,6 @@ const CourseBehaviourLineGraph = ({ data, groupName }: { data: any[]; groupName:
       toolbar: { show: false },
       animations: {
         enabled: true,
-        easing: 'easeinout',
         speed: 800,
       },
     },
