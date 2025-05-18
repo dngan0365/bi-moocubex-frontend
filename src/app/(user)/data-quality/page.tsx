@@ -273,7 +273,9 @@ export default function Dashboard() {
               </div>
             ))}
             <FeatureImportanceBarChart
-              data={data.relevance.find((item: any) => 'featureImportance' in item)?.featureImportance}
+               data={
+                data.relevance.find((item: any) => 'featureImportance' in item)?.featureImportance || {}
+              }
             />
           </div>
         </div>
