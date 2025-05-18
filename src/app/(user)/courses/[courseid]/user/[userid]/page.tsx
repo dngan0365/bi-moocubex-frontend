@@ -433,7 +433,6 @@ export default function UserInfo() {
                 </div>}
         </div>
 
->>>>>>> 8ac0062b034b470cc4df7f864fac3a157e7700bd
       </div>
 
       {/* Footer Note */}
