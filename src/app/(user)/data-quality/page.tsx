@@ -4,16 +4,12 @@ import {
   ArrowUp,
   ArrowDown,
   Info,
-  Sun,
-  Moon,
   BarChart2,
   PieChart,
   LineChart,
   TrendingUp,
 } from 'lucide-react';
-import StudentTrendLineChart from '@/components/charts/StudentTrendLineChart';
-import UserEnrollBarChart from '@/components/charts/UserEnrollBarChart';
-import StudentGroupPieChart from '@/components/charts/StudentGroupPieChart';
+
 import phase1Data from './phase1.json';
 import FeatureImportanceBarChart from '@/components/charts/FeatureImportanceBarChart';
 import AccuracyF1LineChart from '@/components/charts/AccuracyF1LineChart';
@@ -23,11 +19,15 @@ export default function Dashboard() {
   const isDark = theme === 'dark';
   const data = phase1Data;
 
-   // Find the object in relevance that has AUR-ROC key
-  const aurRocObj = data.relevance.find((item) => item["AUR-ROC"]);
+  const variance = data.reliability.find(item => item.varianceFold);
+  const aurRocObj = data.relevance.find(item => item['AUR-ROC']);
+  const aurRocValues = aurRocObj?.['AUR-ROC'] || [];
+  const classLabels = ['lớp A', 'lớp B', 'lớp C', 'lớp D', 'lớp E', 'trung bình các lớp'];
 
-  // Safely extract the array
-  const aurRocValues = aurRocObj?.["AUR-ROC"] || [];
+  const filteredReliability = data.reliability.filter(item => {
+    const key = Object.keys(item)[0];
+    return !['Fold', 'varianceFold', 'nhanxet1'].includes(key);
+  });
 
   const allowedKeys = [
     'dataset',
@@ -119,13 +119,15 @@ export default function Dashboard() {
               <div key={k} className="flex flex-col mb-1">
                 <div className="flex justify-between">
                   <span className="font-medium text-sm text-gray-500 dark:text-gray-400">
-                    {k === 'dataset' && 'Chỉ số cho toàn bộ dataset'}
-                    {k === 'object50' && 'Phần trăm object > 50% đáp ứng'}
-                    {k === 'object75' && 'Phần trăm object > 75% đáp ứng'}
-                    {k === 'object80' && 'Phần trăm object > 80% đáp ứng'}
-                    {k === 'object90' && 'Phần trăm object > 90% đáp ứng'}
-                    {k === 'accuracy' && 'Chỉ số Accuracy'}
-                    {k === 'f1' && 'Chỉ số F1'}
+                    {{
+                      dataset: 'Chỉ số cho toàn bộ dataset',
+                      object50: 'Phần trăm object > 50% đáp ứng',
+                      object75: 'Phần trăm object > 75% đáp ứng',
+                      object80: 'Phần trăm object > 80% đáp ứng',
+                      object90: 'Phần trăm object > 90% đáp ứng',
+                      accuracy: 'Chỉ số Accuracy',
+                      f1: 'Chỉ số F1',
+                    }[k] ?? k}
                   </span>
                   <span
                     className={`font-medium ${
@@ -134,20 +136,20 @@ export default function Dashboard() {
                         : 'text-gray-700 dark:text-gray-300'
                     }`}
                   >
-                    {Array.isArray(v)
+                    {typeof v === 'number'
+                      ? v.toFixed(2)
+                      : Array.isArray(v)
                       ? v.join(', ')
                       : typeof v === 'object'
                       ? JSON.stringify(v)
-                      : typeof v === 'number'
-                      ? v.toFixed(2)
-                      : v.toString()}
+                      : v?.toString()}
                   </span>
                 </div>
                 {typeof v === 'number' && (
                   <div className="w-full bg-gray-200 dark:bg-gray-700 rounded-full h-1.5 mt-1">
                     <div
                       className="bg-cyan-500 h-1.5 rounded-full"
-                      style={{ width: `${Math.min(v , 100)}%` }}
+                      style={{ width: `${Math.min(v, 100)}%` }}
                     ></div>
                   </div>
                 )}
@@ -159,17 +161,15 @@ export default function Dashboard() {
   );
 
   const foldEntry = data?.reliability?.find((item: any) => 'Fold' in item);
+  const foldList =
+    foldEntry?.Fold.map((foldObj: any) => {
+      const [key, value] = Object.entries(foldObj)[0];
+      return {
+        fold: key,
+        ...value,
+      };
+    }) || [];
 
-  // Convert Fold array into an array of fold objects with fold name and metrics
-  const foldList = foldEntry?.Fold.map((foldObj: any) => {
-    const [key, value] = Object.entries(foldObj)[0]; // e.g., ["Fold1", { accTrain: 20, ... }]
-    return {
-      fold: key,
-      ...value,
-    };
-  }) || [];
-
-  console.log(foldList)
   return (
     <div
       className={`min-h-screen transition-colors duration-200 ${
@@ -229,28 +229,44 @@ export default function Dashboard() {
         </div>
 
         <div className="flex flex-wrap -mx-3">
-          
-
           <div className="w-full p-2 grid grid-cols-3 gap-2">
-              <MetricCard title="Reliability" icon={BarChart2}>
-                {renderList(data.reliability)}
-              </MetricCard>
-            <div className={`rounded-xl shadow-md ${getCardBg()} p-2  col-span-2`}>
+            <div className={`rounded-xl shadow-md ${getCardBg()} p-5 transition-all duration-200 h-full`}>
+              <div className="flex justify-between items-center mb-4">
+                <h2 className="text-xl font-semibold flex items-center">
+                  <BarChart2 size={20} className="mr-2 text-cyan-500" />
+                  Reliability
+                </h2>
+                <button className="p-1 rounded hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors">
+                  <Info size={18} className="text-gray-400" />
+                </button>
+              </div>
+              <div className="space-y-3">{renderList(filteredReliability)}</div>
+              {variance?.varianceFold && (
+                <div className="text-md font-semibold p-5">
+                  Độ lệch phương sai Accuracy: {variance.varianceFold.accuracy}
+                  <br />
+                  Độ lệch phương sai F1: {variance.varianceFold.f1}
+                  <br />
+                  Nhận xét: Chỉ số F1 và Accuracy cao. Hai chỉ số này tương đối bằng nhau
+                </div>
+              )}
+            </div>
+
+            <div className={`rounded-xl shadow-md ${getCardBg()} p-2 col-span-2`}>
               <AccuracyF1LineChart data={foldList} />
             </div>
           </div>
 
-          <div className={`rounded-xl shadow-md ${getCardBg()} w-full  p-5 transition-all duration-200`}>
-            <h2 className="text-xl font-semibold flex items-center">Relevance</h2>
-
+          <div className={`rounded-xl shadow-md ${getCardBg()} w-full p-5 transition-all duration-200`}>
+            <h2 className="text-xl font-semibold flex items-center mb-4">Relevance</h2>
             <h3 className="font-semibold mb-2">AUR-ROC Scores</h3>
-                {aurRocValues.map((value, index) => (
-                  <div key={index} className="text-sm">
-                    Fold {index + 1}: {value}
-                  </div>
-                ))}
+            {aurRocValues.map((value, index) => (
+              <div key={index} className="text-md">
+                AUR-ROC cho {classLabels[index]}: {value}
+              </div>
+            ))}
             <FeatureImportanceBarChart
-              data={data.relevance.find((item: any) => item.featureImportance)?.featureImportance}
+              data={data.relevance.find(item => item.featureImportance)?.featureImportance}
             />
           </div>
         </div>

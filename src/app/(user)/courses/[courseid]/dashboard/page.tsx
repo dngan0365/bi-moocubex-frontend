@@ -34,15 +34,7 @@ const courseDetails = [
   { label: 'End Date:', value: course_info.end_date }
 ];
 
-interface PageProps {
-  params: {
-    courseId: string;
-  };
-}
-
-
-export default function CourseInfo({ params }: PageProps) {
-  const { courseId } = params;
+export default function CourseInfo() {
 
   const [detail, setDetail] = useState(false);
 
