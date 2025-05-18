@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import Link from 'next/link';
 import { Search, Eye, Calendar, School, User } from 'lucide-react';
 import { useTheme } from "@/context/ThemeContext"
+import CourseNav from '@/components/coursenav/CourseNav';
 
 // User interface
 interface User {
@@ -87,7 +88,8 @@ const UsersPage: React.FC = () => {
   );
 
   return (
-    <div className={`min-h-screen ${theme === 'dark' ? 'bg-gray-700 text-white' : 'bg-white text-black'}`}>
+    <div className={`min-h-screen pd-4 ${theme === 'dark' ? 'bg-gray-700 text-white' : 'bg-white text-black'}`}>
+      <CourseNav/>
       <div className="mx-auto px-4 py-8 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between mb-6">
           <div>

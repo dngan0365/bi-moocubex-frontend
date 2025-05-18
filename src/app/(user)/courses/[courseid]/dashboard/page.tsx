@@ -10,6 +10,7 @@ import CourseCommentLineGraph from '@/components/charts/CourseCommentLineGraph';
 import CourseBehaviourLineGraph from '@/components/charts/CourseBehaviourLineGraph';
 import CourseStudentGroupCharts from '@/components/charts/CourseStudentGroupCharts';
 import { useTheme } from "@/context/ThemeContext";
+import CourseNav from '@/components/coursenav/CourseNav';
 
 
 const course_info = {
@@ -47,6 +48,7 @@ export default function CourseInfo() {
 
   return (
     <div className={`mx-auto p-4 space-y-6 ${isDark ? 'bg-gray-700 text-white' : 'bg-white text-black'}`}>
+      <CourseNav/>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Course Details */}
         <div className={`${cardClass} p-4 rounded-xl shadow`}>

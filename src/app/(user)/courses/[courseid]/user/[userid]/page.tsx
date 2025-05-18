@@ -9,7 +9,7 @@ import StudentVideoLineChart from '@/components/charts/StudentVideoLineChart';
 import StudentExerciseLineChart from '@/components/charts/StudentExerciseLineChart';
 import StudentExerciseScoreBarChart from '@/components/charts/StudentExerciseScoreBarchart';
 import StudentScoreBarChart from '@/components/charts/StudentScoreBarChart';
-
+import CourseNav from '@/components/coursenav/CourseNav';
 const featuresPhase1 = {
   course_id: "C_1123979",
   user_id: "U_30144337",
@@ -240,6 +240,7 @@ export default function UserInfo() {
 
   return (
     <div className={`mx-auto p-4 space-y-6 ${isDark ? 'bg-gray-700 text-white' : 'bg-white text-black'}`}>
+      <CourseNav/>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {/* user Info */}
             <div className={`${cardClass} p-4 rounded-xl shadow`}>
