@@ -2,47 +2,50 @@ import React from "react";
 import Chart from "react-apexcharts";
 import { useTheme } from "@/context/ThemeContext";
 
+type FoldData = {
+  fold: string;
+  accTrain: number;
+  accValid: number;
+  f1Train: number;
+  f1Valid: number;
+};
+
 type AccuracyF1LineChartProps = {
-  data: Array<{ fold: string; value: any }>;
+  data: FoldData[];
 };
 
 const AccuracyF1LineChart = ({ data }: AccuracyF1LineChartProps) => {
   const { theme } = useTheme();
   const isDark = theme === "dark";
 
-  // Defensive check: if data is missing or not an array
   if (!Array.isArray(data) || data.length === 0) {
     return <div>No fold data available</div>;
   }
 
-  // Safely extract fold values
-  const folds = data
-
-  // Safely map categories
-  const categories = folds.map((_, index) => `Fold ${index + 1}`);
-  console.log(folds);
+  // Use fold names from data or fallback to default fold labels
+  const categories = data.map((fold) => fold.fold);
 
   const series = [
     {
       name: "Accuracy (Train)",
-      data: folds.map((f) => f?.accTrain ?? 0),
+      data: data.map((f) => f.accTrain ?? 0),
       type: "line",
       dashArray: 4,
     },
     {
       name: "Accuracy (Valid)",
-      data: folds.map((f) => f?.accValid ?? 0),
+      data: data.map((f) => f.accValid ?? 0),
       type: "line",
     },
     {
       name: "F1 Score (Train)",
-      data: folds.map((f) => f?.f1Train ?? 0),
+      data: data.map((f) => f.f1Train ?? 0),
       type: "line",
       dashArray: 4,
     },
     {
       name: "F1 Score (Valid)",
-      data: folds.map((f) => f?.f1Valid ?? 0),
+      data: data.map((f) => f.f1Valid ?? 0),
       type: "line",
     },
   ];
