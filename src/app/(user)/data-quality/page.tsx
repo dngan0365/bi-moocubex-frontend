@@ -161,14 +161,17 @@ export default function Dashboard() {
   );
 
   const foldEntry = data?.reliability?.find((item: any) => 'Fold' in item);
-  const foldList =
-    foldEntry?.Fold.map((foldObj: any) => {
+  let foldList: { fold: string; value: any }[] = [];
+
+  if (foldEntry?.Fold && Array.isArray(foldEntry.Fold)) {
+    foldList = foldEntry.Fold.map((foldObj: any) => {
       const [key, value] = Object.entries(foldObj)[0];
       return {
         fold: key,
-        ...value,
+        value,
       };
-    }) || [];
+    });
+  }
 
   return (
     <div
