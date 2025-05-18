@@ -1,6 +1,6 @@
 import React from "react";
 import Chart from "react-apexcharts";
-import { useTheme } from "@emotion/react";
+import { useTheme } from '@/context/ThemeContext';
 
 const VideoScatterChart = () => {
   const { theme } = useTheme(); // theme: "light" | "dark"
