@@ -22,9 +22,9 @@ const commentsData = [
 ];
 
 const stats = [
-  { title: 'Videos', value: '20' },
-  { title: 'Exercises', value: '30' },
-  { title: 'Exams', value: '1' },
+  { title: 'Video', value: '20' },
+  { title: 'Bài tập', value: '30' },
+  { title: 'Exam', value: '1' },
   { title: 'Comment/Reply', value: '5' },
 ];
 
@@ -36,8 +36,8 @@ const user_info = {
 
 const courseDetails = [
   { label: 'User Id:', value: user_info.ID },
-  { label: 'School:', value: user_info.school },
-  { label: 'Date Enroll:', value: user_info.dateEnroll },
+  { label: 'Trường học:', value: user_info.school },
+  { label: 'Ngày đăng kí:', value: user_info.dateEnroll },
 ];
 
 export default function UserInfo({ params }: { params: { courseId: string, userId: string } }) {
@@ -52,13 +52,13 @@ export default function UserInfo({ params }: { params: { courseId: string, userI
   };
 
   const behaviorChartSeries = [
-    { name: 'Video Views', data: videoData },
-    { name: 'Exercise Attempts', data: exercisesData },
+    { name: 'Lượt xem video', data: videoData },
+    { name: 'Lượt hoàn thành bài tập', data: exercisesData },
   ];
 
   const percentChartOptions = {
     chart: { type: 'bar' },
-    xaxis: { categories: ['Video', 'Exercise', 'Exam', 'Total'] },
+    xaxis: { categories: ['Video', 'Bài tập', 'Exam', 'Tổng cộng'] },
     plotOptions: {
       bar: { borderRadius: 6, columnWidth: '40%' },
     },
@@ -67,7 +67,7 @@ export default function UserInfo({ params }: { params: { courseId: string, userI
 
   const percentChartSeries = [
     {
-      name: 'Percent',
+      name: 'Phần trăm',
       data: [80, 20, 100, 60],
     },
   ];
@@ -116,7 +116,7 @@ export default function UserInfo({ params }: { params: { courseId: string, userI
       {/* Behavior Chart */}
       <div className="bg-white shadow-md rounded-2xl p-4">
         <h2 className="text-lg font-semibold text-center mb-4">
-          Student Behavior Over Time
+          Hành vi của học viên qua thời gian
         </h2>
         <Chart
           options={behaviorChartOptions}

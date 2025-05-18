@@ -54,10 +54,10 @@ export default function Dashboard() {
         {/* Stats */}
         <div className="mb-6">
           <div className="flex flex-wrap -mx-2">
-            <StatCard title="Students" value="7,265" percentage={11.01} />
-            <StatCard title="Active Courses" value="3,671" percentage={-0.03} />
-            <StatCard title="Completed Courses" value="1,566" percentage={15.03} />
-            <StatCard title="Students Currently Online" value="2,318" percentage={6.08} />
+            <StatCard title="Học Viên" value="7,265" percentage={11.01} />
+            <StatCard title="Các Khóa Học Đang Hoạt Động" value="3,671" percentage={-0.03} />
+            <StatCard title="Các Khóa Học Đã Kết Thúc" value="1,566" percentage={15.03} />
+            <StatCard title="Học Viên Đang Online" value="2,318" percentage={6.08} />
           </div>
         </div>
 
@@ -65,7 +65,7 @@ export default function Dashboard() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
           <div className={`lg:col-span-2  rounded-lg shadow p-4 transition-colors duration-200  ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-cyan-50 text-gray-800'}`}>
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-semibold ">Students Trend</h3>
+              <h3 className="text-lg font-semibold ">Xu hướng học viên</h3>
             </div>
             <div className="h-64 w-full">
               <StudentTrendLineChart/>
@@ -74,7 +74,7 @@ export default function Dashboard() {
 
           {/* Leaderboard */}
           <div className={`rounded-lg shadow p-4 transition-colors duration-200 ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-cyan-50 text-gray-800'}`}>
-            <h3 className="text-lg font-semibold  mb-4">Leaderboard</h3>
+            <h3 className="text-lg font-semibold  mb-4">Bảng xếp hạng</h3>
             <div className="space-y-4">
               <div className="flex items-center text-sm border-b  pb-2">
                 <div className="w-8">#</div>
@@ -116,12 +116,12 @@ export default function Dashboard() {
         {/* Course Enrollments & Learning Outcomes */}
         <div className={`grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6`}>
           <div className={`rounded-lg shadow p-4 transition-colors duration-200  ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-cyan-50 text-gray-800'}`}>
-            <h3 className="text-lg font-semibold  mb-4">Number of Course Enrollments</h3>
+            <h3 className="text-lg font-semibold  mb-4">Số lượng đăng ký khóa học</h3>
               <UserEnrollBarChart/>
           </div>
 
           <div className={`rounded-lg shadow p-4 transition-colors duration-200 ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-cyan-50 text-gray-800'}`}>
-            <h3 className="text-lg font-semibold  mb-4">Distribution of Learning Outcomes - 2025</h3>
+            <h3 className="text-lg font-semibold  mb-4">Phân phối kết quả học tậpstu - 2025</h3>
               <StudentGroupPieChart/>
           </div>
         </div>

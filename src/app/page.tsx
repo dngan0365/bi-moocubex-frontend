@@ -24,14 +24,13 @@ const Home = () => {
                 Decide with Data
               </h1>
               <p className="text-lg mb-8">
-                Unlock the power of educational data. Our platform transforms raw information into actionable insights — helping schools, educators, and institutions make smarter, data-driven decisions for student success.
-              </p>
+              Mở khóa sức mạnh của dữ liệu giáo dục. Nền tảng của chúng tôi chuyển đổi thông tin thô thành thông tin chi tiết có thể hành động — giúp các trường học, nhà giáo dục và tổ chức đưa ra quyết định thông minh hơn dựa trên dữ liệu để giúp học sinh thành công.              </p>
 
               <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
                 <div className="flex-grow">
                   <input
                     type="email"
-                    placeholder="Enter your email address"
+                    placeholder="Nhập email..."
                     className={`w-full px-4 py-3 rounded-full border border-gray-300 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none ${inputBg}`}
                   />
                 </div>
@@ -39,7 +38,7 @@ const Home = () => {
                   className="px-6 py-3 bg-cyan-500 text-white font-medium rounded-full hover:bg-gray-600 transition-colors"
                   onClick={() => setShowSignInModal(true)}
                 >
-                  Sign in
+                  Đăng kí
                 </button>
               </div>
             </div>

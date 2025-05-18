@@ -19,9 +19,9 @@ const CourseCommentLineGraph = () => {
   const isDark = theme === 'dark';
 
   const series = [
-    { name: 'Neutral', data: commentsData.map(d => d.neutral) },
-    { name: 'Positive', data: commentsData.map(d => d.positive) },
-    { name: 'Negative', data: commentsData.map(d => d.negative) },
+    { name: 'Trung tính', data: commentsData.map(d => d.neutral) },
+    { name: 'Tích cực', data: commentsData.map(d => d.positive) },
+    { name: 'Tiêu cực', data: commentsData.map(d => d.negative) },
   ];
 
   const options: ApexCharts.ApexOptions = {
@@ -61,9 +61,11 @@ const CourseCommentLineGraph = () => {
     xaxis: {
       categories: commentsData.map(d => d.week),
       title: {
-        text: 'Week',
+        text: 'Tuần',
         style: {
           color: isDark ? '#F9FAFB' : '#111827', // gray-50 / gray-900
+          fontSize: '16px',
+          fontFamily: 'Arial, "Segoe UI", Roboto, "Noto Sans", sans-serif',
         },
       },
       labels: {
@@ -77,10 +79,13 @@ const CourseCommentLineGraph = () => {
     },
     yaxis: {
       title: {
-        text: 'Comments',
+        text: 'Bình luận',
         style: {
           color: isDark ? '#F9FAFB' : '#111827',
+          fontSize: '16px',
+          fontFamily: 'Arial, "Segoe UI", Roboto, "Noto Sans", sans-serif',
         },
+
       },
       labels: {
         style: {

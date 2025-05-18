@@ -74,7 +74,7 @@ const SignInModal: FC<SignInModalProps> = ({ isOpen, onClose }) => {
               id="email"
               required
               className={`w-full px-4 py-3 rounded-lg border outline-none ${inputBg} ${inputFocus}`}
-              placeholder="Enter your email"
+              placeholder="Nhập email..."
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />

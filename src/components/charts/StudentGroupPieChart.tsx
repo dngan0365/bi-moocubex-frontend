@@ -54,8 +54,9 @@ const StudentGroupPieChart = () => {
             },
             total: {
               show: true,
-              label: 'Total',
+              label: 'Tổng cộng',
               color: isDark ? '#fff' : '#000',
+              fontSize: '20px',
             },
           },
         },

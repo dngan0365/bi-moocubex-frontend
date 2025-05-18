@@ -29,24 +29,24 @@ const course_info = {
 };
 
 const stats = [
-  { title: 'Videos', value: '20', icon: <FaVideo /> },
-  { title: 'Exercises', value: '30', icon: <FaTasks /> },
-  { title: 'Exams', value: '1', icon: <BookCheck /> },
-  { title: 'Chapters', value: '5', icon: <FaList /> },
+  { title: 'Video', value: '20', icon: <FaVideo /> },
+  { title: 'Bài tập', value: '30', icon: <FaTasks /> },
+  { title: 'Exam', value: '1', icon: <BookCheck /> },
+  { title: 'Chapter', value: '5', icon: <FaList /> },
 ];
 
 const courseDetails = [
-  { label: 'Course Name:', value: course_info.name },
+  { label: 'Tên khóa học:', value: course_info.name },
   { label: 'Course ID:', value: course_info.ID },
-  { label: 'Start Date:', value: course_info.start_date },
-  { label: 'End Date:', value: course_info.end_date }
+  { label: 'Ngày bắt đầu:', value: course_info.start_date },
+  { label: 'Ngày kết thúc:', value: course_info.end_date }
 ];
 
 const areaChartData = {
   series: [
-    { name: 'Neutral', data: commentsData.map(d => d.neutral) },
-    { name: 'Positive', data: commentsData.map(d => d.positive) },
-    { name: 'Negative', data: commentsData.map(d => d.negative) }
+    { name: 'Trung tính', data: commentsData.map(d => d.neutral) },
+    { name: 'Tích cực', data: commentsData.map(d => d.positive) },
+    { name: 'Tiêu cực', data: commentsData.map(d => d.negative) }
   ],
   options: {
     chart: { type: 'area', stacked: true },
@@ -97,11 +97,11 @@ export default function CourseInfo({ params }: { params: { courseId: string } })
       {/* Charts */}
       <div className="grid md:grid-cols-3 gap-4">
         <div className={`${cardClass} p-4 rounded-xl shadow col-span-1`}>
-          <h2 className="text-center text-lg font-semibold mb-4">Course Proportion</h2>
+          <h2 className="text-center text-lg font-semibold mb-4">Tỷ lệ khóa học</h2>
           <CourseProportionPieChart />
         </div>
         <div className={`${cardClass} p-4 rounded-xl shadow col-span-2`}>
-          <h2 className="text-center text-lg font-semibold mb-4">Student Groups</h2>
+          <h2 className="text-center text-lg font-semibold mb-4">Tỷ lệ học viên</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <CourseStudentGroupBarChart/>
             <CourseStudentGroupPieChart/>
@@ -112,19 +112,19 @@ export default function CourseInfo({ params }: { params: { courseId: string } })
 
       {/* Behavior */}
       <div className={`${cardClass} p-4 rounded-xl shadow`}>
-        <h2 className="text-center text-lg font-semibold mb-4">Student Behavior</h2>
+        <h2 className="text-center text-lg font-semibold mb-4">Hành vi học viên</h2>
         <CourseBehaviourLineGraph/>
       </div>
 
       {/* Comments */}
       <div className={`${cardClass} p-4 rounded-xl shadow`}>
-        <h2 className="text-center text-lg font-semibold mb-4">Student Comment/Reply</h2>
+        <h2 className="text-center text-lg font-semibold mb-4">Comment/Reply</h2>
         <CourseCommentLineGraph/>
       </div>
 
       {/* Footer */}
       <div className={`${cardClass} p-4 rounded-xl shadow flex flex-col md:flex-row justify-between items-center gap-4`}>
-        <p className="text-sm text-gray-300">
+        <p className="text-sm text-gray-500">
           <strong>Nhận xét chung:</strong> Chỉ số ổn định, nhưng cũng có một vài điểm bất thường, nhấn để xem chi tiết
         </p>
         <button className="px-4 py-2 rounded-md bg-teal-100 text-teal-800 hover:bg-teal-200 text-sm font-medium">

@@ -86,11 +86,11 @@ const UsersPage: React.FC = () => {
       <div className="max-w-5xl mx-auto px-4 py-8 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between mb-6">
           <div>
-            <h1 className="text-2xl font-bold text-gray-900">User List</h1>
-            <p className="text-gray-500 mt-1">Manage and view all system users</p>
+            <h1 className="text-2xl font-bold text-gray-900">Danh sách học viên</h1>
+            <p className="text-gray-500 mt-1">Quản lý và xem tất cả người dùng hệ thống</p>
           </div>
           <div className="hidden sm:block bg-white rounded-md shadow-sm px-3 py-1 text-sm text-gray-500 border border-gray-200">
-            {filteredUsers.length} users
+            {filteredUsers.length} học viên
           </div>
         </div>
         
@@ -100,7 +100,7 @@ const UsersPage: React.FC = () => {
           </div>
           <input
             type="text"
-            placeholder="Search by ID or School..."
+            placeholder="Tìm kiếm bằng ID..."
             className="block w-full pl-10 pr-3 py-2.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-white shadow-sm"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
@@ -110,13 +110,13 @@ const UsersPage: React.FC = () => {
         <div className="bg-white rounded-lg shadow overflow-hidden">
           <div className="px-4 py-3 border-b border-gray-200 bg-gray-50">
             <div className="flex items-center justify-between">
-              <div className="flex space-x-6 sm:space-x-12">
+              <div className="flex space-x-6 sm:space-x-6">
                 <div className="text-xs font-medium text-gray-500 uppercase">User ID</div>
-                <div className="text-xs font-medium text-gray-500 uppercase">School</div>
+                <div className="text-xs font-medium text-gray-500 uppercase">Trường học</div>
               </div>
               <div className="flex space-x-6 sm:space-x-12">
-                <div className="hidden sm:block text-xs font-medium text-gray-500 uppercase">Enrolled</div>
-                <div className="text-xs font-medium text-gray-500 uppercase">Action</div>
+                <div className="hidden sm:block text-xs font-medium text-gray-500 uppercase">Đăng kí</div>
+                <div className="text-xs font-medium text-gray-500 uppercase">Xem</div>
               </div>
             </div>
           </div>
@@ -126,7 +126,7 @@ const UsersPage: React.FC = () => {
               <div className="mx-auto w-16 h-16 rounded-full bg-gray-100 flex items-center justify-center">
                 <User className="h-8 w-8 text-gray-400" />
               </div>
-              <h3 className="mt-3 text-base font-medium text-gray-900">No users found</h3>
+              <h3 className="mt-3 text-base font-medium text-gray-900">Không tìm thấy học viên</h3>
               <p className="mt-1 text-sm text-gray-500">Try adjusting your search terms</p>
             </div>
           ) : (

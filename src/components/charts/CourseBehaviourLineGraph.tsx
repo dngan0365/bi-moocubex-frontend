@@ -20,11 +20,11 @@ const CourseBehaviourLineGraph = () => {
 
   const series = [
     {
-      name: 'Video Views',
+      name: 'Số lượt xem video',
       data: dailyLearningData.map(d => d.videoViews),
     },
     {
-      name: 'Exercise Attempts',
+      name: 'Só lần làm bài tập',
       data: dailyLearningData.map(d => d.exercisesAttempted),
     },
   ];
@@ -63,9 +63,11 @@ const CourseBehaviourLineGraph = () => {
     xaxis: {
       categories: dailyLearningData.map(d => d.week),
       title: {
-        text: 'Week',
+        text: 'Tuần',
         style: {
           color: isDark ? '#F9FAFB' : '#1F2937', // gray-50 / gray-800
+          fontSize: '16px',
+          fontFamily: 'Arial, "Segoe UI", Roboto, "Noto Sans", sans-serif',
         },
       },
       labels: {
@@ -79,9 +81,11 @@ const CourseBehaviourLineGraph = () => {
     },
     yaxis: {
       title: {
-        text: 'Count',
+        text: 'Số lần',
         style: {
           color: isDark ? '#F9FAFB' : '#1F2937',
+          fontSize: '16px',
+          fontFamily: 'Arial, "Segoe UI", Roboto, "Noto Sans", sans-serif',
         },
       },
       labels: {
