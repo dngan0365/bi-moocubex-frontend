@@ -2,24 +2,16 @@
 import React, { useState } from 'react';
 import dynamic from 'next/dynamic';
 import { FaVideo, FaTasks, FaList } from 'react-icons/fa';
-import { BookCheck} from 'lucide-react';
+import { BookCheck, CircleEllipsis, X } from 'lucide-react';
 import CourseProportionPieChart from '@/components/charts/CourseProportionPieChart';
 import CourseStudentGroupBarChart from '@/components/charts/CourseStudentGroupBarChart';
 import CourseStudentGroupPieChart from '@/components/charts/CourseStudentGroupPieChart';
 import CourseCommentLineGraph from '@/components/charts/CourseCommentLineGraph';
 import CourseBehaviourLineGraph from '@/components/charts/CourseBehaviourLineGraph';
+import CourseStudentGroupCharts from '@/components/charts/CourseStudentGroupCharts';
 import { useTheme } from "@/context/ThemeContext";
 
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
-
-const commentsData = [
-  { week: '01', negative: 10, neutral: 15, positive: 5 },
-  { week: '02', negative: 12, neutral: 18, positive: 7 },
-  { week: '03', negative: 15, neutral: 20, positive: 10 },
-  { week: '04', negative: 18, neutral: 22, positive: 12 },
-  { week: '05', negative: 20, neutral: 25, positive: 15 },
-  { week: '06', negative: 22, neutral: 28, positive: 18 }
-];
 
 const course_info = {
   name: 'Introduction to Data Mining',
@@ -42,20 +34,18 @@ const courseDetails = [
   { label: 'Ngày kết thúc:', value: course_info.end_date }
 ];
 
-const areaChartData = {
-  series: [
-    { name: 'Trung tính', data: commentsData.map(d => d.neutral) },
-    { name: 'Tích cực', data: commentsData.map(d => d.positive) },
-    { name: 'Tiêu cực', data: commentsData.map(d => d.negative) }
-  ],
-  options: {
-    chart: { type: 'area', stacked: true },
-    xaxis: { categories: commentsData.map(d => d.week) }
-  }
-};
 
-export default function CourseInfo({ params }: { params: { courseId: string } }) {
-  const {detail, setDetail} = useState(false);
+interface PageProps {
+  params: {
+    courseId: string;
+  };
+}
+
+
+export default function CourseInfo({ params }: PageProps) {
+  const { courseId } = params;
+
+  const [detail, setDetail] = useState(false);
 
   const { theme } = useTheme();
 
@@ -97,15 +87,24 @@ export default function CourseInfo({ params }: { params: { courseId: string } })
       {/* Charts */}
       <div className="grid md:grid-cols-3 gap-4">
         <div className={`${cardClass} p-4 rounded-xl shadow col-span-1`}>
-          <h2 className="text-center text-lg font-semibold mb-4">Tỷ lệ khóa học</h2>
+
+          <h2 className="text-center text-lg font-semibold mb-4">Course Proportion</h2>
+
           <CourseProportionPieChart />
         </div>
         <div className={`${cardClass} p-4 rounded-xl shadow col-span-2`}>
-          <h2 className="text-center text-lg font-semibold mb-4">Tỷ lệ học viên</h2>
+          <div className="flex items-center justify-between mb-4">
+              <h2 className="text-lg font-semibold">Student Groups</h2>
+              <button
+                className="text-sm text-cyan-500 hover:text-cyan-400"
+                onClick={() => setDetail(!detail)}>
+                  <CircleEllipsis />
+                </button>
+          </div>
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <CourseStudentGroupBarChart/>
             <CourseStudentGroupPieChart/>
-
           </div>
         </div>
       </div>
@@ -124,13 +123,14 @@ export default function CourseInfo({ params }: { params: { courseId: string } })
 
       {/* Footer */}
       <div className={`${cardClass} p-4 rounded-xl shadow flex flex-col md:flex-row justify-between items-center gap-4`}>
-        <p className="text-sm text-gray-500">
+
+        <p className="text-sm">
           <strong>Nhận xét chung:</strong> Chỉ số ổn định, nhưng cũng có một vài điểm bất thường, nhấn để xem chi tiết
         </p>
-        <button className="px-4 py-2 rounded-md bg-teal-100 text-teal-800 hover:bg-teal-200 text-sm font-medium">
-          Xem chi tiết báo cáo
-        </button>
       </div>
+      
+      {/* Modal for details */}
+      <CourseStudentGroupCharts isOpen={detail} onClose={() => setDetail(false)} />
     </div>
   );
 }

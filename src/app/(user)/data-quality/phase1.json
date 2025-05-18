@@ -1,0 +1,197 @@
+{
+  "completeness": [
+    { "dataset": 80 },
+    { "object50": 60 },
+    { "object75": 50 },
+    { "object80": 40 },
+    { "object90": 20 }
+  ],
+  "consistency": [
+    { "dataset": 80 },
+    { "object50": 60 },
+    { "object75": 50 },
+    { "object80": 40 },
+    { "object90": 20 }
+  ],
+  "timeliness": [
+    { "dataset": 80 },
+    { "object50": 60 },
+    { "object75": 50 },
+    { "object80": 40 },
+    { "object90": 20 }
+  ],
+  "harddimention": {
+    "average": 80
+  },
+  "reliability": [
+    { "accuracy": 90 },
+    { "f1": 80 },
+    { "nhanxet1": "Tin cay cao" },
+    {
+      "Fold": [
+        {
+          "Fold1": {
+            "accTrain": 20,
+            "accValid": 10,
+            "f1Train": 10,
+            "f1Valid": 20
+          }
+        },
+        {
+          "Fold2": {
+            "accTrain": 20,
+            "accValid": 10,
+            "f1Train": 10,
+            "f1Valid": 20
+          }
+        },
+        {
+          "Fold3": {
+            "accTrain": 20,
+            "accValid": 10,
+            "f1Train": 10,
+            "f1Valid": 20
+          }
+        },
+        {
+          "Fold4": {
+            "accTrain": 20,
+            "accValid": 10,
+            "f1Train": 10,
+            "f1Valid": 20
+          }
+        },
+        {
+          "Fold5": {
+            "accTrain": 20,
+            "accValid": 10,
+            "f1Train": 10,
+            "f1Valid": 20
+          }
+        }
+      ]
+    },
+    {
+      "varianceFold": {
+        "accuracy": 1,
+        "f1": 0.5
+      }
+    }
+  ],
+  "relevance": [
+    {
+      "AUR-ROC": [0.94, 0.43, 0.65, 0.75, 0.80, 0.90]
+    },
+    {
+      "featureImportance": {
+        "field_encoded_1": 22,
+        "field_encoded_2": 38,
+        "start_year": 2020,
+        "start_month": 5,
+        "end_year": 2020,
+        "end_month": 8,
+        "user_year": 2020,
+        "user_month": 6,
+        "video_count": 63,
+        "exercise_count": 8,
+        "chapter_count": 9,
+        "user_past_course_count": 2,
+        "user_time_since_last_course": 0,
+        "num_prerequisites": 0,
+        "certificate": 1,
+        "assignment": 50,
+        "video": 50,
+        "exam": 0,
+        "type": 1,
+        "duration_days": 89,
+        "remaining_time": 70,
+        "entropy_time_comment_phase1": 0,
+        "exercise_id_count_1": 1,
+        "exercise_correct_sum_1": 0,
+        "exercise_correct_mean_1": 1,
+        "exercise_num_problem_sum_1": 0,
+        "exercise_num_problem_mean_1": 0,
+        "exercise_attempts_sum_mean_1": 2,
+        "exercise_attempts_mean_mean_1": 2,
+        "exercise_date_from_enroll_min_1": 2,
+        "exercise_date_from_enroll_mean_1": 1,
+        "exercise_date_from_enroll_max_1": 0,
+        "exercise_context_sum_1": 0,
+        "exercise_context_mean_1": 0,
+        "exercise_langugage_binary_mean_1": 0,
+        "exercise_diff_sum_1": 3.5,
+        "exercise_diff_mean_1": 3.5,
+        "exercise_diff_min_1": 0,
+        "exercise_diff_max_1": 0.0258333333333333,
+        "exercise_perc_goal_score_mean_1": 0.0258333333333333,
+        "exercise_perc_real_completed_mean_1": 0.0258333333333333,
+        "exercise_perc_real_completed_std_1": 0.0258333333333333,
+        "exercise_perc_real_correct_mean_1": 0,
+        "exercise_perc_real_correct_std_1": 0.2,
+        "exercise_perc_real_score_sum_1": 0,
+        "exercise_perc_real_score_mean_1": 0,
+        "exercise_perc_real_score_std_1": 0,
+        "exercise_hour_entropy_1": 0,
+        "video_watch_count_1": 0,
+        "video_watched_percentage_1": 0,
+        "video_percentage_watch_time_1": 0,
+        "video_pause_count_1": 0,
+        "video_pause_avg_1": 0,
+        "video_pause_std_1": 0,
+        "video_rewatch_avg_1": 0,
+        "video_rewatch_std_1": 0,
+        "video_time_between_views_avg_1": 0,
+        "video_time_between_views_std_1": 0,
+        "video_speed_avg_1": 0,
+        "entropy_time_1": 0,
+        "total_words_phase1": 0,
+        "total_positive1": 0,
+        "total_negative1": 0,
+        "total_neutral1": 0,
+        "entropy_time_comment_phase2": 0,
+        "exercise_id_count_2": 1,
+        "exercise_correct_sum_2": 0,
+        "exercise_correct_mean_2": 1,
+        "exercise_num_problem_sum_2": 0,
+        "exercise_num_problem_mean_2": 0,
+        "exercise_attempts_sum_mean_2": 2,
+        "exercise_attempts_mean_mean_2": 2,
+        "exercise_date_from_enroll_min_2": 2,
+        "exercise_date_from_enroll_mean_2": 1,
+        "exercise_date_from_enroll_max_2": 0,
+        "exercise_context_sum_2": 0,
+        "exercise_context_mean_2": 0,
+        "exercise_langugage_binary_mean_2": 0,
+        "exercise_diff_sum_2": 3.5,
+        "exercise_diff_mean_2": 3.5,
+        "exercise_diff_min_2": 0,
+        "exercise_diff_max_2": 0.0258333333333333,
+        "exercise_perc_goal_score_mean_2": 0.0258333333333333,
+        "exercise_perc_real_completed_mean_2": 0.0258333333333333,
+        "exercise_perc_real_completed_std_2": 0.0258333333333333,
+        "exercise_perc_real_correct_mean_2": 0,
+        "exercise_perc_real_correct_std_2": 0.2,
+        "exercise_perc_real_score_sum_2": 0,
+        "exercise_perc_real_score_mean_2": 0,
+        "exercise_perc_real_score_std_2": 0,
+        "exercise_hour_entropy_2": 0,
+        "video_watch_count_2": 0,
+        "video_watched_percentage_2": 0,
+        "video_percentage_watch_time_2": 0,
+        "video_pause_count_2": 0,
+        "video_pause_avg_2": 0,
+        "video_pause_std_2": 0,
+        "video_rewatch_avg_2": 0,
+        "video_rewatch_std_2": 0,
+        "video_time_between_views_avg_2": 0,
+        "video_time_between_views_std_2": 0,
+        "video_speed_avg_2": 0,
+        "entropy_time_2": 0,
+        "total_words_phase2": 0,
+        "total_positive2": 0,
+        "total_negative2": 0,
+        "total_neutral2": 0
+      }
+    }
+  ]
+}

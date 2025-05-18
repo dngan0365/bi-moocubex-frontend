@@ -35,7 +35,7 @@ const Home = () => {
                   />
                 </div>
                 <button 
-                  className="px-6 py-3 bg-cyan-500 text-white font-medium rounded-full hover:bg-gray-600 transition-colors"
+                  className="px-6 py-3 bg-cyan-500 text-white font-medium rounded-full hover:bg-cyan-400 transition-colors"
                   onClick={() => setShowSignInModal(true)}
                 >
                   Đăng kí
