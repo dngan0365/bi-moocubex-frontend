@@ -69,7 +69,7 @@ const CoursesPage: React.FC = () => {
           </div>
           <input
             type="text"
-            placeholder="Search for courses by name or ID..."
+            placeholder="Tìm kiếm khóa học bằng tên hoặc ID..."
             className="block w-full pl-10 pr-3 py-3 border border-gray-200 rounded-xl focus:ring-2 focus:ring-cyan-500 focus:border-cyan-500  shadow-sm"
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
@@ -81,7 +81,7 @@ const CoursesPage: React.FC = () => {
             <div className="mx-auto w-24 h-24 rounded-full bg-gray-100 flex items-center justify-center">
               <BookOpen className="h-12 w-12 text-gray-400" />
             </div>
-            <h3 className="mt-4 text-lg font-medium text-gray-900">No courses found</h3>
+            <h3 className="mt-4 text-lg font-medium text-gray-900">Không tìm thấy khóa học</h3>
             <p className="mt-1 text-gray-500">Try adjusting your search terms</p>
           </div>
         ) : (

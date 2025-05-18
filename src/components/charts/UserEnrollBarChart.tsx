@@ -40,6 +40,7 @@ const UserEnrollBarChart = () => {
           speed: 350,
         },
       },
+      fontFamily: 'Arial, "Segoe UI", Roboto, "Noto Sans", sans-serif', // 👈 add here
     },
     plotOptions: {
       bar: {
@@ -50,48 +51,67 @@ const UserEnrollBarChart = () => {
     },
     dataLabels: {
       enabled: false,
+      style: {
+        fontFamily: 'Arial, "Segoe UI", Roboto, "Noto Sans", sans-serif', // 👈
+      },
     },
     xaxis: {
-      categories: years,
-      title: {
-        text: 'Year',
-        style: {
-          color: isDark ? '#fff' : '#4B5563',
-        },
-      },
-      labels: {
-        style: {
-          colors: isDark ? '#fff' : '#4B5563',
-        },
+    categories: years,
+    title: {
+      text: 'Năm',
+      offsetY: 2, // 👈 thêm khoảng cách giữa trục và tiêu đề
+      style: {
+        color: isDark ? '#fff' : '#4B5563',
+        fontSize: '14px', // 👈 giảm kích thước font
+        fontFamily: 'Arial, "Segoe UI", Roboto, "Noto Sans", sans-serif',
       },
     },
-    yaxis: {
-      title: {
-        text: 'Enrollments',
-        style: {
-          color: isDark ? '#fff' : '#374151',
-        },
-      },
-      labels: {
-        style: {
-          colors: isDark ? '#fff' : '#4B5563',
-        },
+    labels: {
+      style: {
+        fontSize: '14px',
+        colors: isDark ? '#fff' : '#4B5563',
+        fontFamily: 'Arial, "Segoe UI", Roboto, "Noto Sans", sans-serif',
       },
     },
+  },
+  yaxis: {
+    title: {
+      text: 'Lượt đăng kí',
+      offsetX: -5, // 👈 thêm khoảng cách giữa trục và tiêu đề
+      style: {
+        fontSize: '14px',
+        color: isDark ? '#fff' : '#374151',
+        fontFamily: 'Arial, "Segoe UI", Roboto, "Noto Sans", sans-serif',
+      },
+    },
+    labels: {
+      style: {
+        fontSize: '12px',
+        colors: isDark ? '#fff' : '#4B5563',
+        fontFamily: 'Arial, "Segoe UI", Roboto, "Noto Sans", sans-serif',
+      },
+    },
+  },
+
     legend: {
       position: 'top',
       labels: {
         colors: isDark ? '#fff' : '#4B5563',
+        fontFamily: 'Arial, "Segoe UI", Roboto, "Noto Sans", sans-serif', // 👈
       },
     },
     fill: {
       opacity: 0.9,
     },
-    colors: ['#3B82F6'], // Tailwind blue-500
+    colors: ['#3B82F6'],
     tooltip: {
       theme: isDark ? 'dark' : 'light',
+      style: {
+        fontFamily: 'Arial, "Segoe UI", Roboto, "Noto Sans", sans-serif', // 👈
+      },
     },
   };
+
 
   return (
       <ApexCharts options={options} series={series} type="bar" height={400} />

@@ -65,7 +65,7 @@ const CourseStudentGroupPieChart = () => {
             },
             total: {
               show: true,
-              label: 'Total',
+              label: 'Tổng',
               fontSize: '16px',
               fontWeight: 600,
               color: isDark ? '#fff' : '#111827',
