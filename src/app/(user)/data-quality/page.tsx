@@ -176,6 +176,13 @@ export default function Dashboard() {
       return { fold: key, value };
     });
   }
+  const transformedFoldList = foldList.map(({ fold, value }) => ({
+  fold,
+  accTrain: value.accTrain ?? 0,
+  accValid: value.accValid ?? 0,
+  f1Train: value.f1Train ?? 0,
+  f1Valid: value.f1Valid ?? 0,
+}));
 
   return (
     <div
@@ -260,7 +267,7 @@ export default function Dashboard() {
             </div>
 
             <div className={`rounded-xl shadow-md ${getCardBg()} p-2 col-span-2`}>
-              <AccuracyF1LineChart data={foldList} />
+              <AccuracyF1LineChart data={transformedFoldList} />
             </div>
           </div>
 
