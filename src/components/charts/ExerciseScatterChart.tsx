@@ -39,7 +39,7 @@ const ExerciseScatterChart = () => {
     data: students
       .filter((s) => s.label === label)
       .map((s) => ({ x: s.courses, y: s.exercise })),
-    color: labelColors[label] || "#888"
+    color: labelColors[label as keyof typeof labelColors] || "#888"
   }));
 
   const options: ApexCharts.ApexOptions = {
@@ -99,7 +99,6 @@ const ExerciseScatterChart = () => {
         colors: theme === "dark" ? "#f0f0f0" : "#333"
       },
       markers: {
-        radius: 12
       }
     },
     tooltip: {

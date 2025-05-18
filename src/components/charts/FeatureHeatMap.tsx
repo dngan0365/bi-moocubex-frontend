@@ -65,13 +65,13 @@ const FeatureHeatMap = () => {
     }
   };
 
-  const series = variables.map((rowVar) => ({
-    name: rowVar,
-    data: variables.map((colVar) => ({
-      x: colVar,
-      y: parseFloat(correlationMatrix[rowVar]?.[colVar] || 0)
-    }))
-  }));
+    const series = variables.map((rowVar) => ({
+      name: rowVar,
+      data: variables.map((colVar) => ({
+        x: colVar,
+        y: parseFloat(correlationMatrix[rowVar]?.[colVar] ?? "0"),
+      })),
+    }));
 
   const options: ApexCharts.ApexOptions = {
     chart: {

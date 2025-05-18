@@ -23,8 +23,6 @@ const VideoScatterChart = () => {
     { courses: 3, videos: 15, label: "E" }
   ];
 
-  const labels = [...new Set(students.map((s) => s.label))];
-
   const labelColors = {
     A: "#1E90FF",
     B: "#28a745",
@@ -33,12 +31,15 @@ const VideoScatterChart = () => {
     E: "#6f42c1"
   };
 
+  type LabelKey = keyof typeof labelColors;
+  const labels: LabelKey[] = ["A", "B", "C", "D", "E"];
+
   const series = labels.map((label) => ({
     name: `Học viên ${label}`,
     data: students
       .filter((s) => s.label === label)
       .map((s) => ({ x: s.courses, y: s.videos })),
-    color: labelColors[label] || "#888"
+    color: labelColors[label]
   }));
 
   const options: ApexCharts.ApexOptions = {
