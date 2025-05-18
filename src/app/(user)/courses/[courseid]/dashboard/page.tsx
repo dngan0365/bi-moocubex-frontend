@@ -21,20 +21,23 @@ const course_info = {
 };
 
 const stats = [
-  { title: 'Videos', value: '20', icon: <FaVideo /> },
-  { title: 'Exercises', value: '30', icon: <FaTasks /> },
-  { title: 'Exams', value: '1', icon: <BookCheck /> },
-  { title: 'Chapters', value: '5', icon: <FaList /> },
+  { title: 'Video', value: '20', icon: <FaVideo /> },
+  { title: 'Bài tập', value: '30', icon: <FaTasks /> },
+  { title: 'Exam', value: '1', icon: <BookCheck /> },
+  { title: 'Chapter', value: '5', icon: <FaList /> },
 ];
 
 const courseDetails = [
-  { label: 'Course Name:', value: course_info.name },
+  { label: 'Tên khóa học:', value: course_info.name },
   { label: 'Course ID:', value: course_info.ID },
-  { label: 'Start Date:', value: course_info.start_date },
-  { label: 'End Date:', value: course_info.end_date }
+  { label: 'Ngày bắt đầu:', value: course_info.start_date },
+  { label: 'Ngày kết thúc:', value: course_info.end_date }
 ];
 
+
+
 export default function CourseInfo() {
+
 
   const [detail, setDetail] = useState(false);
 
@@ -79,6 +82,7 @@ export default function CourseInfo() {
       {/* Charts */}
       <div className="grid md:grid-cols-3 gap-4">
         <div className={`${cardClass} p-4 rounded-xl shadow col-span-1`}>
+
           <h2 className="text-center text-lg font-semibold mb-4">Course Proportion</h2>
 
           <CourseProportionPieChart />
@@ -92,6 +96,7 @@ export default function CourseInfo() {
                   <CircleEllipsis />
                 </button>
           </div>
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <CourseStudentGroupBarChart/>
             <CourseStudentGroupPieChart/>
@@ -101,18 +106,19 @@ export default function CourseInfo() {
 
       {/* Behavior */}
       <div className={`${cardClass} p-4 rounded-xl shadow`}>
-        <h2 className="text-center text-lg font-semibold mb-4">Student Behavior</h2>
+        <h2 className="text-center text-lg font-semibold mb-4">Hành vi học viên</h2>
         <CourseBehaviourLineGraph/>
       </div>
 
       {/* Comments */}
       <div className={`${cardClass} p-4 rounded-xl shadow`}>
-        <h2 className="text-center text-lg font-semibold mb-4">Student Comment/Reply</h2>
+        <h2 className="text-center text-lg font-semibold mb-4">Comment/Reply</h2>
         <CourseCommentLineGraph/>
       </div>
 
       {/* Footer */}
       <div className={`${cardClass} p-4 rounded-xl shadow flex flex-col md:flex-row justify-between items-center gap-4`}>
+
         <p className="text-sm">
           <strong>Nhận xét chung:</strong> Chỉ số ổn định, nhưng cũng có một vài điểm bất thường, nhấn để xem chi tiết
         </p>

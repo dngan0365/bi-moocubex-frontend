@@ -93,10 +93,11 @@ const UsersPage: React.FC = () => {
       <div className="mx-auto px-4 py-8 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between mb-6">
           <div>
-            <p className="text-gray-500 mt-1">Manage and view all system users</p>
+            <h1 className="text-2xl font-bold text-gray-900">Danh sách học viên</h1>
+            <p className="text-gray-500 mt-1">Quản lý và xem tất cả người dùng hệ thống</p>
           </div>
-          <div className={`hidden sm:block rounded-md shadow-sm px-3 py-1 text-sm border ${theme === 'dark' ? 'bg-gray-700 text-gray-300 border-gray-600' : 'bg-white text-gray-500 border-gray-200'}`}>
-            {filteredUsers.length} users
+          <div className="hidden sm:block bg-white rounded-md shadow-sm px-3 py-1 text-sm text-gray-500 border border-gray-200">
+            {filteredUsers.length} học viên
           </div>
         </div>
 
@@ -106,11 +107,9 @@ const UsersPage: React.FC = () => {
           </div>
           <input
             type="text"
-            placeholder="Search by ID or School..."
-            className={`block w-full pl-10 pr-3 py-2.5 rounded-lg focus:ring-2 shadow-sm
-              ${theme === 'dark'
-                ? 'bg-gray-800 border-gray-700 text-white placeholder-gray-400 focus:ring-cyan-500 focus:border-cyan-500'
-                : 'bg-white border-gray-200 text-black placeholder-gray-500 focus:ring-cyan-500 focus:border-cyan-500'}`}
+            placeholder="Tìm kiếm bằng ID..."
+            className="block w-full pl-10 pr-3 py-2.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-white shadow-sm"
+
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
@@ -119,14 +118,15 @@ const UsersPage: React.FC = () => {
         <div className={`rounded-lg shadow overflow-hidden ${theme === 'dark' ? 'bg-gray-900' : 'bg-white'}`}>
           <div className={`px-4 py-3 border-b ${theme === 'dark' ? 'border-gray-800 bg-gray-800' : 'border-gray-200 bg-gray-50'}`}>
             <div className="flex items-center justify-between">
-              <div className="flex space-x-6 sm:space-x-12">
-                <div className="text-xs font-medium text-gray-500 uppercase"></div>
+              <div className="flex space-x-6 sm:space-x-6">
                 <div className="text-xs font-medium text-gray-500 uppercase">User ID</div>
+                <div className="text-xs font-medium text-gray-500 uppercase">Trường học</div>
+
               </div>
               <div className="text-xs font-medium text-gray-500 uppercase pl-2">School</div>
               <div className="flex space-x-6 sm:space-x-12">
-                <div className="hidden sm:block text-xs font-medium text-gray-500 uppercase">Enrolled</div>
-                <div className="text-xs font-medium text-gray-500 uppercase">Detail</div>
+                <div className="hidden sm:block text-xs font-medium text-gray-500 uppercase">Đăng kí</div>
+                <div className="text-xs font-medium text-gray-500 uppercase">Xem</div>
               </div>
             </div>
           </div>
@@ -136,8 +136,8 @@ const UsersPage: React.FC = () => {
               <div className={`mx-auto w-16 h-16 rounded-full flex items-center justify-center ${theme === 'dark' ? 'bg-gray-700' : 'bg-gray-100'}`}>
                 <User className="h-8 w-8 text-gray-400" />
               </div>
-              <h3 className={`mt-3 text-base font-medium ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>No users found</h3>
-              <p className={`mt-1 text-sm ${theme === 'dark' ? 'text-gray-400' : 'text-gray-500'}`}>Try adjusting your search terms</p>
+              <h3 className="mt-3 text-base font-medium text-gray-900">Không tìm thấy học viên</h3>
+              <p className="mt-1 text-sm text-gray-500">Try adjusting your search terms</p>
             </div>
           ) : (
             <div className="divide-y divide-gray-100 dark:divide-gray-700">

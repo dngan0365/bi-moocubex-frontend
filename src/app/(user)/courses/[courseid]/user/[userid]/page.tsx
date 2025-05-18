@@ -208,8 +208,8 @@ const stats: StatItem[] = [
   { title: 'Exercises', value: '30', icon: <FaTasks /> },
   { title: 'Exams', value: '1', icon: <BookCheck /> },
   { title: 'Comment/Reply', value: '5', icon: <FaComments />},
-];
 
+]
 const user_info = {
   ID: 'DM101',
   school: 'UIT',
@@ -433,6 +433,7 @@ export default function UserInfo() {
                 </div>}
         </div>
 
+>>>>>>> 8ac0062b034b470cc4df7f864fac3a157e7700bd
       </div>
 
       {/* Footer Note */}

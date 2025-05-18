@@ -11,6 +11,8 @@ import { useRouter } from "next/navigation";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
+import { usePathname } from 'next/navigation';
+
 
 const Navbar: FC = () => {
   const { theme } = useTheme();
@@ -18,6 +20,8 @@ const Navbar: FC = () => {
   const [showSignUpModal, setShowSignUpModal] = useState(false);
   const { isAuthenticated, user, logout } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
+  const pathname = usePathname();
+
 
   const router = useRouter();
   const handleLogout = () => {
@@ -47,9 +51,28 @@ const Navbar: FC = () => {
           </Link>
 
           <div className="flex items-center space-x-2">
-            <Link href="/about" className="text-cyan-500 font-bold hover:text-cyan-400">Giới thiệu</Link>
+            <Link
+              href="/about"
+              className={`px-2 py-1 rounded-md font-bold ${
+                pathname === '/about'
+                  ? 'bg-cyan-500 text-white'
+                  : 'text-cyan-500 hover:text-cyan-400'
+              }`}
+            >
+              Giới thiệu
+            </Link>
             <span className="text-cyan-500 font-bold">|</span>
-            <Link href="/experiment" className="text-cyan-500 font-bold hover:text-cyan-400">Kết quả thực nghiệm</Link>
+            <Link
+              href="/experiment"
+              className={`px-2 py-1 rounded-md font-bold ${
+                pathname === '/experiment'
+                  ? 'bg-cyan-500 text-white'
+                  : 'text-cyan-500 hover:text-cyan-400'
+              }`}
+            >
+              Kết quả thực nghiệm
+            </Link>
+
           </div>
 
           {/* Desktop Menu */}
@@ -64,7 +87,7 @@ const Navbar: FC = () => {
                   onClick={handleLogout}
                   className="px-4 py-2 rounded-full bg-red-500 text-white font-medium hover:bg-red-600 transition-colors"
                 >
-                  Logout
+                  Đăng xuất
                 </button>
                 <Link href="/profile">
                   <AccountCircleIcon style={{ width: '45px', height: '45px' }} className="text-cyan-500" />
@@ -76,13 +99,13 @@ const Navbar: FC = () => {
                   onClick={() => setShowSignInModal(true)}
                   className="px-5 py-2 rounded-full border border-cyan-500 text-cyan-500 font-medium hover:bg-gray-100 transition-colors"
                 >
-                  Log in
+                  Đăng nhập
                 </button>
                 <button
                   onClick={() => setShowSignUpModal(true)}
                   className="px-5 py-2 rounded-full bg-cyan-500 text-white font-medium hover:bg-cyan-400 transition-colors"
                 >
-                  Sign up
+                  Đăng kí
                 </button>
               </>
             )}
@@ -115,7 +138,7 @@ const Navbar: FC = () => {
                   onClick={handleLogout}
                   className="block w-full text-left px-4 py-2 rounded bg-red-500 text-white hover:bg-red-600"
                 >
-                  Logout
+                  Đăng xuất
                 </button>
                 <Link href="/profile" className="block text-cyan-600 px-4">
                   <AccountCircleIcon style={{ width: '35px', height: '35px' }} />
@@ -127,13 +150,13 @@ const Navbar: FC = () => {
                   onClick={() => { setShowSignInModal(true); setIsOpen(false); }}
                   className="w-full text-left px-4 py-2 rounded border border-cyan-500 text-cyan-500 hover:bg-gray-200"
                 >
-                  Log in
+                  Đăng nhập
                 </button>
                 <button
                   onClick={() => { setShowSignUpModal(true); setIsOpen(false); }}
                   className="w-full text-left px-4 py-2 rounded bg-cyan-500 text-white hover:bg-cyan-400"
                 >
-                  Sign up
+                  Đăng kí
                 </button>
               </>
             )}
