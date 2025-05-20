@@ -13,15 +13,47 @@ import {
 } from "lucide-react";
 import { useTheme } from "@/context/ThemeContext";
 
-// Reusable components
-const Card = ({ children, className = '' }) => (
-  <div className={`bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 ${className}`}>
-    {children}
-  </div>
-);
+import React from "react";
 
-const StatCard = ({ title, value, trend, trendValue, icon, color }) => (
-  <div className={`bg-gray-800 p-5 rounded-xl border-l-4 ${color} transition-transform duration-300 hover:scale-[1.02]`}>
+// ✅ Card Component Types
+type CardProps = {
+  children: React.ReactNode;
+  className?: string;
+};
+
+const Card = ({ children, className = "" }: CardProps) => {
+  const { theme } = useTheme();
+  const isDark = theme === 'dark';
+
+  return (
+    <div className={`${isDark ? 'bg-gray-800 text-gray-100' : 'bg-white text-gray-900'} rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 ${className}`}>
+      {children}
+    </div>
+  );
+};
+
+
+// ✅ StatCard Component Types
+type StatCardProps = {
+  title: string;
+  value: string | number;
+  trend: "up" | "down" | "flat";
+  trendValue: string;
+  icon: React.ReactNode;
+  color: string; // ví dụ: 'border-cyan-500'
+};
+
+const StatCard = ({
+  title,
+  value,
+  trend,
+  trendValue,
+  icon,
+  color,
+}: StatCardProps) => (
+  <div
+    className={`bg-gray-800 p-5 rounded-xl border-l-4 ${color} transition-transform duration-300 hover:scale-[1.02]`}
+  >
     <div className="flex justify-between items-start">
       <div>
         <h3 className="text-cyan-400 text-sm font-medium mb-2">{title}</h3>
@@ -39,23 +71,36 @@ const StatCard = ({ title, value, trend, trendValue, icon, color }) => (
           from last week
         </div>
       </div>
-      <div className={`p-3 rounded-full bg-gray-700`}>{icon}</div>
+      <div className="p-3 rounded-full bg-gray-700">{icon}</div>
     </div>
   </div>
 );
 
-const TeamMember = ({ name, id, classInfo, avatar }) => (
-  <div className="flex items-center space-x-4 p-4 bg-gray-50 rounded-xl hover:bg-cyan-50 transition-colors">
-    <div className="flex-shrink-0 h-14 w-14 rounded-full bg-gradient-to-r from-cyan-500 to-blue-600 flex items-center justify-center text-2xl text-white shadow-md">
-      {avatar}
+// ✅ TeamMember Component Types
+type TeamMemberProps = {
+  name: string;
+  id: string;
+  classInfo: string;
+  avatar: React.ReactNode;
+};
+
+const TeamMember = ({ name, id, classInfo, avatar }: TeamMemberProps) => {
+  const { theme } = useTheme();
+  const isDark = theme === 'dark';
+
+  return (
+    <div className={`flex items-center space-x-4 p-4 rounded-xl transition-colors ${isDark ? 'bg-gray-700 hover:bg-gray-600 text-white' : 'bg-gray-50 hover:bg-cyan-50 text-gray-900'}`}>
+      <div className="flex-shrink-0 h-14 w-14 rounded-full bg-gradient-to-r from-cyan-500 to-blue-600 flex items-center justify-center text-2xl text-white shadow-md">
+        {avatar}
+      </div>
+      <div>
+        <p className="font-medium">{name}</p>
+        <p className="text-sm text-gray-400">{id}</p>
+        <p className="text-sm text-gray-400">{classInfo}</p>
+      </div>
     </div>
-    <div>
-      <p className="font-medium text-gray-900">{name}</p>
-      <p className="text-sm text-gray-500">{id}</p>
-      <p className="text-sm text-gray-500">{classInfo}</p>
-    </div>
-  </div>
-);
+  );
+};
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState("overview");
@@ -177,7 +222,7 @@ export default function Home() {
               Implementation Team
             </h2>
             <span className="bg-cyan-100 text-cyan-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
-              5 Members
+              5 Thành viên
             </span>
           </div>
           <div className="p-6">
@@ -463,11 +508,9 @@ export default function Home() {
                     />
                     Data Sources
                   </h3>
-                  <a href="http://moocdata.cn/data/MOOCCube" target="_blank" rel="noopener noreferrer">
-                    <button className="px-4 py-2 text-sm font-medium text-white bg-gradient-to-r from-cyan-500 to-blue-600 rounded-md hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500 shadow-sm transition-all">
-                      View Data
-                    </button>
-                  </a>
+                  <button className="px-4 py-2 text-sm font-medium text-white bg-gradient-to-r from-cyan-500 to-blue-600 rounded-md hover:opacity-90 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-cyan-500 shadow-sm transition-all">
+                    View Data
+                  </button>
                 </div>
 
                 <div
@@ -593,7 +636,7 @@ export default function Home() {
                   <StatCard
                     title="Active Students"
                     value="428"
-                    trend="same"
+                    trend="flat"
                     trendValue="2% from last week"
                     icon={<Users className="w-5 h-5 text-yellow-400" />}
                     color="border-yellow-500"
