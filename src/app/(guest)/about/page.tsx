@@ -14,25 +14,14 @@ import {
 import { useTheme } from "@/context/ThemeContext";
 
 // Reusable components
-const Card = ({ children, className = "" }) => {
-  const { theme } = useTheme();
-  const isDark = theme === "dark";
-
-  return (
-    <div
-      className={`${
-        isDark ? "bg-gray-800 text-gray-100" : "bg-white text-gray-900"
-      } rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 ${className}`}
-    >
-      {children}
-    </div>
-  );
-};
+const Card = ({ children, className = '' }) => (
+  <div className={`bg-white rounded-xl shadow-md overflow-hidden hover:shadow-lg transition-shadow duration-300 ${className}`}>
+    {children}
+  </div>
+);
 
 const StatCard = ({ title, value, trend, trendValue, icon, color }) => (
-  <div
-    className={`bg-gray-800 p-5 rounded-xl border-l-4 ${color} transition-transform duration-300 hover:scale-[1.02]`}
-  >
+  <div className={`bg-gray-800 p-5 rounded-xl border-l-4 ${color} transition-transform duration-300 hover:scale-[1.02]`}>
     <div className="flex justify-between items-start">
       <div>
         <h3 className="text-cyan-400 text-sm font-medium mb-2">{title}</h3>
@@ -55,29 +44,18 @@ const StatCard = ({ title, value, trend, trendValue, icon, color }) => (
   </div>
 );
 
-const TeamMember = ({ name, id, classInfo, avatar }) => {
-  const { theme } = useTheme();
-  const isDark = theme === "dark";
-
-  return (
-    <div
-      className={`flex items-center space-x-4 p-4 rounded-xl transition-colors ${
-        isDark
-          ? "bg-gray-700 hover:bg-gray-600 text-white"
-          : "bg-gray-50 hover:bg-cyan-50 text-gray-900"
-      }`}
-    >
-      <div className="flex-shrink-0 h-14 w-14 rounded-full bg-gradient-to-r from-cyan-500 to-blue-600 flex items-center justify-center text-2xl text-white shadow-md">
-        {avatar}
-      </div>
-      <div>
-        <p className="font-medium">{name}</p>
-        <p className="text-sm text-gray-400">{id}</p>
-        <p className="text-sm text-gray-400">{classInfo}</p>
-      </div>
+const TeamMember = ({ name, id, classInfo, avatar }) => (
+  <div className="flex items-center space-x-4 p-4 bg-gray-50 rounded-xl hover:bg-cyan-50 transition-colors">
+    <div className="flex-shrink-0 h-14 w-14 rounded-full bg-gradient-to-r from-cyan-500 to-blue-600 flex items-center justify-center text-2xl text-white shadow-md">
+      {avatar}
     </div>
-  );
-};
+    <div>
+      <p className="font-medium text-gray-900">{name}</p>
+      <p className="text-sm text-gray-500">{id}</p>
+      <p className="text-sm text-gray-500">{classInfo}</p>
+    </div>
+  </div>
+);
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState("overview");

@@ -46,7 +46,6 @@ const StudentTrendLineChart = () => {
       },
       animations: {
         enabled: true,
-        easing: 'easeinout',
         speed: 800,
         animateGradually: {
           enabled: true,

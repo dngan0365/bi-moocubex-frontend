@@ -10,8 +10,8 @@ import CourseCommentLineGraph from '@/components/charts/CourseCommentLineGraph';
 import CourseBehaviourLineGraph from '@/components/charts/CourseBehaviourLineGraph';
 import CourseStudentGroupCharts from '@/components/charts/CourseStudentGroupCharts';
 import { useTheme } from "@/context/ThemeContext";
+import CourseNav from '@/components/coursenav/CourseNav';
 
-const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
 
 const course_info = {
   name: 'Introduction to Data Mining',
@@ -35,15 +35,9 @@ const courseDetails = [
 ];
 
 
-interface PageProps {
-  params: {
-    courseId: string;
-  };
-}
 
+export default function CourseInfo() {
 
-export default function CourseInfo({ params }: PageProps) {
-  const { courseId } = params;
 
   const [detail, setDetail] = useState(false);
 
@@ -57,6 +51,7 @@ export default function CourseInfo({ params }: PageProps) {
 
   return (
     <div className={`mx-auto p-4 space-y-6 ${isDark ? 'bg-gray-700 text-white' : 'bg-white text-black'}`}>
+      <CourseNav/>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Course Details */}
         <div className={`${cardClass} p-4 rounded-xl shadow`}>

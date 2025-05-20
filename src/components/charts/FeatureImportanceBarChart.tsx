@@ -79,7 +79,7 @@ const FeatureImportanceBarChart : React.FC<FeatureImportanceBarChartProps> = ({ 
   ];
 
   return (
-    <div className={`p-4 rounded-xl shadow `}>
+    <div className={`p-4`}>
       <h2 className={`text-lg font-semibold text-center mb-4 ${isDark ? "text-white" : "text-gray-800"}`}>
         Feature Importances
       </h2>

@@ -24,7 +24,6 @@ const StudentScoreBarChart = () => {
       toolbar: { show: false },
       animations: {
         enabled: true,
-        easing: 'easeinout',
         speed: 700,
         animateGradually: {
           enabled: true,

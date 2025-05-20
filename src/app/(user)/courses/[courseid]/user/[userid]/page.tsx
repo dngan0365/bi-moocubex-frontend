@@ -9,7 +9,7 @@ import StudentVideoLineChart from '@/components/charts/StudentVideoLineChart';
 import StudentExerciseLineChart from '@/components/charts/StudentExerciseLineChart';
 import StudentExerciseScoreBarChart from '@/components/charts/StudentExerciseScoreBarchart';
 import StudentScoreBarChart from '@/components/charts/StudentScoreBarChart';
-
+import CourseNav from '@/components/coursenav/CourseNav';
 const featuresPhase1 = {
   course_id: "C_1123979",
   user_id: "U_30144337",
@@ -197,13 +197,19 @@ const featuresPhase2 = {
 const featuresPhase3 = {};
 const featuresPhase4 = {};
 
-const stats = [
-  { title: 'Video', value: '20' },
-  { title: 'Bài tập', value: '30' },
-  { title: 'Exam', value: '1' },
-  { title: 'Comment/Reply', value: '5' },
-];
+type StatItem = {
+  title: string;
+  value: string;
+  icon: React.ReactNode;
+};
 
+const stats: StatItem[] = [
+  { title: 'Videos', value: '20', icon: <FaVideo /> },
+  { title: 'Exercises', value: '30', icon: <FaTasks /> },
+  { title: 'Exams', value: '1', icon: <BookCheck /> },
+  { title: 'Comment/Reply', value: '5', icon: <FaComments />},
+
+]
 const user_info = {
   ID: 'DM101',
   school: 'UIT',
@@ -219,7 +225,7 @@ const userDetails = [
 
 ];
 
-export default function UserInfo({ params }: { params: { courseId: string, userId: string } }) {
+export default function UserInfo() {
   const { theme } = useTheme()
   
   const isDark = theme === 'dark';
@@ -240,6 +246,7 @@ export default function UserInfo({ params }: { params: { courseId: string, userI
 
   return (
     <div className={`mx-auto p-4 space-y-6 ${isDark ? 'bg-gray-700 text-white' : 'bg-white text-black'}`}>
+      <CourseNav/>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {/* user Info */}
             <div className={`${cardClass} p-4 rounded-xl shadow`}>
@@ -371,7 +378,7 @@ export default function UserInfo({ params }: { params: { courseId: string, userI
                           {/* Highlight label separately */}
                           <div className="mt-4 px-3 py-2 bg-cyan-400/10 border-l-4 border-cyan-400 rounded text-sm">
                             <span className="text-cyan-500 font-semibold">Label: </span>
-                            <span className="text-cyan-500 font-bold text-base">{featuresPhase2.label}</span>
+                            <span className="text-cyan-500 font-bold text-base">{featuresPhase2?.label}</span>
                           </div>
                         </>
                       ) : (
@@ -403,7 +410,7 @@ export default function UserInfo({ params }: { params: { courseId: string, userI
                           {/* Highlight label separately */}
                           <div className="mt-4 px-3 py-2 bg-cyan-400/10 border-l-4 border-cyan-400 rounded text-sm">
                             <span className="text-cyan-500 font-semibold">Label: </span>
-                            <span className="text-cyan-500 font-bold text-base">{featuresPhase3.label}</span>
+                            <span className="text-cyan-500 font-bold text-base"> {(featuresPhase3 as any)?.label}</span>
                           </div>
                         </>
                       ) : (
@@ -434,7 +441,7 @@ export default function UserInfo({ params }: { params: { courseId: string, userI
                           {/* Highlight label separately */}
                           <div className="mt-4 px-3 py-2 bg-cyan-400/10 border-l-4 border-cyan-400 rounded text-sm">
                             <span className="text-cyan-500 font-semibold">Label: </span>
-                            <span className="text-cyan-500 font-bold text-base">{featuresPhase4.label}</span>
+                            <span className="text-cyan-500 font-bold text-base"> {(featuresPhase4 as any)?.label}</span>
                           </div>
                         </>
                       ) : (

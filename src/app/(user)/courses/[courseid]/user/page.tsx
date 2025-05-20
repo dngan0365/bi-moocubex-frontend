@@ -1,8 +1,10 @@
-"use client";
-import React, { useState } from "react";
-import Link from "next/link";
-import { Search, Eye, Calendar, School, User } from "lucide-react";
-import { useTheme } from "@/context/ThemeContext";
+
+'use client'
+import React, { useState } from 'react';
+import Link from 'next/link';
+import { Search, Eye, Calendar, School, User } from 'lucide-react';
+import { useTheme } from "@/context/ThemeContext"
+import CourseNav from '@/components/coursenav/CourseNav';
 
 // User interface
 interface User {

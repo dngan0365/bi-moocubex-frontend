@@ -78,7 +78,7 @@ const Navbar: FC = () => {
           {/* Desktop Menu */}
           <div className="hidden md:flex items-center space-x-4">
             <ThemeToggle />
-            {isAuthenticated ? (
+            {true ? (
               <>
                 <Link href="/overview" className="px-4 py-2 rounded-full bg-cyan-500 text-white font-medium hover:bg-cyan-400 transition-colors">
                   Giao diện BI
