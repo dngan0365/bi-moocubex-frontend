@@ -51,7 +51,7 @@ const StudentScoreBarChart = () => {
     },
     colors: ['#A78BFA', '#6EE7B7', '#93C5FD', '#FCD34D'], // purple, green, blue, yellow
     xaxis: {
-      categories: ['Video', 'Exercise', 'Exam', 'Total'],
+      categories: ['Video', 'Exercise', 'Exam', 'Tổng'],
       labels: {
         style: {
           colors: isDark ? '#E5E7EB' : '#374151',
@@ -62,9 +62,11 @@ const StudentScoreBarChart = () => {
         color: isDark ? '#6B7280' : '#D1D5DB',
       },
       title: {
-        text: 'Activity',
+        text: 'Hoạt động',
         style: {
           color: isDark ? '#F3F4F6' : '#111827',
+          fontSize: '13px',
+          fontFamily: 'Arial, "Segoe UI", Roboto, "Noto Sans", sans-serif',
         },
       },
     },
@@ -77,9 +79,11 @@ const StudentScoreBarChart = () => {
         },
       },
       title: {
-        text: 'Score (%)',
+        text: 'Điểm (%)',
         style: {
           color: isDark ? '#F3F4F6' : '#111827',
+          fontSize: '13px',
+          fontFamily: 'Arial, "Segoe UI", Roboto, "Noto Sans", sans-serif',
         },
       },
     },
@@ -112,7 +116,7 @@ const StudentScoreBarChart = () => {
   return (
     <div className={`w-full mx-auto`}>
       <h2 className={`text-lg font-semibold text-center ${isDark ? 'text-white' : 'text-gray-800'}`}>
-        Score Distribution
+        Phân phối điểm số
       </h2>
       <Chart options={options} series={series} type="bar" height={350} />
     </div>

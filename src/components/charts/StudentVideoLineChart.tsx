@@ -22,11 +22,11 @@ const StudentVideoLineChart = () => {
 
   const series = [
     {
-      name: 'Student Video Views',
+      name: 'Lượt xem video',
       data: VideoData.map(d => d.videoViews),
     },
     {
-      name: 'Average Video Views',
+      name: 'Lượt xem trung bình',
       data: VideoData.map(d => d.averageVideoViews),
     },
   ];
@@ -65,9 +65,11 @@ const StudentVideoLineChart = () => {
     xaxis: {
       categories: VideoData.map(d => d.week),
       title: {
-        text: 'Week',
+        text: 'Tuần',
         style: {
           color: isDark ? '#F3F4F6' : '#111827',
+          fontSize: '16px',
+          fontFamily: 'Arial, "Segoe UI", Roboto, "Noto Sans", sans-serif',
         },
       },
       labels: {
@@ -81,9 +83,11 @@ const StudentVideoLineChart = () => {
     },
     yaxis: {
       title: {
-        text: 'Views',
+        text: 'Lượt xem',
         style: {
           color: isDark ? '#F3F4F6' : '#111827',
+          fontSize: '16px',
+          fontFamily: 'Arial, "Segoe UI", Roboto, "Noto Sans", sans-serif',
         },
       },
       labels: {
@@ -124,7 +128,7 @@ const StudentVideoLineChart = () => {
   return (
     <div className={`w-full mx-auto `}>
       <h2 className={`text-lg font-semibold text-center mb-4 ${isDark ? 'text-white' : 'text-gray-800'}`}>
-        Weekly Student Video Views vs Average
+        Lượt xem theo tuần vs trung bình
       </h2>
       <Chart options={options} series={series} type="line" height={350} />
     </div>

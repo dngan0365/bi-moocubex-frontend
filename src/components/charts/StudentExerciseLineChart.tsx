@@ -23,11 +23,11 @@ const StudentExerciseLineChart = () => {
 
   const series = [
     {
-      name: 'Exercise Attempts',
+      name: 'Lượt hoàn thành bài tập',
       data: exerciseAttemptData.map((d) => d.exerciseAttempt),
     },
     {
-      name: 'Average Attempts',
+      name: 'Lượt hoàn thành trung bình',
       data: exerciseAttemptData.map((d) => d.averageExerciseAttempt),
     },
   ];
@@ -66,9 +66,11 @@ const StudentExerciseLineChart = () => {
     xaxis: {
       categories: exerciseAttemptData.map((d) => d.week),
       title: {
-        text: 'Week',
+        text: 'Tuần',
         style: {
           color: isDark ? '#F3F4F6' : '#111827',
+          fontSize: '16px',
+          fontFamily: 'Arial, "Segoe UI", Roboto, "Noto Sans", sans-serif',
         },
       },
       labels: {
@@ -82,9 +84,11 @@ const StudentExerciseLineChart = () => {
     },
     yaxis: {
       title: {
-        text: 'Attempts',
+        text: 'Lượt hoàn thành',
         style: {
           color: isDark ? '#F3F4F6' : '#111827',
+          fontSize: '16px',
+          fontFamily: 'Arial, "Segoe UI", Roboto, "Noto Sans", sans-serif',
         },
       },
       labels: {
@@ -125,7 +129,7 @@ const StudentExerciseLineChart = () => {
   return (
     <div className={`w-full mx-auto`}>
       <h2 className={`text-lg font-semibold text-center mb-4 ${isDark ? 'text-white' : 'text-gray-800'}`}>
-        Weekly Exercise Attempts vs Average
+        Lượt hoành thành bài tập vs trung bình
       </h2>
       <Chart options={options} series={series} type="line" height={350} />
     </div>

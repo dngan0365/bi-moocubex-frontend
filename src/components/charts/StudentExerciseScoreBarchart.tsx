@@ -23,11 +23,11 @@ const StudentExerciseScoreBarChart = () => {
 
   const series = [
     {
-      name: 'Your Score',
+      name: 'Điểm học viên',
       data: exerciseScoreData.map((d) => d.exerciseScoreAverage),
     },
     {
-      name: 'Average Score',
+      name: 'Điểm trung bình',
       data: exerciseScoreData.map((d) => d.averageExerciseScoreAverage),
     },
   ];
@@ -73,9 +73,11 @@ const StudentExerciseScoreBarChart = () => {
         color: isDark ? '#6B7280' : '#D1D5DB',
       },
       title: {
-        text: 'Week',
+        text: 'Tuần',
         style: {
           color: isDark ? '#F3F4F6' : '#111827',
+          fontSize: '16px',
+          fontFamily: 'Arial, "Segoe UI", Roboto, "Noto Sans", sans-serif',
         },
       },
     },
@@ -88,9 +90,11 @@ const StudentExerciseScoreBarChart = () => {
         },
       },
       title: {
-        text: 'Score (out of 10)',
+        text: 'Điểm (thang điểm 10)',
         style: {
           color: isDark ? '#F3F4F6' : '#111827',
+          fontSize: '16px',
+          fontFamily: 'Arial, "Segoe UI", Roboto, "Noto Sans", sans-serif',
         },
       },
     },
@@ -121,7 +125,7 @@ const StudentExerciseScoreBarChart = () => {
   return (
     <div className={`w-full mx-auto`}>
       <h2 className={`text-lg font-semibold text-center mb-4 ${isDark ? 'text-white' : 'text-gray-800'}`}>
-        Weekly Exercise Scores vs Class Average
+        Điểm bài tập theo tuần vs điểm trung bình lớp
       </h2>
       <Chart options={options} series={series} type="bar" height={350} />
     </div>

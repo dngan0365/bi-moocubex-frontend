@@ -1,8 +1,8 @@
-'use client'
-import React, { useState } from 'react';
-import Link from 'next/link';
-import { Search, Eye, Calendar, School, User } from 'lucide-react';
-import { useTheme } from "@/context/ThemeContext"
+"use client";
+import React, { useState } from "react";
+import Link from "next/link";
+import { Search, Eye, Calendar, School, User } from "lucide-react";
+import { useTheme } from "@/context/ThemeContext";
 
 // User interface
 interface User {
@@ -14,39 +14,51 @@ interface User {
 // Mock user data
 const mockUsers: User[] = [
   {
-    id: 'U_123456',
-    school: '巴蜀文化',
-    enrollDate: '2023-10-02',
+    id: "U_123456",
+    school: "巴蜀文化",
+    enrollDate: "2023-10-02",
   },
   {
-    id: 'U_15721',
-    school: '数据挖掘',
-    enrollDate: '2023-10-02',
+    id: "U_15721",
+    school: "数据挖掘",
+    enrollDate: "2023-10-02",
   },
   {
-    id: 'U_19284',
-    school: '大学计算机',
-    enrollDate: '2023-10-05',
+    id: "U_19284",
+    school: "大学计算机",
+    enrollDate: "2023-10-05",
   },
   {
-    id: 'U_13849',
-    school: '大学物理',
-    enrollDate: '2023-10-07',
-  }
+    id: "U_13849",
+    school: "大学物理",
+    enrollDate: "2023-10-07",
+  },
 ];
 
 const UserListItem = ({ user }: { user: User }) => {
   const { theme } = useTheme();
 
   return (
-    <div className={`border-b transition-colors ${theme === "dark" ? 'bg-gray-900 text-white hover:bg-gray-700' : 'bg-white text-black hover:bg-gray-50'}`}>
+    <div
+      className={`border-b transition-colors ${
+        theme === "dark"
+          ? "bg-gray-900 text-white hover:bg-gray-700"
+          : "bg-white text-black hover:bg-gray-50"
+      }`}
+    >
       <div className="flex items-center justify-between p-4">
         <div className="flex items-center space-x-4">
           <div className="flex-shrink-0 w-10 h-10 bg-cyan-400/10 rounded-full flex items-center justify-center">
             <User className="h-5 w-5 text-cyan-500" />
           </div>
           <div>
-            <p className={`text-sm font-medium ${theme === 'dark' ? 'text-white' : 'text-gray-900'}`}>{user.id}</p>
+            <p
+              className={`text-sm font-medium ${
+                theme === "dark" ? "text-white" : "text-gray-900"
+              }`}
+            >
+              {user.id}
+            </p>
           </div>
         </div>
 
@@ -58,11 +70,13 @@ const UserListItem = ({ user }: { user: User }) => {
         <div className="flex items-center space-x-4">
           <div className="hidden sm:flex items-center text-sm text-gray-500">
             <Calendar className="w-3.5 h-3.5 mr-1" />
-            <span>{new Date(user.enrollDate).toLocaleDateString('en-US', {
-              year: 'numeric',
-              month: 'short',
-              day: 'numeric'
-            })}</span>
+            <span>
+              {new Date(user.enrollDate).toLocaleDateString("en-US", {
+                year: "numeric",
+                month: "short",
+                day: "numeric",
+              })}
+            </span>
           </div>
 
           <Link
@@ -78,23 +92,49 @@ const UserListItem = ({ user }: { user: User }) => {
 };
 
 const UsersPage: React.FC = () => {
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
   const { theme } = useTheme();
 
-  const filteredUsers = mockUsers.filter(user =>
-    user.school.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    user.id.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredUsers = mockUsers.filter(
+    (user) =>
+      user.school.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      user.id.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   return (
-    <div className={`min-h-screen ${theme === 'dark' ? 'bg-gray-700 text-white' : 'bg-white text-black'}`}>
+    <div
+      className={`min-h-screen ${
+        theme === "dark" ? "bg-gray-700 text-white" : "bg-white text-black"
+      }`}
+    >
       <div className="mx-auto px-4 py-8 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between mb-6">
           <div>
-            <h1 className="text-2xl font-bold text-gray-900">Danh sách học viên</h1>
-            <p className="text-gray-500 mt-1">Quản lý và xem tất cả người dùng hệ thống</p>
+            <h1
+              className={`text-2xl font-bold ${
+                theme === "dark" ? "text-white" : "text-gray-900"
+              }`}
+            >
+              Danh sách học viên
+            </h1>
+            <p
+              className={`${
+                theme === "dark" ? "text-gray-300" : "text-gray-500"
+              } mt-1`}
+            >
+              Quản lý và xem tất cả người dùng hệ thống
+            </p>
           </div>
-          <div className="hidden sm:block bg-white rounded-md shadow-sm px-3 py-1 text-sm text-gray-500 border border-gray-200">
+
+          <div
+            className={`hidden sm:block rounded-md shadow-sm px-3 py-1 text-sm border 
+            ${
+              theme === "dark"
+                ? "bg-gray-800 text-gray-300 border-gray-600"
+                : "bg-white text-gray-500 border-gray-200"
+            }
+          `}
+          >
             {filteredUsers.length} học viên
           </div>
         </div>
@@ -106,36 +146,68 @@ const UsersPage: React.FC = () => {
           <input
             type="text"
             placeholder="Tìm kiếm bằng ID..."
-            className="block w-full pl-10 pr-3 py-2.5 border border-gray-200 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 bg-white shadow-sm"
-
+            className={`block w-full pl-10 pr-3 py-2.5 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 shadow-sm
+              ${
+                theme === "dark"
+                  ? "bg-gray-800 text-white border-gray-600 placeholder-gray-400"
+                  : "bg-white text-black border-gray-200 placeholder-gray-500"
+              }
+            `}
             value={searchTerm}
             onChange={(e) => setSearchTerm(e.target.value)}
           />
         </div>
 
-        <div className={`rounded-lg shadow overflow-hidden ${theme === 'dark' ? 'bg-gray-900' : 'bg-white'}`}>
-          <div className={`px-4 py-3 border-b ${theme === 'dark' ? 'border-gray-800 bg-gray-800' : 'border-gray-200 bg-gray-50'}`}>
+        <div
+          className={`rounded-lg shadow overflow-hidden ${
+            theme === "dark" ? "bg-gray-900" : "bg-white"
+          }`}
+        >
+          <div
+            className={`px-4 py-3 border-b ${
+              theme === "dark"
+                ? "border-gray-800 bg-gray-800"
+                : "border-gray-200 bg-gray-50"
+            }`}
+          >
             <div className="flex items-center justify-between">
               <div className="flex space-x-6 sm:space-x-6">
-                <div className="text-xs font-medium text-gray-500 uppercase">User ID</div>
-                <div className="text-xs font-medium text-gray-500 uppercase">Trường học</div>
-
+                <div className="text-xs font-medium text-gray-500 uppercase">
+                  User ID
+                </div>
+                <div className="text-xs font-medium text-gray-500 uppercase">
+                  Trường học
+                </div>
               </div>
-              <div className="text-xs font-medium text-gray-500 uppercase pl-2">School</div>
+              <div className="text-xs font-medium text-gray-500 uppercase pl-2">
+                School
+              </div>
               <div className="flex space-x-6 sm:space-x-12">
-                <div className="hidden sm:block text-xs font-medium text-gray-500 uppercase">Đăng kí</div>
-                <div className="text-xs font-medium text-gray-500 uppercase">Xem</div>
+                <div className="hidden sm:block text-xs font-medium text-gray-500 uppercase">
+                  Đăng kí
+                </div>
+                <div className="text-xs font-medium text-gray-500 uppercase">
+                  Xem
+                </div>
               </div>
             </div>
           </div>
 
           {filteredUsers.length === 0 ? (
             <div className="text-center py-12">
-              <div className={`mx-auto w-16 h-16 rounded-full flex items-center justify-center ${theme === 'dark' ? 'bg-gray-700' : 'bg-gray-100'}`}>
+              <div
+                className={`mx-auto w-16 h-16 rounded-full flex items-center justify-center ${
+                  theme === "dark" ? "bg-gray-700" : "bg-gray-100"
+                }`}
+              >
                 <User className="h-8 w-8 text-gray-400" />
               </div>
-              <h3 className="mt-3 text-base font-medium text-gray-900">Không tìm thấy học viên</h3>
-              <p className="mt-1 text-sm text-gray-500">Try adjusting your search terms</p>
+              <h3 className="mt-3 text-base font-medium text-gray-900">
+                Không tìm thấy học viên
+              </h3>
+              <p className="mt-1 text-sm text-gray-500">
+                Try adjusting your search terms
+              </p>
             </div>
           ) : (
             <div className="divide-y divide-gray-100 dark:divide-gray-700">

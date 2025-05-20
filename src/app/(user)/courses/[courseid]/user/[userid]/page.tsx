@@ -213,9 +213,9 @@ const user_info = {
 
 const userDetails = [
   { label: 'User Id:', value: user_info.ID },
-  { label: 'School:', value: user_info.school },
-  { label: 'Date Enroll:', value: user_info.dateEnroll },
-  { label: 'Number Course:', value: user_info.courses },
+  { label: 'Trường học:', value: user_info.school },
+  { label: 'Ngày đăng kí:', value: user_info.dateEnroll },
+  { label: 'Số khóa học:', value: user_info.courses },
 
 ];
 
@@ -325,10 +325,15 @@ export default function UserInfo({ params }: { params: { courseId: string, userI
                                 key={key}
                                 className="border rounded-md bg-gray-50/10 p-2 flex flex-col"
                               >
-                                <span className="text-gray-500 font-medium truncate">{key}</span>
-                                <span className="text-gray-500 break-words">{String(value)}</span>
+                                <span className={`${theme === 'dark' ? 'text-gray-300' : 'text-gray-500'} font-medium truncate`}>
+                                  {key}
+                                </span>
+                                <span className={`${theme === 'dark' ? 'text-gray-200' : 'text-gray-500'} break-words`}>
+                                  {String(value)}
+                                </span>
                               </div>
                             ))}
+
                           </div>
 
                           {/* Highlight label separately */}
@@ -353,8 +358,12 @@ export default function UserInfo({ params }: { params: { courseId: string, userI
                                 key={key}
                                 className="border rounded-md bg-gray-50/10 p-2 flex flex-col"
                               >
-                                <span className="text-gray-500 font-medium truncate">{key}</span>
-                                <span className="text-gray-500 break-words">{String(value)}</span>
+                                <span className={`${theme === 'dark' ? 'text-gray-300' : 'text-gray-500'} font-medium truncate`}>
+                                  {key}
+                                </span>
+                                <span className={`${theme === 'dark' ? 'text-gray-200' : 'text-gray-500'} break-words`}>
+                                  {String(value)}
+                                </span>
                               </div>
                             ))}
                           </div>
@@ -381,8 +390,12 @@ export default function UserInfo({ params }: { params: { courseId: string, userI
                                 key={key}
                                 className="border rounded-md bg-gray-50/10 p-2 flex flex-col"
                               >
-                                <span className="text-gray-500 font-medium truncate">{key}</span>
-                                <span className="text-gray-500 break-words">{String(value)}</span>
+                                <span className={`${theme === 'dark' ? 'text-gray-300' : 'text-gray-500'} font-medium truncate`}>
+                                  {key}
+                                </span>
+                                <span className={`${theme === 'dark' ? 'text-gray-200' : 'text-gray-500'} break-words`}>
+                                  {String(value)}
+                                </span>
                               </div>
                             ))}
                           </div>
@@ -408,8 +421,12 @@ export default function UserInfo({ params }: { params: { courseId: string, userI
                                 key={key}
                                 className="border rounded-md bg-gray-50/10 p-2 flex flex-col"
                               >
-                                <span className="text-gray-500 font-medium truncate">{key}</span>
-                                <span className="text-gray-500 break-words">{String(value)}</span>
+                                <span className={`${theme === 'dark' ? 'text-gray-300' : 'text-gray-500'} font-medium truncate`}>
+                                  {key}
+                                </span>
+                                <span className={`${theme === 'dark' ? 'text-gray-200' : 'text-gray-500'} break-words`}>
+                                  {String(value)}
+                                </span>
                               </div>
                             ))}
                           </div>
@@ -426,7 +443,6 @@ export default function UserInfo({ params }: { params: { courseId: string, userI
                 </div>}
         </div>
 
->>>>>>> 8ac0062b034b470cc4df7f864fac3a157e7700bd
       </div>
 
       {/* Footer Note */}
