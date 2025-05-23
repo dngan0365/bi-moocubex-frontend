@@ -273,6 +273,7 @@ export default function UserInfo() {
             </div>
       </div>
 
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Percentage Chart */}
           <div className={`${cardClass} p-4 rounded-xl shadow col-span-1`}>
@@ -285,6 +286,14 @@ export default function UserInfo() {
           
       </div>
 
+      {/* Footer Note */}
+      <div  className={`${cardClass} p-4 rounded-xl shadow flex flex-col md:flex-row justify-between items-center gap-4`}>
+        <p className="text-sm">
+          <strong>Nhận xét chung:</strong> Chỉ số ổn định, nhưng cũng có một vài
+          điểm bất thường, nhấn để xem chi tiết
+        </p>
+      </div>
+
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className={`${cardClass} p-4 rounded-xl shadow col-span-1`}>
               <StudentExerciseLineChart/>
@@ -292,6 +301,14 @@ export default function UserInfo() {
             <div className={`${cardClass} p-4 rounded-xl shadow col-span-1`}>
               <StudentExerciseScoreBarChart/>
             </div>
+      </div>
+
+      {/* Footer Note */}
+      <div  className={`${cardClass} p-4 rounded-xl shadow flex flex-col md:flex-row justify-between items-center gap-4`}>
+        <p className="text-sm">
+          <strong>Nhận xét chung:</strong> Chỉ số ổn định, nhưng cũng có một vài
+          điểm bất thường, nhấn để xem chi tiết
+        </p>
       </div>
 
 
@@ -318,6 +335,8 @@ export default function UserInfo() {
             ))}
           </nav>
         </div>
+
+        
             
         <div className="p-6">
             {activeTab === 'phase1' && 

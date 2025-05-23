@@ -103,7 +103,10 @@ const FeatureHeatMap = () => {
     title: {
       text: "Correlation Heatmap",
       style: {
-        color: isDark ? "#f0f0f0" : "#111"
+        color: isDark ? "#f0f0f0" : "#111",
+        fontWeight: 1000,
+          fontSize: "16px",
+          fontFamily: 'Arial, "Segoe UI", Roboto, "Noto Sans", sans-serif',
       }
     },
     xaxis: {

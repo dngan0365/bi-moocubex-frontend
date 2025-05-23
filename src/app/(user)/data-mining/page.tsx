@@ -35,6 +35,19 @@ export default function Dashboard() {
           </div>
         </div>
 
+        {/* Summary Section */}
+        <div className={`rounded-lg shadow p-4 transition-colors duration-200 my-8 ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-cyan-50 text-gray-800'}`}>
+          <div className="flex items-center justify-between">
+            <div className="flex items-center">
+              <Info size={20} className=" mr-2" />
+              <h3 className="text-lg font-semibold ">Nhận xét chung:</h3>
+            </div>
+          </div>
+          <p className="mt-2 ">
+            Chỉ số ổn định, nhưng cũng có một vài điểm bất thường, nhấn để xem chi tiết
+          </p>
+        </div>
+
 
         {/* Course Enrollments & Learning Outcomes */}
         <div className={`grid grid-cols-1 lg:grid-cols-1 gap-6 mb-6`}>

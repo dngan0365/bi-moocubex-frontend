@@ -56,14 +56,16 @@ const VideoScatterChart = () => {
         text: "Số khóa học",
         style: {
           color: theme === "dark" ? "#fff" : "#000",
-          fontWeight: 500
+          fontWeight: 1000,
+          fontSize: '16px',
+          fontFamily: 'Arial, "Segoe UI", Roboto, "Noto Sans", sans-serif',
         }
       },
       tickAmount: 6,
       labels: {
         style: {
           colors: theme === "dark" ? "#ccc" : "#444",
-          fontSize: "13px"
+          fontSize: "16px"
         }
       },
       axisBorder: { color: theme === "dark" ? "#666" : "#ddd" },
@@ -74,7 +76,9 @@ const VideoScatterChart = () => {
         text: "Số Video đã coi",
         style: {
           color: theme === "dark" ? "#fff" : "#000",
-          fontWeight: 500
+          fontWeight: 1000,
+          fontSize: '16px',
+          fontFamily: 'Arial, "Segoe UI", Roboto, "Noto Sans", sans-serif',
         }
       },
       tickAmount: 6,

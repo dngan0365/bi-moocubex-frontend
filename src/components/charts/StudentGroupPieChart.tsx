@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useMemo } from 'react';
 import dynamic from 'next/dynamic';
 import { useTheme } from '@/context/ThemeContext';
 
@@ -15,9 +15,10 @@ const StudentGroupPieChart = () => {
 
   const series = groupCounts;
 
-  const options: ApexCharts.ApexOptions = {
+  // Generate options every time theme changes
+  const options: ApexCharts.ApexOptions = useMemo(() => ({
     chart: {
-      type: 'donut', // This was missing before
+      type: 'donut',
       toolbar: {
         show: true,
       },
@@ -75,11 +76,20 @@ const StudentGroupPieChart = () => {
         },
       },
     ],
-    colors: ['#60A5FA', '#34D399', '#FBBF24', '#F87171', '#A78BFA'], // Better color variety
-  };
+    colors: ['#60A5FA', '#34D399', '#FBBF24', '#F87171', '#A78BFA'],
+  }), [isDark]); // 👈 chỉ re-calculate khi theme thay đổi
+
+  // Force re-render chart when theme changes
+  const chartKey = useMemo(() => `theme-${theme}`, [theme]);
 
   return (
-      <ApexCharts options={options} series={series} type="donut" height={360} />
+    <ApexCharts
+      key={chartKey} // 👈 force remount when theme changes
+      options={options}
+      series={series}
+      type="donut"
+      height={360}
+    />
   );
 };
 

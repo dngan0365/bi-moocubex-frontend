@@ -121,7 +121,7 @@ export default function Dashboard() {
           </div>
 
           <div className={`rounded-lg shadow p-4 transition-colors duration-200 ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-cyan-50 text-gray-800'}`}>
-            <h3 className="text-lg font-semibold  mb-4">Phân phối kết quả học tậpstu - 2025</h3>
+            <h3 className="text-lg font-semibold  mb-4">Phân phối kết quả học tập - 2025</h3>
               <StudentGroupPieChart/>
           </div>
         </div>

@@ -1,4 +1,4 @@
-'use client';
+"use client";
 import React from "react";
 import Chart from "react-apexcharts";
 import { useTheme } from "@/context/ThemeContext";
@@ -21,7 +21,7 @@ const ExerciseScatterChart = () => {
     { courses: 6, exercise: 35, label: "D" },
     { courses: 4, exercise: 20, label: "D" },
     { courses: 7, exercise: 50, label: "D" },
-    { courses: 3, exercise: 15, label: "E" }
+    { courses: 3, exercise: 15, label: "E" },
   ];
 
   const labels = [...new Set(students.map((s) => s.label))];
@@ -31,7 +31,7 @@ const ExerciseScatterChart = () => {
     B: "#28a745",
     C: "#ffc107",
     D: "#dc3545",
-    E: "#6f42c1"
+    E: "#6f42c1",
   };
 
   const series = labels.map((label) => ({
@@ -39,7 +39,7 @@ const ExerciseScatterChart = () => {
     data: students
       .filter((s) => s.label === label)
       .map((s) => ({ x: s.courses, y: s.exercise })),
-    color: labelColors[label as keyof typeof labelColors] || "#888"
+    color: labelColors[label as keyof typeof labelColors] || "#888",
   }));
 
   const options: ApexCharts.ApexOptions = {
@@ -47,41 +47,57 @@ const ExerciseScatterChart = () => {
       type: "scatter",
       height: 400,
       toolbar: { show: true },
-      background: 'transparent',
+      background: "transparent",
       zoom: {
         enabled: true,
-        type: "xy"
-      }
+        type: "xy",
+      },
     },
     xaxis: {
-      title: { text: "Số khóa học", style: { color: theme === "dark" ? "#fff" : "#000" } },
+      title: {
+        text: "Số khóa học",
+        style: {
+          color: theme === "dark" ? "#fff" : "#000",
+          fontWeight: 1000,
+          fontSize: "16px",
+          fontFamily: 'Arial, "Segoe UI", Roboto, "Noto Sans", sans-serif',
+        },
+      },
       tickAmount: 5,
       labels: {
         style: {
           colors: theme === "dark" ? "#ccc" : "#333",
-          fontSize: "13px"
-        }
+          fontSize: "13px",
+        },
       },
       axisBorder: {
-        color: theme === "dark" ? "#555" : "#ccc"
+        color: theme === "dark" ? "#555" : "#ccc",
       },
       axisTicks: {
-        color: theme === "dark" ? "#555" : "#ccc"
-      }
+        color: theme === "dark" ? "#555" : "#ccc",
+      },
     },
     yaxis: {
-      title: { text: "Số bài tập đã làm", style: { color: theme === "dark" ? "#fff" : "#000" } },
+      title: {
+        text: "Số bài tập đã làm",
+        style: {
+          color: theme === "dark" ? "#fff" : "#000",
+          fontWeight: 1000,
+          fontSize: "16px",
+          fontFamily: 'Arial, "Segoe UI", Roboto, "Noto Sans", sans-serif',
+        },
+      },
       tickAmount: 5,
       labels: {
         style: {
           colors: theme === "dark" ? "#ccc" : "#333",
-          fontSize: "13px"
-        }
-      }
+          fontSize: "13px",
+        },
+      },
     },
     grid: {
       borderColor: theme === "dark" ? "#444" : "#e0e0e0",
-      strokeDashArray: 4
+      strokeDashArray: 4,
     },
     markers: {
       size: 7,
@@ -89,28 +105,27 @@ const ExerciseScatterChart = () => {
       strokeWidth: 1,
       strokeColors: "#fff",
       hover: {
-        size: 9
-      }
+        size: 9,
+      },
     },
     legend: {
       position: "top",
       fontSize: "14px",
       labels: {
-        colors: theme === "dark" ? "#f0f0f0" : "#333"
+        colors: theme === "dark" ? "#f0f0f0" : "#333",
       },
-      markers: {
-      }
+      markers: {},
     },
     tooltip: {
       theme: theme,
       style: {
-        fontSize: "13px"
-      }
-    }
+        fontSize: "13px",
+      },
+    },
   };
 
   return (
-      <Chart options={options} series={series} type="scatter" height={400} />
+    <Chart options={options} series={series} type="scatter" height={400} />
   );
 };
 
