@@ -68,6 +68,15 @@ const Experiment: React.FC = () => {
       </div>
 
       <div className={`mt-8 w-full max-w-4xl rounded-xl shadow-md p-6 transition-colors duration-300 ${isDark ? 'bg-gray-800' : 'bg-white'}`}>
+  <h3 className="text-lg font-semibold mb-4">Nhận xét</h3>
+  <div className={`rounded-lg px-4 py-3 text-sm ${isDark ? 'bg-gray-900 text-gray-200' : 'bg-gray-100 text-gray-800'}`}>
+    Các mô hình học sâu như BiLSTM, ANN-LSTM và GNN đang cho kết quả rất tốt, vượt trội hơn so với các mô hình truyền thống và boosting. Có thể tiếp tục tối ưu hóa thêm để cải thiện F1.
+  </div>
+</div>
+
+
+
+      <div className={`mt-8 w-full max-w-4xl rounded-xl shadow-md p-6 transition-colors duration-300 ${isDark ? 'bg-gray-800' : 'bg-white'}`}>
         <h3 className="text-lg font-semibold mb-4">Model Categories</h3>
         <ul className="space-y-2 text-sm">
           <li><span className="font-medium">Traditional ML:</span> KNN, SVM, Random Forest</li>
