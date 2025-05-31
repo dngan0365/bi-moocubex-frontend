@@ -68,6 +68,7 @@ Dự án bao gồm các tính năng sau:
 ## 📂 Hướng Dẫn Thư Mục
 
 Dưới đây là mô tả về cấu trúc thư mục chính của dự án Next.js này:
+```
 .
 ├── .github/                # Cấu hình liên quan đến GitHub (ví dụ: Workflows cho CI/CD)
 ├── public/                 # Chứa các tệp tĩnh được phục vụ trực tiếp (ví dụ: ảnh, favicon.ico)
@@ -107,7 +108,7 @@ Dưới đây là mô tả về cấu trúc thư mục chính của dự án Nex
 ├── package-lock.json       # Ghi lại chính xác các phiên bản của dependencies (nếu dùng npm)
 ├── package.json            # Chứa metadata của dự án, scripts và danh sách dependencies
 └── postcss.config.mjs      # Cấu hình cho PostCSS (công cụ xử lý CSS)
-
+```
 **Giải thích chi tiết hơn về một số thành phần:**
 
 * **`src/app/`**: Đây là nơi bạn định nghĩa các routes (đường dẫn) và UI cho ứng dụng sử dụng **App Router** của Next.js.
