@@ -132,6 +132,44 @@ Trong tệp `package.json`, bạn sẽ tìm thấy các scripts sau (hoặc tư�
 * `"start"`: Khởi động server production sau khi đã build.
 * `"lint"`: Chạy ESLint để kiểm tra lỗi và phong cách code.
 
+## 🎯 Sơ đồ kiến trúc
+Dự án sử dụng một quy trình đầu cuối để thu thập, xử lý, phân tích dữ liệu từ bộ dữ liệu MOOCCubeX và triển khai ứng dụng Business Intelligence. Quy trình này tận dụng sức mạnh của các dịch vụ đám mây AWS và nền tảng Vercel.
+
+Sơ đồ dưới đây minh họa tổng quan kiến trúc:
+![Sơ đồ kiến trúc hệ thống]([https://drive.google.com/file/d/1TDZEFLlbTfeRPWVHiwA86HMvvD9wY56s/view?usp=sharing](https://drive.google.com/file/d/1TDZEFLlbTfeRPWVHiwA86HMvvD9wY56s/view)
+Quy trình chi tiết bao gồm các giai đoạn sau:
+
+1. *Thu Thập Dữ Liệu (Data Ingest):*
+
+- Nguồn: Bộ dữ liệu MOOCCubeX (định dạng tệp CSV đã qua xử lý).
+- Dữ liệu thô được thu thập và lưu trữ ban đầu vào Amazon S3 (Raw Layer).
+- Lưu Trữ, Danh Mục và Biến Đổi Dữ Liệu (Data Store, Catalog & Transform):
+
+2. *Kho lưu trữ (Data Lake):*
+- Amazon S3: Đóng vai trò là kho dữ liệu chính, tổ chức theo các tầng:
+- Raw Layer: Chứa dữ liệu gốc CSV từ MOOCCubeX.
+- Processed Layer: Chứa dữ liệu đã được làm sạch, định dạng, sẵn sàng cho phân tích và huấn luyện mô hình.
+- Danh mục dữ liệu (Data Catalog):
+- AWS Glue Data Catalog: Tự động tạo và quản lý metadata (schema, bảng) cho dữ liệu trên S3, cho phép các dịch vụ khác dễ dàng khám phá và truy vấn.
+- Biến đổi dữ liệu (ETL - Extract, Transform, Load):
+- AWS Glue (Studio, Interactive Sessions, DataBrew): Các công cụ chính để xây dựng, chạy, giám sát các job ETL; làm sạch, chuẩn hóa dữ liệu thông qua giao diện trực quan hoặc mã Python/Spark.
+- Amazon EMR (với Apache Spark): Xử lý các tập dữ liệu lớn, các tác vụ biến đổi phức tạp đòi hỏi khả năng xử lý phân tán mạnh mẽ.
+3. *Truy vấn dữ liệu tương tác:*
+- Amazon Athena: Cho phép truy vấn dữ liệu trực tiếp trên S3 (Processed Layer) bằng cú pháp SQL tiêu chuẩn, kết hợp với Glue Data Catalog.
+- Máy học (Machine Learning):
+- Amazon SageMaker: Xây dựng, huấn luyện và triển khai các mô hình máy học để dự đoán hành vi người dùng, kết quả học tập, cá nhân hóa nội dung, và các tác vụ phân tích nâng cao khác.
+4. *Trực quan hóa & Báo cáo BI (BI Visualization & Reporting):*
+- Amazon QuickSight: Tạo và chia sẻ các báo cáo, dashboard tương tác dựa trên dữ liệu từ Athena hoặc Redshift cho người dùng cuối.
+- Triển Khai Ứng Dụng, Tự Động Hóa & Mở Rộng Truy Cập (Application Deployment, Automation & Access):
+-----
+- Tự động hóa & API Backend (Automation & API Backend):
+- AWS Lambda: Phát triển các hàm không máy chủ (serverless) để tự động hóa các quy trình (ví dụ: kích hoạt job ETL, thực thi truy vấn Athena định kỳ) và xây dựng API backend (kết hợp với Amazon API Gateway) để cung cấp dữ liệu cho ứng dụng frontend.
+5. Triển khai ứng dụng BI (BI Application Deployment):
+- Nền tảng: Vercel được sử dụng để triển khai ứng dụng web BI.
+- Framework: Next.js (React) để phát triển giao diện người dùng trực quan, tương tác cao.
+- Kết nối dữ liệu: Ứng dụng Next.js tương tác với backend API (xây dựng bằng AWS Lambda và API Gateway, hoặc GraphQL) để lấy dữ liệu đã phân tích.
+- Lợi ích: Đảm bảo hiệu suất cao, khả năng mở rộng tốt và quy trình CI/CD dễ dàng cho ứng dụng frontend.
+
 ## 🛠️ Công Nghệ Sử Dụng
 
 * [Next.js](https://nextjs.org/)
