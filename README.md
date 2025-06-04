@@ -136,7 +136,7 @@ Trong tệp `package.json`, bạn sẽ tìm thấy các scripts sau (hoặc tư�
 Dự án sử dụng một quy trình đầu cuối để thu thập, xử lý, phân tích dữ liệu từ bộ dữ liệu MOOCCubeX và triển khai ứng dụng Business Intelligence. Quy trình này tận dụng sức mạnh của các dịch vụ đám mây AWS và nền tảng Vercel.
 
 Sơ đồ dưới đây minh họa tổng quan kiến trúc:
-![Sơ đồ kiến trúc hệ thống]([[https://drive.google.com/file/d/1TDZEFLlbTfeRPWVHiwA86HMvvD9wY56s/view?usp=sharing](https://drive.google.com/file/d/1TDZEFLlbTfeRPWVHiwA86HMvvD9wY56s/view)])
+![Sơ đồ kiến trúc hệ thống](img/Screenshot 2025-06-04 214841.png)
 Quy trình chi tiết bao gồm các giai đoạn sau:
 
 1. *Thu Thập Dữ Liệu (Data Ingest):*
