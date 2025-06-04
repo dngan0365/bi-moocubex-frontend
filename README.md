@@ -1,7 +1,9 @@
 # BI dữ liệu MOOCCubeX và dự đoán kết quả học tập của học viên
-============
+
 
 Đây là một ứng dụng web được xây dựng bằng Next.js, một framework React phổ biến để phát triển các ứng dụng web hiện đại, nhanh chóng và tối ưu cho SEO.
+
+
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 ![build-status workflow](https://github.com/nishanb/Namma-Bot/actions/workflows/app-deploy.yml/badge.svg)
 ![Contributors workflow](https://img.shields.io/github/contributors/nishanb/Namma-Bot)
@@ -141,7 +143,7 @@ Dự án sử dụng một quy trình đầu cuối để thu thập, xử lý, 
 
 Sơ đồ dưới đây minh họa tổng quan kiến trúc:
 
-![](img/Screenshot 2025-06-04 214841.png)
+![](img/Screenshot%202025-06-04%20214841.png)
 
 Quy trình chi tiết bao gồm các giai đoạn sau:
 
