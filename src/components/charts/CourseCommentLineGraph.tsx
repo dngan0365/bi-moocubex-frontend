@@ -1,27 +1,105 @@
 'use client';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import { useTheme } from '@/context/ThemeContext';
 
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
 
-const commentsData = [
-  { week: '01', negative: 10, neutral: 15, positive: 5 },
-  { week: '02', negative: 12, neutral: 18, positive: 7 },
-  { week: '03', negative: 15, neutral: 20, positive: 10 },
-  { week: '04', negative: 18, neutral: 22, positive: 12 },
-  { week: '05', negative: 20, neutral: 25, positive: 15 },
-  { week: '06', negative: 22, neutral: 28, positive: 18 },
-];
+interface SentimentData {
+  sentiment_label: string; // "0", "1", "2"
+  year: string;
+  month: string;
+  comment_count: string;
+}
 
-const CourseCommentLineGraph = () => {
+interface ApiResponse {
+  comments: SentimentData[];
+  replies: any[];
+}
+
+// Map sentiment_label to meaningful names (adjust if needed)
+const sentimentMap = {
+  '0': 'Tiêu cực',
+  '1': 'Trung tính',
+  '2': 'Tích cực',
+};
+
+const CourseCommentLineGraph = ({ courseId }: { courseId: string }) => {
   const { theme } = useTheme();
   const isDark = theme === 'dark';
 
+  const [commentsData, setCommentsData] = useState<
+    { label: string; negative: number; neutral: number; positive: number }[]
+  >([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  // Fetch data from API
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const res = await fetch(
+          `https://uz71shye78.execute-api.us-east-1.amazonaws.com/dev/api/course-comment-reply-sentiment?course_id=${courseId}`
+        );
+        if (!res.ok) throw new Error(`Error: ${res.status}`);
+
+        const data: ApiResponse = await res.json();
+
+        // Transform data: aggregate counts by month-year, split by sentiment_label
+        // Step 1: Collect unique month-year keys sorted
+        const monthYearSet = new Set<string>();
+        data.comments.forEach(({ year, month }) => {
+          const key = `${year}-${month.padStart(2, '0')}`;
+          monthYearSet.add(key);
+        });
+        const sortedMonths = Array.from(monthYearSet).sort();
+
+        // Step 2: For each month-year, sum counts for each sentiment_label
+        const processed = sortedMonths.map((monthYear) => {
+          // Split year-month
+          const [year, month] = monthYear.split('-');
+          // Filter comment entries for this month-year
+          const entries = data.comments.filter(
+            (d) => d.year === year && d.month.padStart(2, '0') === month
+          );
+
+          // Sum counts by sentiment_label
+          const negative = entries
+            .filter((d) => d.sentiment_label === '0')
+            .reduce((sum, d) => sum + Number(d.comment_count), 0);
+          const neutral = entries
+            .filter((d) => d.sentiment_label === '1')
+            .reduce((sum, d) => sum + Number(d.comment_count), 0);
+          const positive = entries
+            .filter((d) => d.sentiment_label === '2')
+            .reduce((sum, d) => sum + Number(d.comment_count), 0);
+
+          return {
+            label: monthYear,
+            negative,
+            neutral,
+            positive,
+          };
+        });
+
+        setCommentsData(processed);
+        setLoading(false);
+      } catch (e: any) {
+        setError(e.message);
+        setLoading(false);
+      }
+    }
+    fetchData();
+  }, []);
+
+  if (loading) return <p>Đang tải dữ liệu...</p>;
+  if (error) return <p>Lỗi: {error}</p>;
+  if (commentsData.length === 0) return <p>Không có dữ liệu để hiển thị</p>;
+
   const series = [
-    { name: 'Trung tính', data: commentsData.map(d => d.neutral) },
-    { name: 'Tích cực', data: commentsData.map(d => d.positive) },
-    { name: 'Tiêu cực', data: commentsData.map(d => d.negative) },
+    { name: 'Tiêu cực', data: commentsData.map((d) => d.negative) },
+    { name: 'Trung tính', data: commentsData.map((d) => d.neutral) },
+    { name: 'Tích cực', data: commentsData.map((d) => d.positive) },
   ];
 
   const options: ApexCharts.ApexOptions = {
@@ -58,11 +136,11 @@ const CourseCommentLineGraph = () => {
       },
     },
     xaxis: {
-      categories: commentsData.map(d => d.week),
+      categories: commentsData.map((d) => d.label),
       title: {
-        text: 'Tuần',
+        text: 'Tháng',
         style: {
-          color: isDark ? '#F9FAFB' : '#111827', // gray-50 / gray-900
+          color: isDark ? '#F9FAFB' : '#111827',
           fontSize: '16px',
           fontFamily: 'Arial, "Segoe UI", Roboto, "Noto Sans", sans-serif',
         },
@@ -78,13 +156,12 @@ const CourseCommentLineGraph = () => {
     },
     yaxis: {
       title: {
-        text: 'Bình luận',
+        text: 'Số lượng bình luận',
         style: {
           color: isDark ? '#F9FAFB' : '#111827',
           fontSize: '16px',
           fontFamily: 'Arial, "Segoe UI", Roboto, "Noto Sans", sans-serif',
         },
-
       },
       labels: {
         style: {
@@ -102,7 +179,7 @@ const CourseCommentLineGraph = () => {
     tooltip: {
       theme: isDark ? 'dark' : 'light',
     },
-    colors: ['#A78BFA', '#34D399', '#F87171'], // violet, green, red
+    colors: ['#F87171', '#A78BFA', '#34D399'], // red, violet, green
     grid: {
       borderColor: isDark ? '#374151' : '#E5E7EB',
       strokeDashArray: 4,
@@ -119,9 +196,7 @@ const CourseCommentLineGraph = () => {
     ],
   };
 
-  return (
-      <Chart options={options} series={series} type="area" height={350} />
-  );
+  return <Chart options={options} series={series} type="area" height={350} />;
 };
 
 export default CourseCommentLineGraph;

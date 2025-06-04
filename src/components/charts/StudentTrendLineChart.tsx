@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import { useTheme } from '@/context/ThemeContext';
 
@@ -10,24 +10,51 @@ const StudentTrendLineChart = () => {
   const { theme } = useTheme();
   const isDark = theme === 'dark';
 
+  const [series, setSeries] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
   const months = [
     'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
     'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
   ];
 
-  const currentYear = new Date().getFullYear();
-  const lastYear = currentYear - 1;
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const res = await fetch('https://uz71shye78.execute-api.us-east-1.amazonaws.com/dev/api/monthly-users');
+        const data = await res.json();
 
-  const series = [
-    {
-      name: `${currentYear}`,
-      data: [120, 140, 180, 200, 220, 240, 260, 300, 280, 310, 330, 360],
-    },
-    {
-      name: `${lastYear}`,
-      data: [100, 120, 160, 190, 210, 220, 250, 270, 260, 280, 300, 320],
-    },
-  ];
+        // Group data by year
+        const grouped: Record<string, number[]> = {};
+
+        data.forEach((entry: any) => {
+          const year = parseInt(entry.year).toString();
+          const monthIdx = parseInt(entry.month) - 1;
+          const count = parseInt(entry.num_users);
+
+          if (!grouped[year]) {
+            grouped[year] = Array(12).fill(0);
+          }
+
+          grouped[year][monthIdx] = count;
+        });
+
+        // Convert grouped data into ApexCharts series format
+        const chartSeries = Object.entries(grouped).map(([year, data]) => ({
+          name: year,
+          data,
+        }));
+
+        setSeries(chartSeries);
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const options: ApexCharts.ApexOptions = {
     chart: {
@@ -115,11 +142,19 @@ const StudentTrendLineChart = () => {
     tooltip: {
       theme: isDark ? 'dark' : 'light',
     },
-    colors: ['#3B82F6', '#F97316'],
+    colors: ['#3B82F6', '#F97316', '#10B981', '#8B5CF6'],
   };
 
   return (
-  <ApexCharts options={options} series={series} type="area" height={300} width="100%" />
+    <div className="w-full">
+      {loading ? (
+        <div className="text-center py-12 text-gray-500 animate-pulse">
+          Loading chart...
+        </div>
+      ) : (
+        <ApexCharts options={options} series={series} type="area" height={300} width="100%" />
+      )}
+    </div>
   );
 };
 

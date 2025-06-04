@@ -1,31 +1,68 @@
 'use client';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
-import { useTheme } from "@/context/ThemeContext";
+import { useTheme } from '@/context/ThemeContext';
+import axios from 'axios';
 
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
 
-const CourseBehaviourLineGraph = () => {
+const CourseBehaviourLineGraph = ({ courseId }: { courseId: string }) => {
   const { theme } = useTheme();
   const isDark = theme === 'dark';
 
-  const dailyLearningData = [
-    { week: '01', videoViews: 20, exercisesAttempted: 15 },
-    { week: '02', videoViews: 25, exercisesAttempted: 18 },
-    { week: '03', videoViews: 22, exercisesAttempted: 20 },
-    { week: '04', videoViews: 30, exercisesAttempted: 25 },
-    { week: '05', videoViews: 35, exercisesAttempted: 30 },
-    { week: '06', videoViews: 40, exercisesAttempted: 35 },
-  ];
+  const [data, setData] = useState<{ month: string; videoViews: number; exercisesAttempted: number }[]>([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [videoRes, exerciseRes] = await Promise.all([
+          axios.get(`https://uz71shye78.execute-api.us-east-1.amazonaws.com/dev/api/course-video-count?course_id=${courseId}`),
+          axios.get(`https://uz71shye78.execute-api.us-east-1.amazonaws.com/dev/api/course-exercise-count?course_id=${courseId}`),
+        ]);
+
+        const videos = videoRes.data;
+        const exercises = exerciseRes.data;
+
+        // Normalize by "year-month"
+        const combined: Record<string, { videoViews?: number; exercisesAttempted?: number }> = {};
+
+        videos.forEach((item: any) => {
+          const key = `${item.year}-${item.month}`;
+          if (!combined[key]) combined[key] = {};
+          combined[key].videoViews = parseInt(item.video_count);
+        });
+
+        exercises.forEach((item: any) => {
+          const key = `${item.year}-${item.month}`;
+          if (!combined[key]) combined[key] = {};
+          combined[key].exercisesAttempted = parseInt(item.exercise_count);
+        });
+
+        const finalData = Object.entries(combined).map(([key, value]) => ({
+          month: key,
+          videoViews: value.videoViews || 0,
+          exercisesAttempted: value.exercisesAttempted || 0,
+        }));
+
+        // Sort by year-month
+        finalData.sort((a, b) => (a.month > b.month ? 1 : -1));
+        setData(finalData);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
+  }, [courseId]);
 
   const series = [
     {
       name: 'Số lượt xem video',
-      data: dailyLearningData.map(d => d.videoViews),
+      data: data.map(d => d.videoViews),
     },
     {
-      name: 'Só lần làm bài tập',
-      data: dailyLearningData.map(d => d.exercisesAttempted),
+      name: 'Số lần làm bài tập',
+      data: data.map(d => d.exercisesAttempted),
     },
   ];
 
@@ -38,45 +75,24 @@ const CourseBehaviourLineGraph = () => {
       animations: {
         enabled: true,
         speed: 800,
-        animateGradually: {
-          enabled: true,
-          delay: 150,
-        },
-        dynamicAnimation: {
-          enabled: true,
-          speed: 350,
-        },
+        animateGradually: { enabled: true, delay: 150 },
+        dynamicAnimation: { enabled: true, speed: 350 },
       },
     },
-    stroke: {
-      curve: 'smooth',
-      width: 3,
-    },
-    markers: {
-      size: 5,
-      strokeWidth: 2,
-      hover: {
-        sizeOffset: 4,
-      },
-    },
+    stroke: { curve: 'smooth', width: 3 },
+    markers: { size: 5, strokeWidth: 2, hover: { sizeOffset: 4 } },
     xaxis: {
-      categories: dailyLearningData.map(d => d.week),
+      categories: data.map(d => d.month),
       title: {
-        text: 'Tuần',
+        text: 'Tháng',
         style: {
-          color: isDark ? '#F9FAFB' : '#1F2937', // gray-50 / gray-800
+          color: isDark ? '#F9FAFB' : '#1F2937',
           fontSize: '16px',
           fontFamily: 'Arial, "Segoe UI", Roboto, "Noto Sans", sans-serif',
         },
       },
-      labels: {
-        style: {
-          colors: isDark ? '#D1D5DB' : '#374151', // gray-300 / gray-700
-        },
-      },
-      axisBorder: {
-        color: isDark ? '#6B7280' : '#D1D5DB',
-      },
+      labels: { style: { colors: isDark ? '#D1D5DB' : '#374151' } },
+      axisBorder: { color: isDark ? '#6B7280' : '#D1D5DB' },
     },
     yaxis: {
       title: {
@@ -87,42 +103,20 @@ const CourseBehaviourLineGraph = () => {
           fontFamily: 'Arial, "Segoe UI", Roboto, "Noto Sans", sans-serif',
         },
       },
-      labels: {
-        style: {
-          colors: isDark ? '#E5E7EB' : '#374151',
-        },
-      },
+      labels: { style: { colors: isDark ? '#E5E7EB' : '#374151' } },
     },
-    tooltip: {
-      theme: isDark ? 'dark' : 'light',
-    },
+    tooltip: { theme: isDark ? 'dark' : 'light' },
     legend: {
       position: 'top',
       horizontalAlign: 'center',
-      labels: {
-        colors: isDark ? '#F9FAFB' : '#1F2937',
-      },
+      labels: { colors: isDark ? '#F9FAFB' : '#1F2937' },
     },
-    colors: ['#3B82F6', '#34D399'], // blue-500, green-400
-    grid: {
-      borderColor: isDark ? '#374151' : '#E5E7EB', // gray-700 / gray-200
-      strokeDashArray: 4,
-    },
-    responsive: [
-      {
-        breakpoint: 480,
-        options: {
-          chart: {
-            height: 300,
-          },
-        },
-      },
-    ],
+    colors: ['#3B82F6', '#34D399'],
+    grid: { borderColor: isDark ? '#374151' : '#E5E7EB', strokeDashArray: 4 },
+    responsive: [{ breakpoint: 480, options: { chart: { height: 300 } } }],
   };
 
-  return (
-      <Chart options={options} series={series} type="line" height={350} />
-  );
+  return <Chart options={options} series={series} type="line" height={350} />;
 };
 
 export default CourseBehaviourLineGraph;

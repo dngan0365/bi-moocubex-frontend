@@ -31,11 +31,11 @@ const Sidebar = () => {
       href: '/courses',
       icon: <BookIcon />,
     },
-    {
-      name: 'Khai thác dữ liệu',
-      href: '/data-mining',
-      icon: <QueryStatsIcon />,
-    },
+    // {
+    //   name: 'Khai thác dữ liệu',
+    //   href: '/data-mining',
+    //   icon: <QueryStatsIcon />,
+    // },
   ];
 
   const sidebarClasses = `sticky top-16 z-10 h-[calc(100vh-4rem)] transition-all duration-300 ${
