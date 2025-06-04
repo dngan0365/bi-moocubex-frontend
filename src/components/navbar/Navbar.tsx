@@ -70,7 +70,7 @@ const Navbar: FC = () => {
                   : 'text-cyan-500 hover:text-cyan-400'
               }`}
             >
-              Kết quả thực nghiệm
+              Kết quả phân tích dự đoán
             </Link>
 
           </div>

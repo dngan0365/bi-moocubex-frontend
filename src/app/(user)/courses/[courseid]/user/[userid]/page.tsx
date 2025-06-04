@@ -1,201 +1,15 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Chart from 'react-apexcharts';
 import { useTheme } from '@/context/ThemeContext';
+import { useParams } from 'next/navigation';
 import { BarChart, LineChart, Users, AlertTriangle, Info, Clipboard, Zap, FileText, BookCheck } from 'lucide-react';
 import { FaVideo, FaTasks, FaList, FaComments  } from 'react-icons/fa';
-import StudentVideoLineChart from '@/components/charts/StudentVideoLineChart';
-import StudentExerciseLineChart from '@/components/charts/StudentExerciseLineChart';
-import StudentExerciseScoreBarChart from '@/components/charts/StudentExerciseScoreBarchart';
 import StudentScoreBarChart from '@/components/charts/StudentScoreBarChart';
 import CourseNav from '@/components/coursenav/CourseNav';
-const featuresPhase1 = {
-  course_id: "C_1123979",
-  user_id: "U_30144337",
-  school: "河北地质大学",
-  field_encoded_1: 22,
-  field_encoded_2: 38,
-  start_year: 2020.0,
-  start_month: 5.0,
-  end_year: 2020.0,
-  end_month: 8.0,
-  user_year: 2020.0,
-  user_month: 6.0,
-  video_count: 63,
-  exercise_count: 8,
-  chapter_count: 9,
-  user_past_course_count: 2,
-  user_time_since_last_course: 0.0,
-  num_prerequisites: 0,
-  certificate: 1.0,
-  assignment: 50.0,
-  video: 50.0,
-  exam: 0.0,
-  type: 1.0,
-  duration_days: 89.0,
-  remaining_time: 70,
-  entropy_time_comment_phase1: 0.0,
-  exercise_id_count_1: 1.0,
-  exercise_correct_sum_1: 0.0,
-  exercise_correct_mean_1: 1.0,
-  exercise_num_problem_sum_1: 0.0,
-  exercise_num_problem_mean_1: 0.0,
-  exercise_attempts_sum_mean_1: 2.0,
-  exercise_attempts_mean_mean_1: 2.0,
-  exercise_date_from_enroll_min_1: 2.0,
-  exercise_date_from_enroll_mean_1: 1.0,
-  exercise_date_from_enroll_max_1: 0.0,
-  exercise_context_sum_1: 0.0,
-  exercise_context_mean_1: 0.0,
-  exercise_langugage_binary_mean_1: 0.0,
-  exercise_diff_sum_1: 3.5,
-  exercise_diff_mean_1: 3.5,
-  exercise_diff_min_1: 0.0,
-  exercise_diff_max_1: 0.0258333333333333,
-  exercise_perc_goal_score_mean_1: 0.0258333333333333,
-  exercise_perc_real_completed_mean_1: 0.0258333333333333,
-  exercise_perc_real_completed_std_1: 0.0258333333333333,
-  exercise_perc_real_correct_mean_1: 0.0,
-  exercise_perc_real_correct_std_1: 0.2,
-  exercise_perc_real_score_sum_1: 0.0,
-  exercise_perc_real_score_mean_1: 0.0,
-  exercise_perc_real_score_std_1: 0.0,
-  exercise_hour_entropy_1: 0.0,
-  video_watch_count_1: 0.0,
-  video_watched_percentage_1: -0.0,
-  video_percentage_watch_time_1: 0.0,
-  video_pause_count_1: 0.0,
-  video_pause_avg_1: 0.0,
-  video_pause_std_1: 0.0,
-  video_rewatch_avg_1: 0.0,
-  video_rewatch_std_1: 0.0,
-  video_time_between_views_avg_1: 0.0,
-  video_time_between_views_std_1: 0.0,
-  video_speed_avg_1: 0.0,
-  entropy_time_1: 0.0,
-  total_words_phase1: 0.0,
-  total_positive1: 0.0,
-  total_negative1: 0.0,
-  total_neutral1: 0.0,
-  label: "E",
-};
+import StudentBehaviourLineChart from '@/components/charts/StudentBehaviourLineChart';
 
-const featuresPhase2 = {
-  course_id: "C_1123979",
-  user_id: "U_30144337",
-  school: "河北地质大学",
-  field_encoded_1: 22,
-  field_encoded_2: 38,
-  start_year: 2020.0,
-  start_month: 5.0,
-  end_year: 2020.0,
-  end_month: 8.0,
-  user_year: 2020.0,
-  user_month: 6.0,
-  video_count: 63,
-  exercise_count: 8,
-  chapter_count: 9,
-  user_past_course_count: 2,
-  user_time_since_last_course: 0.0,
-  num_prerequisites: 0,
-  certificate: 1.0,
-  assignment: 50.0,
-  video: 50.0,
-  exam: 0.0,
-  type: 1.0,
-  duration_days: 89.0,
-  remaining_time: 70,
-  entropy_time_comment_phase1: 0.0,
-  exercise_id_count_1: 1.0,
-  exercise_correct_sum_1: 0.0,
-  exercise_correct_mean_1: 1.0,
-  exercise_num_problem_sum_1: 0.0,
-  exercise_num_problem_mean_1: 0.0,
-  exercise_attempts_sum_mean_1: 2.0,
-  exercise_attempts_mean_mean_1: 2.0,
-  exercise_date_from_enroll_min_1: 2.0,
-  exercise_date_from_enroll_mean_1: 1.0,
-  exercise_date_from_enroll_max_1: 0.0,
-  exercise_context_sum_1: 0.0,
-  exercise_context_mean_1: 0.0,
-  exercise_langugage_binary_mean_1: 0.0,
-  exercise_diff_sum_1: 3.5,
-  exercise_diff_mean_1: 3.5,
-  exercise_diff_min_1: 0.0,
-  exercise_diff_max_1: 0.0258333333333333,
-  exercise_perc_goal_score_mean_1: 0.0258333333333333,
-  exercise_perc_real_completed_mean_1: 0.0258333333333333,
-  exercise_perc_real_completed_std_1: 0.0258333333333333,
-  exercise_perc_real_correct_mean_1: 0.0,
-  exercise_perc_real_correct_std_1: 0.2,
-  exercise_perc_real_score_sum_1: 0.0,
-  exercise_perc_real_score_mean_1: 0.0,
-  exercise_perc_real_score_std_1: 0.0,
-  exercise_hour_entropy_1: 0.0,
-  video_watch_count_1: 0.0,
-  video_watched_percentage_1: -0.0,
-  video_percentage_watch_time_1: 0.0,
-  video_pause_count_1: 0.0,
-  video_pause_avg_1: 0.0,
-  video_pause_std_1: 0.0,
-  video_rewatch_avg_1: 0.0,
-  video_rewatch_std_1: 0.0,
-  video_time_between_views_avg_1: 0.0,
-  video_time_between_views_std_1: 0.0,
-  video_speed_avg_1: 0.0,
-  entropy_time_1: 0.0,
-  total_words_phase1: 0.0,
-  total_positive1: 0.0,
-  total_negative1: 0.0,
-  total_neutral1: 0.0,
-  entropy_time_comment_phase2: 0.0,
-  exercise_id_count_2: 1.0,
-  exercise_correct_sum_2: 0.0,
-  exercise_correct_mean_2: 1.0,
-  exercise_num_problem_sum_2: 0.0,
-  exercise_num_problem_mean_2: 0.0,
-  exercise_attempts_sum_mean_2: 2.0,
-  exercise_attempts_mean_mean_2: 2.0,
-  exercise_date_from_enroll_min_2: 2.0,
-  exercise_date_from_enroll_mean_2: 1.0,
-  exercise_date_from_enroll_max_2: 0.0,
-  exercise_context_sum_2: 0.0,
-  exercise_context_mean_2: 0.0,
-  exercise_langugage_binary_mean_2: 0.0,
-  exercise_diff_sum_2: 3.5,
-  exercise_diff_mean_2: 3.5,
-  exercise_diff_min_2: 0.0,
-  exercise_diff_max_2: 0.0258333333333333,
-  exercise_perc_goal_score_mean_2: 0.0258333333333333,
-  exercise_perc_real_completed_mean_2: 0.0258333333333333,
-  exercise_perc_real_completed_std_2: 0.0258333333333333,
-  exercise_perc_real_correct_mean_2: 0.0,
-  exercise_perc_real_correct_std_2: 0.2,
-  exercise_perc_real_score_sum_2: 0.0,
-  exercise_perc_real_score_mean_2: 0.0,
-  exercise_perc_real_score_std_2: 0.0,
-  exercise_hour_entropy_2: 0.0,
-  video_watch_count_2: 0.0,
-  video_watched_percentage_2: -0.0,
-  video_percentage_watch_time_2: 0.0,
-  video_pause_count_2: 0.0,
-  video_pause_avg_2: 0.0,
-  video_pause_std_2: 0.0,
-  video_rewatch_avg_2: 0.0,
-  video_rewatch_std_2: 0.0,
-  video_time_between_views_avg_2: 0.0,
-  video_time_between_views_std_2: 0.0,
-  video_speed_avg_2: 0.0,
-  entropy_time_2: 0.0,
-  total_words_phase2: 0.0,
-  total_positive2: 0.0,
-  total_negative2: 0.0,
-  total_neutral2: 0.0,
-  label: "E",
-};
-const featuresPhase3 = {};
-const featuresPhase4 = {};
 
 type StatItem = {
   title: string;
@@ -203,31 +17,28 @@ type StatItem = {
   icon: React.ReactNode;
 };
 
-const stats: StatItem[] = [
-  { title: 'Videos', value: '20', icon: <FaVideo /> },
-  { title: 'Exercises', value: '30', icon: <FaTasks /> },
-  { title: 'Exams', value: '1', icon: <BookCheck /> },
-  { title: 'Comment/Reply', value: '5', icon: <FaComments />},
-
-]
-const user_info = {
-  ID: 'DM101',
-  school: 'UIT',
-  dateEnroll: '01/02/2025',
-  courses: '5'
+type ApiResponse = {
+  user_info: any[];
+  user_exercises: any[];
+  user_video: any[];
+  user_comments: any[];
 };
-
-const userDetails = [
-  { label: 'User Id:', value: user_info.ID },
-  { label: 'Trường học:', value: user_info.school },
-  { label: 'Ngày đăng kí:', value: user_info.dateEnroll },
-  { label: 'Số khóa học:', value: user_info.courses },
-
-];
 
 export default function UserInfo() {
   const { theme } = useTheme()
+  const params = useParams();
+  const courseId = Array.isArray(params.courseid) ? params.courseid[0] : params.courseid;
+  const userId = Array.isArray(params.userid) ? params.userid[0] : params.userid;
   
+  const [stats, setStats] = useState<StatItem[]>([]);
+  const [userDetails, setUserDetails] = useState<{ label: string; value: string }[]>([]);
+  const [featuresPhase1, setFeaturesPhase1] = useState<Record<string, any>>({});
+  const [featuresPhase2, setFeaturesPhase2] = useState<Record<string, any>>({});
+  const [featuresPhase3, setFeaturesPhase3] = useState<Record<string, any>>({});
+  const [featuresPhase4, setFeaturesPhase4] = useState<Record<string, any>>({});
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
   const isDark = theme === 'dark';
 
   const cardClass = isDark
@@ -243,6 +54,172 @@ export default function UserInfo() {
     { id: 'phase4', name: 'Phase 4', icon: <FileText className="w-4 h-4" /> }
   ];
 
+  useEffect(() => {
+    if (!courseId || !userId) return;
+
+    const fetchData = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+
+        // Fetch user info
+        const res = await fetch(
+          `https://uz71shye78.execute-api.us-east-1.amazonaws.com/dev/api/user-course-info?course_id=${courseId}&user_id=${userId}`
+        );
+        
+        if (!res.ok) {
+          throw new Error(`HTTP error! status: ${res.status}`);
+        }
+        
+        const data: ApiResponse = await res.json();
+        console.log('User info data:', data); // Debug log
+
+        const info = data.user_info?.[0] || {};
+        const exercises = data.user_exercises?.[0]?.exercise_count || '0';
+        const videos = data.user_video?.[0]?.video_count || '0';
+        const comments = data.user_comments?.[0] || {};
+
+        const enrollmentDate = `${info.user_month?.split('.')[0] || '01'}/${info.user_year?.split('.')[0] || '2025'}`;
+
+        setUserDetails([
+          { label: 'User Id:', value: info.user_id || userId },
+          { label: 'Trường học:', value: info.school || 'N/A' },
+          { label: 'Ngày đăng kí:', value: enrollmentDate },
+          { label: 'Số khóa học:', value: '1' }
+        ]);
+
+        setStats([
+          { title: 'Videos', value: videos, icon: <FaVideo /> },
+          { title: 'Exercises', value: exercises, icon: <FaTasks /> },
+          { title: 'Exams', value: comments.final_exam_score || '0', icon: <BookCheck /> },
+          { title: 'Comment/Reply', value: '0', icon: <FaComments /> }
+        ]);
+
+        // Fetch features data
+        const resFeatures = await fetch(
+          `https://uz71shye78.execute-api.us-east-1.amazonaws.com/dev/api/user-course-predict?course_id=${courseId}&user_id=${userId}`
+        );
+        
+        if (!resFeatures.ok) {
+          throw new Error(`Features API error! status: ${resFeatures.status}`);
+        }
+        
+        const featuresData = await resFeatures.json();
+        console.log('Features data received:', featuresData); // Debug log
+
+        // Process the array format - find each phase by phase number
+        const phase1Data = featuresData.find((item: any) => item.phase === 1)?.data || {};
+        const phase2Data = featuresData.find((item: any) => item.phase === 2)?.data || {};
+        const phase3Data = featuresData.find((item: any) => item.phase === 3)?.data || {};
+        const phase4Data = featuresData.find((item: any) => item.phase === 4)?.data || {};
+
+        // Set features data
+        setFeaturesPhase1(phase1Data);
+        setFeaturesPhase2(phase2Data);
+        setFeaturesPhase3(phase3Data);
+        setFeaturesPhase4(phase4Data);
+
+        console.log('Phase 1 features set:', phase1Data); // Debug log
+        console.log('Phase 2 features set:', phase2Data); // Debug log
+        console.log('Phase 3 features set:', phase3Data); // Debug log
+        console.log('Phase 4 features set:', phase4Data); // Debug log
+
+      } catch (error) {
+        console.error('Error fetching data:', error);
+        setError(error instanceof Error ? error.message : 'Unknown error occurred');
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchData();
+  }, [courseId, userId]);
+
+  // Helper function to render features
+  const renderFeatures = (features: Record<string, any>, phaseName: string) => {
+    console.log(`Rendering ${phaseName} features:`, features); // Debug log
+    
+    if (!features || Object.keys(features).length === 0) {
+      return (
+        <div className="text-center py-8">
+          <p className="text-sm text-gray-500 italic">No features available for {phaseName}</p>
+          <p className="text-xs text-gray-400 mt-2">API Response: {JSON.stringify(features)}</p>
+        </div>
+      );
+    }
+
+    const featureEntries = Object.entries(features).filter(([key]) => key !== 'predicted_label');
+    const predictedLabel = features.predicted_label;
+
+    return (
+      <>
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3 text-sm">
+          {featureEntries.map(([key, value]) => (
+            <div
+              key={key}
+              className="border rounded-lg bg-gray-50/10 p-3 flex flex-col min-h-[80px]"
+            >
+              <span className={`${theme === 'dark' ? 'text-gray-300' : 'text-gray-600'} font-medium text-xs mb-1 line-clamp-2`}>
+                {key.replace(/_/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}
+              </span>
+              <span className={`${theme === 'dark' ? 'text-white' : 'text-gray-800'} font-semibold flex-1 flex items-center`}>
+                {typeof value === 'number' ? value.toFixed(3) : String(value)}
+              </span>
+            </div>
+          ))}
+        </div>
+
+        {predictedLabel && (
+          <div className="mt-6 px-4 py-3 bg-cyan-400/20 border border-cyan-400 rounded-lg">
+            <div className="flex items-center gap-2">
+              <span className="text-cyan-600 font-semibold">Predicted Label:</span>
+              <span className="text-cyan-700 font-bold text-lg">{predictedLabel}</span>
+            </div>
+          </div>
+        )}
+
+        {/* Debug info */}
+        <details className="mt-4">
+          <summary className="text-xs text-gray-500 cursor-pointer">Debug Info</summary>
+          <pre className="text-xs bg-gray-100 dark:bg-gray-800 p-2 rounded mt-2 overflow-auto">
+            {JSON.stringify(features, null, 2)}
+          </pre>
+        </details>
+      </>
+    );
+  };
+
+  if (loading) {
+    return (
+      <div className={`mx-auto p-4 ${isDark ? 'bg-gray-700 text-white' : 'bg-white text-black'}`}>
+        <div className="flex items-center justify-center h-64">
+          <div className="text-center">
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-cyan-500 mx-auto mb-4"></div>
+            <p>Loading user data...</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className={`mx-auto p-4 ${isDark ? 'bg-gray-700 text-white' : 'bg-white text-black'}`}>
+        <div className="flex items-center justify-center h-64">
+          <div className="text-center">
+            <AlertTriangle className="h-12 w-12 text-red-500 mx-auto mb-4" />
+            <p className="text-red-500">Error loading data: {error}</p>
+            <button 
+              onClick={() => window.location.reload()} 
+              className="mt-4 px-4 py-2 bg-cyan-500 text-white rounded hover:bg-cyan-600"
+            >
+              Retry
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className={`mx-auto p-4 space-y-6 ${isDark ? 'bg-gray-700 text-white' : 'bg-white text-black'}`}>
@@ -273,51 +250,21 @@ export default function UserInfo() {
             </div>
       </div>
 
-
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {/* Percentage Chart */}
           <div className={`${cardClass} p-4 rounded-xl shadow col-span-1`}>
-            <StudentScoreBarChart/>
+            <StudentScoreBarChart courseId={courseId ?? ''} userId={userId ?? ''}/>
           </div>
         {/* Video Behavior Chart */}
           <div className={`${cardClass} p-4 rounded-xl shadow col-span-1`}>
-            <StudentVideoLineChart/>
+            <StudentBehaviourLineChart courseId={courseId ?? ''} userId={userId ?? ''}/>
           </div>
-          
       </div>
 
-      {/* Footer Note */}
-      <div  className={`${cardClass} p-4 rounded-xl shadow flex flex-col md:flex-row justify-between items-center gap-4`}>
-        <p className="text-sm">
-          <strong>Nhận xét chung:</strong> Chỉ số ổn định, nhưng cũng có một vài
-          điểm bất thường, nhấn để xem chi tiết
-        </p>
-      </div>
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <div className={`${cardClass} p-4 rounded-xl shadow col-span-1`}>
-              <StudentExerciseLineChart/>
-            </div>
-            <div className={`${cardClass} p-4 rounded-xl shadow col-span-1`}>
-              <StudentExerciseScoreBarChart/>
-            </div>
-      </div>
-
-      {/* Footer Note */}
-      <div  className={`${cardClass} p-4 rounded-xl shadow flex flex-col md:flex-row justify-between items-center gap-4`}>
-        <p className="text-sm">
-          <strong>Nhận xét chung:</strong> Chỉ số ổn định, nhưng cũng có một vài
-          điểm bất thường, nhấn để xem chi tiết
-        </p>
-      </div>
-
-
-      {/* Placeholder for Future Phases */}
-                
-      {/* Tabs */}
-      <div className={`${cardClass} p-4 rounded-xl shadow col-span-1`}>
-        <div className="border-b border-gray-200 px-6">
-          <nav className="-mb-px flex space-x-8">
+      {/* Features Tabs */}
+      <div className={`${cardClass} rounded-xl shadow`}>
+        <div className="border-b border-gray-200 dark:border-gray-600">
+          <nav className="flex space-x-8 px-6">
             {tabs.map((tab) => (
               <button
                 key={tab.id}
@@ -335,147 +282,51 @@ export default function UserInfo() {
             ))}
           </nav>
         </div>
-
-        
             
         <div className="p-6">
-            {activeTab === 'phase1' && 
-                <div>
-                      <h2 className="text-lg font-semibold mb-2">Phase 1 Features</h2>
-
-                      {featuresPhase1 && typeof featuresPhase1 === 'object' && Object.keys(featuresPhase1).length > 0 ? (
-                        <>
-                          <div className="grid grid-cols-8 sm:grid-cols-6 gap-2 text-sm">
-                            {Object.entries(featuresPhase1).map(([key, value]) => (
-                              <div
-                                key={key}
-                                className="border rounded-md bg-gray-50/10 p-2 flex flex-col"
-                              >
-                                <span className={`${theme === 'dark' ? 'text-gray-300' : 'text-gray-500'} font-medium truncate`}>
-                                  {key}
-                                </span>
-                                <span className={`${theme === 'dark' ? 'text-gray-200' : 'text-gray-500'} break-words`}>
-                                  {String(value)}
-                                </span>
-                              </div>
-                            ))}
-
-                          </div>
-
-                          {/* Highlight label separately */}
-                          <div className="mt-4 px-3 py-2 bg-cyan-400/10 border-l-4 border-cyan-400 rounded text-sm">
-                            <span className="text-cyan-500 font-semibold">Label: </span>
-                            <span className="text-cyan-500 font-bold text-base">{featuresPhase1.label}</span>
-                          </div>
-                        </>
-                      ) : (
-                        <p className="text-sm text-gray-500 italic">There are no features to display.</p>
-                      )}
-
-                </div>}
-            {activeTab === 'phase2' && 
-                <div>
-                    <h2 className="text-lg font-semibold mb-2">Phase 2 Features</h2>
-                      {featuresPhase2 && typeof featuresPhase2 === 'object' && Object.keys(featuresPhase2).length > 0 ? (
-                        <>
-                          <div className="grid grid-cols-8 sm:grid-cols-6 gap-2 text-sm">
-                            {Object.entries(featuresPhase2).map(([key, value]) => (
-                              <div
-                                key={key}
-                                className="border rounded-md bg-gray-50/10 p-2 flex flex-col"
-                              >
-                                <span className={`${theme === 'dark' ? 'text-gray-300' : 'text-gray-500'} font-medium truncate`}>
-                                  {key}
-                                </span>
-                                <span className={`${theme === 'dark' ? 'text-gray-200' : 'text-gray-500'} break-words`}>
-                                  {String(value)}
-                                </span>
-                              </div>
-                            ))}
-                          </div>
-
-                          {/* Highlight label separately */}
-                          <div className="mt-4 px-3 py-2 bg-cyan-400/10 border-l-4 border-cyan-400 rounded text-sm">
-                            <span className="text-cyan-500 font-semibold">Label: </span>
-                            <span className="text-cyan-500 font-bold text-base">{featuresPhase2?.label}</span>
-                          </div>
-                        </>
-                      ) : (
-                        <p className="text-sm text-gray-500 italic">There are no features to display.</p>
-                      )}
-                </div>}
-            {activeTab === 'phase3' && 
-                <div>
-                      <h2 className="text-lg font-semibold mb-2">Phase 1 Features</h2>
-
-                      {featuresPhase3 && typeof featuresPhase3 === 'object' && Object.keys(featuresPhase3).length > 0 ? (
-                        <>
-                          <div className="grid grid-cols-8 sm:grid-cols-6 gap-2 text-sm">
-                            {Object.entries(featuresPhase3).map(([key, value]) => (
-                              <div
-                                key={key}
-                                className="border rounded-md bg-gray-50/10 p-2 flex flex-col"
-                              >
-                                <span className={`${theme === 'dark' ? 'text-gray-300' : 'text-gray-500'} font-medium truncate`}>
-                                  {key}
-                                </span>
-                                <span className={`${theme === 'dark' ? 'text-gray-200' : 'text-gray-500'} break-words`}>
-                                  {String(value)}
-                                </span>
-                              </div>
-                            ))}
-                          </div>
-
-                          {/* Highlight label separately */}
-                          <div className="mt-4 px-3 py-2 bg-cyan-400/10 border-l-4 border-cyan-400 rounded text-sm">
-                            <span className="text-cyan-500 font-semibold">Label: </span>
-                            <span className="text-cyan-500 font-bold text-base"> {(featuresPhase3 as any)?.label}</span>
-                          </div>
-                        </>
-                      ) : (
-                        <p className="text-sm text-gray-500 italic">There are no features to display.</p>
-                      )}
-                </div>}
-            {activeTab === 'phase4' && 
-                <div>
-                      <h2 className="text-lg font-semibold mb-2">Phase 4 Features</h2>
-                      {featuresPhase4 && typeof featuresPhase4 === 'object' && Object.keys(featuresPhase4).length > 0 ? (
-                        <>
-                          <div className="grid grid-cols-8 sm:grid-cols-6 gap-2 text-sm">
-                            {Object.entries(featuresPhase4).map(([key, value]) => (
-                              <div
-                                key={key}
-                                className="border rounded-md bg-gray-50/10 p-2 flex flex-col"
-                              >
-                                <span className={`${theme === 'dark' ? 'text-gray-300' : 'text-gray-500'} font-medium truncate`}>
-                                  {key}
-                                </span>
-                                <span className={`${theme === 'dark' ? 'text-gray-200' : 'text-gray-500'} break-words`}>
-                                  {String(value)}
-                                </span>
-                              </div>
-                            ))}
-                          </div>
-
-                          {/* Highlight label separately */}
-                          <div className="mt-4 px-3 py-2 bg-cyan-400/10 border-l-4 border-cyan-400 rounded text-sm">
-                            <span className="text-cyan-500 font-semibold">Label: </span>
-                            <span className="text-cyan-500 font-bold text-base"> {(featuresPhase4 as any)?.label}</span>
-                          </div>
-                        </>
-                      ) : (
-                        <p className="text-sm text-gray-500 italic">There are no features to display.</p>
-                      )}
-                </div>}
+          {activeTab === 'phase1' && (
+            <>
+              <h2 className="text-lg font-semibold mb-4">Phase 1 Features</h2>
+              {renderFeatures(featuresPhase1, 'Phase 1')}
+            </>
+          )}
+          {activeTab === 'phase2' && (
+            <>
+              <h2 className="text-lg font-semibold mb-4">Phase 2 Features</h2>
+              {renderFeatures(featuresPhase2, 'Phase 2')}
+            </>
+          )}
+          {activeTab === 'phase3' && (
+            <>
+              <h2 className="text-lg font-semibold mb-4">Phase 3 Features</h2>
+              {renderFeatures(featuresPhase3, 'Phase 3')}
+            </>
+          )}
+          {activeTab === 'phase4' && (
+            <>
+              <h2 className="text-lg font-semibold mb-4">Phase 4 Features</h2>
+              {renderFeatures(featuresPhase4, 'Phase 4')}
+            </>
+          )}
         </div>
-
       </div>
 
       {/* Footer Note */}
-      <div  className={`${cardClass} p-4 rounded-xl shadow flex flex-col md:flex-row justify-between items-center gap-4`}>
+      <div className={`${cardClass} p-4 rounded-xl shadow flex flex-col md:flex-row justify-between items-center gap-4`}>
         <p className="text-sm">
-          <strong>Nhận xét chung:</strong> Chỉ số ổn định, nhưng cũng có một vài
-          điểm bất thường, nhấn để xem chi tiết
+          <strong>Nhận xét chung:</strong><br/>
+          {featuresPhase1.predicted_label === "E" && (
+            <span className="text-red-500">Học viên có nguy cơ không hoàn thành khóa học.</span>
+          )}
+          {featuresPhase1.predicted_label === "D" && (
+            <span className="text-orange-500">Học viên có nguy cơ hoàn thành khóa học với điểm số không cao.</span>
+          )}
+          {featuresPhase1.predicted_label && featuresPhase1.predicted_label !== "E" && featuresPhase1.predicted_label !== "D" && (
+            <span className="text-green-500">Học viên có thể đậu khóa học.</span>
+          )}
+          {!featuresPhase1.predicted_label && (
+            <span className="text-gray-500">Chưa có dự đoán cho học viên này.</span>
+          )}
         </p>
       </div>
     </div>

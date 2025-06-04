@@ -5,20 +5,32 @@ import { useTheme } from '@/context/ThemeContext';
 
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
 
-const CourseProportionPieChart = () => {
+interface CourseProportionPieChartProps {
+  video: number;
+  assignment: number;
+  exam: number;
+}
+
+const CourseProportionPieChart: React.FC<CourseProportionPieChartProps> = ({
+  video,
+  assignment,
+  exam
+}) => {
   const { theme } = useTheme();
   const isDark = theme === 'dark';
 
-  const series = [60, 20, 20];
-  const labels = ['Video', 'Exercises', 'Exam'];
+  const series = [
+    parseInt(video.toString(), 10),
+    parseInt(assignment.toString(), 10),
+    parseInt(exam.toString(), 10)
+  ];
+  const labels = ['Video', 'Assignment', 'Exam'];
 
   const options: ApexCharts.ApexOptions = {
     chart: {
       type: 'donut',
       background: 'transparent',
-      toolbar: {
-        show: true,
-      },
+      toolbar: { show: true },
     },
     labels,
     colors: ['#3B82F6', '#34D399', '#FBBF24'],
@@ -82,20 +94,14 @@ const CourseProportionPieChart = () => {
       {
         breakpoint: 480,
         options: {
-          chart: {
-            width: 280,
-          },
-          legend: {
-            position: 'bottom',
-          },
+          chart: { width: 280 },
+          legend: { position: 'bottom' },
         },
       },
     ],
   };
 
-  return (
-      <Chart options={options} series={series} type="donut" height={300} />
-  );
+  return <Chart options={options} series={series} type="donut" height={300} />;
 };
 
 export default CourseProportionPieChart;

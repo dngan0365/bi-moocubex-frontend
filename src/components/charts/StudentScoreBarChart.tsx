@@ -1,19 +1,55 @@
 'use client';
 
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import { useTheme } from '@/context/ThemeContext';
+import axios from 'axios';
 
 const Chart = dynamic(() => import('react-apexcharts'), { ssr: false });
 
-const StudentScoreBarChart = () => {
+interface Props {
+  courseId: string;
+  userId: string;
+}
+
+const StudentScoreBarChart: React.FC<Props> = ({ courseId, userId }) => {
   const { theme } = useTheme();
   const isDark = theme === 'dark';
+
+  const [scores, setScores] = useState<number[]>([0, 0, 0, 0]); // [video, exercise, exam, total]
+
+  useEffect(() => {
+    const fetchScores = async () => {
+      try {
+        const response = await axios.get(`https://uz71shye78.execute-api.us-east-1.amazonaws.com/dev/api/user-course-score-proportion`, {
+          params: {
+            course_id: courseId,
+            user_id: userId,
+          },
+        });
+
+        const result = response.data?.[0];
+
+        if (result) {
+          setScores([
+              Math.round(parseFloat(result.video_score) * 100),
+              Math.round(parseFloat(result.assignment_score) * 100),
+              Math.round(parseFloat(result.final_exam_score) * 100),
+              Math.round(parseFloat(result.total_score)),
+          ]);
+        }
+      } catch (error) {
+        console.error('Failed to fetch score data:', error);
+      }
+    };
+
+    if (courseId && userId) fetchScores();
+  }, [courseId, userId]);
 
   const series = [
     {
       name: 'Percent',
-      data: [80, 20, 100, 60],
+      data: scores,
     },
   ];
 

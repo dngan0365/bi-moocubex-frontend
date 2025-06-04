@@ -4,17 +4,61 @@ import { ArrowUp, ArrowDown, Info, Sun, Moon } from 'lucide-react';
 import StudentTrendLineChart from '@/components/charts/StudentTrendLineChart'
 import UserEnrollBarChart from '@/components/charts/UserEnrollBarChart'
 import StudentGroupPieChart from '@/components/charts/StudentGroupPieChart'
+import { useEffect, useState } from 'react';
+
+type Course = {
+  course_id: string;
+  name: string;
+  user_count: string; 
+};
 
 export default function Dashboard() {
   const { theme } = useTheme(); 
 
-  const top5Student = [
-    { id: "U_001", progress: 80, numCourse: 300 },
-    { id: "U_002", progress: 60, numCourse: 280 },
-    { id: "U_003", progress: 70, numCourse: 250 },
-    { id: "U_004", progress: 50, numCourse: 200 },
-    { id: "U_005", progress: 40, numCourse: 150 },
-  ];
+  const [courses, setCourses] = useState<Course[]>([]);
+  const [loadingCourse, setLoadingCourse] = useState(true);
+
+  const [stats, setStats] = useState<null | {
+    total_users: string;
+    total_courses: string;
+    courses_since_july_2020: string;
+    users_in_2020: string;
+  }>(null);
+  const [loadingStats, setLoadingStats] = useState(true);
+
+  useEffect(() => {
+    const fetchCourses = async () => {
+      try {
+        const res = await fetch("https://uz71shye78.execute-api.us-east-1.amazonaws.com/dev/api/top-courses");
+        const data = await res.json();
+        setCourses(data);
+      } catch (error) {
+        console.error("Failed to fetch courses", error);
+      } finally {
+        setLoadingCourse(false);
+      }
+    };
+
+    fetchCourses();
+  }, []);
+
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const res = await fetch('https://uz71shye78.execute-api.us-east-1.amazonaws.com/dev/api/summary-stats');
+        const data = await res.json();
+        if (Array.isArray(data) && data.length > 0) {
+          setStats(data[0]);
+        }
+      } catch (error) {
+        console.error('Failed to fetch stats:', error);
+      } finally {
+        setLoadingStats(false);
+      }
+    };
+
+    fetchStats();
+  }, []);
 
   const getStatusColor = (percentage: number) => {
     if (percentage > 10) return 'text-green-500';
@@ -54,10 +98,16 @@ export default function Dashboard() {
         {/* Stats */}
         <div className="mb-6">
           <div className="flex flex-wrap -mx-2">
-            <StatCard title="Học Viên" value="7,265" percentage={11.01} />
-            <StatCard title="Các Khóa Học Đang Hoạt Động" value="3,671" percentage={-0.03} />
-            <StatCard title="Các Khóa Học Đã Kết Thúc" value="1,566" percentage={15.03} />
-            <StatCard title="Học Viên Đang Online" value="2,318" percentage={6.08} />
+            {stats ? (
+              <>
+                <StatCard title="Học viên" value={parseInt(stats.total_users).toLocaleString()} percentage={11.01} />
+                <StatCard title="Các khóa Học Đang Hoạt Động" value={parseInt(stats.courses_since_july_2020).toLocaleString()} percentage={-0.03} />
+                <StatCard title="Tổng số khóa học" value={parseInt(stats.total_courses).toLocaleString()} percentage={15.03} />
+                <StatCard title="Học viên năm 2020" value={parseInt(stats.users_in_2020).toLocaleString()} percentage={6.08} />
+              </>
+            ) : (
+              <div className="w-full text-center py-8">Đang tải dữ liệu...</div>
+            )}
           </div>
         </div>
 
@@ -78,33 +128,20 @@ export default function Dashboard() {
             <div className="space-y-4">
               <div className="flex items-center text-sm border-b  pb-2">
                 <div className="w-8">#</div>
-                <div className="flex-1">Họ và Tên</div>
-                <div className="w-33">Mức độ hoàn thành</div>
-                <div className="w-20 text-right">Số khóa học</div>
+                <div className="flex-1">Mã khóa học</div>
+                <div className="w-28">Tên khóa học</div>
+                <div className="w-22 text-right">Lượt đăng kí</div>
               </div>
-              {top5Student.map((student, index) => (
-                <div key={student.id} className="flex items-center gap-4 py-2">
-                  <div className="w-8 font-medium">{index + 1}</div>
-                  <div className="flex-1">{student.id}</div>
-                  <div className="w-33">
-                  <div className="flex items-center gap-2">
-                    {/* Progress Bar */}
-                    <div className="flex-1 bg-gray-200 dark:bg-gray-700 rounded-full h-2">
-                      <div
-                        className="h-2 rounded-full bg-blue-500"
-                        style={{ width: `${Math.min(student.progress, 100)}%` }}
-                      ></div>
-                    </div>
-
-                    {/* Percentage Text */}
-                    <span className="text-xs text-gray-600 dark:text-gray-300 w-6 text-right">
-                      {student.progress}%
-                    </span>
+              {courses.map((course, index) => (
+                <div key={course.course_id} className="flex items-center gap-4 py-2">
+                  <div className="w-8 font-normal">{index + 1}</div>
+                  <div className="flex-1 text-sm truncate">{course.course_id}</div>
+                  <div className="w-28">
+                    <span className=" font-sm truncate block whitespace-nowrap overflow-hidden">{course.name}</span>
                   </div>
-                  </div>
-                  <div className="w-20 text-right">
+                  <div className="w-22 text-right">
                     <span className="bg-blue-100 dark:bg-blue-900 text-blue-800 dark:text-blue-100 py-1 px-2 rounded-full text-xs">
-                      {student.numCourse}
+                      {course.user_count}
                     </span>
                   </div>
                 </div>
@@ -121,7 +158,7 @@ export default function Dashboard() {
           </div>
 
           <div className={`rounded-lg shadow p-4 transition-colors duration-200 ${theme === 'dark' ? 'bg-gray-900 text-white' : 'bg-cyan-50 text-gray-800'}`}>
-            <h3 className="text-lg font-semibold  mb-4">Phân phối kết quả học tập - 2025</h3>
+            <h3 className="text-lg font-semibold  mb-4">Phân phối kết quả học tập - trước 7/2025</h3>
               <StudentGroupPieChart/>
           </div>
         </div>
@@ -135,7 +172,8 @@ export default function Dashboard() {
             </div>
           </div>
           <p className="mt-2 ">
-            Chỉ số ổn định, nhưng cũng có một vài điểm bất thường, nhấn để xem chi tiết
+            Phần lớn học viên đăng kí vào năm 2020 <br />
+            Nhóm học sinh nhóm thuộc loại E là cao nhất, tiếp theo là nhóm D, C, B và A. <br />
           </p>
         </div>
 

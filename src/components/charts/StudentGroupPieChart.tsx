@@ -1,21 +1,41 @@
 'use client';
 
-import React, { useMemo } from 'react';
+import React, { useMemo, useEffect, useState } from 'react';
 import dynamic from 'next/dynamic';
 import { useTheme } from '@/context/ThemeContext';
 
 const ApexCharts = dynamic(() => import('react-apexcharts'), { ssr: false });
 
+interface LabelData {
+  label: string;
+  num_users: string; // string vì API trả về string
+}
+
 const StudentGroupPieChart = () => {
   const { theme } = useTheme();
   const isDark = theme === 'dark';
 
-  const groupLabels = ['Group A', 'Group B', 'Group C', 'Group D', 'Group E'];
-  const groupCounts = [10, 80, 150, 50, 100];
+  const [data, setData] = useState<LabelData[]>([]);
+
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const res = await fetch('https://uz71shye78.execute-api.us-east-1.amazonaws.com/dev/api/label-distribution');
+        const json: LabelData[] = await res.json();
+        setData(json);
+      } catch (error) {
+        console.error('Failed to fetch label distribution:', error);
+      }
+    }
+    fetchData();
+  }, []);
+
+  // Lấy labels và series từ data
+  const groupLabels = useMemo(() => data.map(d => `Group ${d.label}`), [data]);
+  const groupCounts = useMemo(() => data.map(d => Number(d.num_users)), [data]);
 
   const series = groupCounts;
 
-  // Generate options every time theme changes
   const options: ApexCharts.ApexOptions = useMemo(() => ({
     chart: {
       type: 'donut',
@@ -58,6 +78,7 @@ const StudentGroupPieChart = () => {
               label: 'Tổng cộng',
               color: isDark ? '#fff' : '#000',
               fontSize: '20px',
+              formatter: () => series.reduce((a, b) => a + b, 0).toString(), // tổng số user
             },
           },
         },
@@ -76,15 +97,24 @@ const StudentGroupPieChart = () => {
         },
       },
     ],
-    colors: ['#60A5FA', '#34D399', '#FBBF24', '#F87171', '#A78BFA'],
-  }), [isDark]); // 👈 chỉ re-calculate khi theme thay đổi
+    colors: ['#F87171', '#FBBF24', '#34D399', '#60A5FA', '#A78BFA'], // màu tương ứng label D, C, B, A, E
+  }), [isDark, groupLabels, series]);
 
-  // Force re-render chart when theme changes
+  // Key để force remount chart khi theme thay đổi
   const chartKey = useMemo(() => `theme-${theme}`, [theme]);
+
+  // Nếu data chưa có thì show loading hoặc null
+  if (data.length === 0)
+  return (
+    <div className="flex flex-col items-center justify-center py-16">
+      <div className="w-12 h-12 border-4 border-gray-300 border-t-blue-500 rounded-full animate-spin"></div>
+      <p className="mt-4 text-gray-600 dark:text-gray-300 text-lg">Đang tải biểu đồ...</p>
+    </div>
+  );
 
   return (
     <ApexCharts
-      key={chartKey} // 👈 force remount when theme changes
+      key={chartKey}
       options={options}
       series={series}
       type="donut"
