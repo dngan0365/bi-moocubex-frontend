@@ -189,10 +189,6 @@ Quy trình chi tiết bao gồm các giai đoạn sau:
 
 Nếu bạn muốn đóng góp cho dự án này, vui lòng [Mô tả quy trình đóng góp của bạn, ví dụ: fork repository, tạo branch mới, submit pull request].
 
-## 📄 Giấy Phép
-
-Dự án này được cấp phép theo [Tên Giấy Phép, ví dụ: MIT License]. Xem tệp `LICENSE` để biết thêm chi tiết (nếu có).
-
 ---
 
 Hy vọng README này hữu ích! Hãy tùy chỉnh nó thêm để phù hợp chính xác với dự án của bạn.
