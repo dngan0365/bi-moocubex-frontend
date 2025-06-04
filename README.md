@@ -17,9 +17,9 @@ Dự án bao gồm các tính năng sau:
 
 * **Xác thực người dùng:** Phân chia quyền truy cập cho khách (guest) và người dùng đã đăng nhập (user).
 * **Quản lý khóa học:** Hiển thị danh sách khóa học, chi tiết từng khóa học.
-* **Nội dung chuyên biệt:** Có các trang dành riêng cho các chủ đề như "data-mining" (khai phá dữ liệu) và "data-quality" (chất lượng dữ liệu), có thể bao gồm nội dung tổng quan và các giai đoạn cụ thể (ví dụ: `phase1.json`).
-* **Trang thông tin chung:** Các trang như "about" (giới thiệu).
-* **API backend:** Có thể có các API tùy chỉnh được định nghĩa trong thư mục `src/api`.
+* **Nội dung chuyên biệt:** Có các trang dành riêng cho các chủ đề như "data-mining" (khai phá dữ liệu) và "data-quality" (chất lượng dữ liệu), Dự đoán kết quả học tập, phân tích dữ liệu học tập .
+* **Trang thông tin chung:** Các trang như "about" (giới thiệu), kết quả dự đoán (experiment).
+* **API backend:** Các API tùy chỉnh được định nghĩa trong thư mục `src/api`.
 
 ## 🚀 Cách Khởi Động
 
@@ -86,7 +86,7 @@ Dưới đây là mô tả về cấu trúc thư mục chính của dự án Nex
 │   │   ├── (guest)/        # Các route dành cho khách truy cập (chưa đăng nhập)
 │   │   │   ├── about/      # Trang giới thiệu
 │   │   │   │   └── page.tsx
-│   │   │   └── experiment/ # Trang thử nghiệm
+│   │   │   └── experiment/ # Trang kết quả thực nghiệm
 │   │   │       └── page.tsx
 │   │   ├── (user)/         # Các route dành cho người dùng đã đăng nhập
 │   │   │   ├── courses/    # Trang quản lý hoặc hiển thị các khóa học
@@ -184,7 +184,7 @@ Quy trình chi tiết bao gồm các giai đoạn sau:
 * [React](https://reactjs.org/)
 * [TypeScript](https://www.typescriptlang.org/) (dựa trên phần mở rộng `.ts` và `.tsx`)
 * [Tailwind CSS](https://tailwindcss.com/) (có thể, dựa trên `globals.css` và `postcss.config.mjs` là phổ biến) - *Xác nhận nếu bạn có sử dụng*
-
+* [FastAPI.js](https://fastapi.org/) (dành cho backend)
 ## 🤝 Đóng Góp
 
 Nếu bạn muốn đóng góp cho dự án này, vui lòng [Mô tả quy trình đóng góp của bạn, ví dụ: fork repository, tạo branch mới, submit pull request].
