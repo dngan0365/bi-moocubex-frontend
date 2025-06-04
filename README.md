@@ -1,7 +1,12 @@
 # BI dữ liệu MOOCCubeX và dự đoán kết quả học tập của học viên
+============
 
 Đây là một ứng dụng web được xây dựng bằng Next.js, một framework React phổ biến để phát triển các ứng dụng web hiện đại, nhanh chóng và tối ưu cho SEO.
-
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+![build-status workflow](https://github.com/nishanb/Namma-Bot/actions/workflows/app-deploy.yml/badge.svg)
+![Contributors workflow](https://img.shields.io/github/contributors/nishanb/Namma-Bot)
+![GitHub issues](https://img.shields.io/github/issues/nishanb/Namma-Bot)
+* * * * *
 ## 🎯 Mục Đích của Repository
 
 Bộ dữ liệu cho việc phân tích là: [MOOCCubeX](https://github.com/THU-KEG/MOOCCubeX)
@@ -85,11 +90,10 @@ Dưới đây là mô tả về cấu trúc thư mục chính của dự án Nex
 │   │   │   ├── courses/    # Trang quản lý hoặc hiển thị các khóa học
 │   │   │   │   ├── [courseid]/ # Route động cho chi tiết một khóa học cụ thể
 │   │   │   │   │   └── page.tsx
-│   │   │   │   ├── data-mining/ # Trang cụ thể cho khóa học/chủ đề "data-mining"
+│   │   │   │   ├── data-mining/ # Trang cụ thể cho chủ đề "data-mining"
 │   │   │   │   │   └── page.tsx
-│   │   │   │   └── data-quality/ # Trang cụ thể cho khóa học/chủ đề "data-quality"
-│   │   │   │       ├── page.tsx
-│   │   │   │       └── phase1.json # Dữ liệu JSON liên quan đến "data-quality", có thể là giai đoạn 1
+│   │   │   │   └── data-quality/ # Trang cụ thể cho chủ đề "data-quality"
+│   │   │   │       ├── page.tsx   
 │   │   │   ├── overview/   # Trang tổng quan cho người dùng
 │   │   │   │   └── page.tsx
 │   │   │   └── profile/    # Trang hồ sơ người dùng
@@ -136,7 +140,9 @@ Trong tệp `package.json`, bạn sẽ tìm thấy các scripts sau (hoặc tư�
 Dự án sử dụng một quy trình đầu cuối để thu thập, xử lý, phân tích dữ liệu từ bộ dữ liệu MOOCCubeX và triển khai ứng dụng Business Intelligence. Quy trình này tận dụng sức mạnh của các dịch vụ đám mây AWS và nền tảng Vercel.
 
 Sơ đồ dưới đây minh họa tổng quan kiến trúc:
-![Sơ đồ kiến trúc hệ thống](bi-moocubex-frontend/img/Screenshot 2025-06-04 214841.png)
+
+![](img/Screenshot 2025-06-04 214841.png)
+
 Quy trình chi tiết bao gồm các giai đoạn sau:
 
 1. *Thu Thập Dữ Liệu (Data Ingest):*
